@@ -82,5 +82,5 @@ const server = app.listen(_config.port, '0.0.0.0', function () {
     const port = server.address().port;
  
     console.log('The app is runing at:')
- 	console.log('\033[0;32m Http://localhost:'+port+'\033[0m')
+ 	console.log('\033[0;32m Http://localhost:'+port+'\033[0m\n')
 })

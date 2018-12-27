@@ -76,10 +76,12 @@ function mkdirTemplate(folder, body, resolveCli) {
 					if(err) {
 						console.log(err);
 					} else {
+						messge.log('start init template');
 						messge.success('new [Folder] '+folder);
 						writeAddFile(folder, body).then((result) => {
 							const id = folder.split('/')[1];
 							resolveCli({id : id, status : '1000'});
+							messge.log('end init template', '\n');
 						});
 					}
 				})

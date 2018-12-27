@@ -6,6 +6,9 @@ function getTime() {
 
 // node控制台提示
 const messge = {
+	log(msg, str = '') {
+		console.log(`--------------${msg}--------------${str}`);
+	},
 	success(msg) {
 		console.log(getTime() + ' \033[42;37msuccess\033[0;0m '+ msg +'\033[0m');
 	}
