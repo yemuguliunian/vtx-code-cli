@@ -1,0 +1,2 @@
+cd ..
+cnpm install
