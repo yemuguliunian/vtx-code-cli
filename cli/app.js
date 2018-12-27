@@ -36,7 +36,7 @@ app.post('/curd/cli', function(req, res){
     cli(req.body).then(({status, id}) => {
         let msg = {
             exception: id ? "" : `【${status}】${_config.status_code[status]}`,
-            msg: id ? _config[status] : "",
+            msg: id ? _config.status_code[status] : "",
             result: id ? 0 : 1
         };
         if(id) {

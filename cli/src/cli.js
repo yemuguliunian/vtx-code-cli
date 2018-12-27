@@ -101,9 +101,10 @@ function cli(body) {
 	    const key = `vtx_${moment().format('YYYYMMDDHHmmss')}`;
 		// 是否存在dist文件
 		fs.exists( distFolderName, function(exists) {
+			// 以id作为每个curd模板的文件名
+			const folder = distFolderName + '/' + key;
 			if(exists) {
-				// 存在dist文件，以id作为每个curd模板的文件名
-				const folder = distFolderName + '/' + key;
+				// 存在dist文件
 				mkdirTemplate(folder, body, resolve);
 			} else {
 				// 不存在
@@ -111,7 +112,7 @@ function cli(body) {
 					if(err) {
 						console.log(err);
 					}
-					cli(body);
+					mkdirTemplate(folder, body, resolve);
 				})
 			}
 		})
