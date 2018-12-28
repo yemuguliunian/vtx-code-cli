@@ -22,6 +22,5 @@ function indent(num) {
 module.exports = {
 	split_array : split_array,
 	indent : indent,
-	message : message,
 	getTime : getTime
 };

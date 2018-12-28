@@ -2,7 +2,9 @@
  * 控制台打印统一处理
  */
 require('console-color-mr');
+
 const { getTime } = require('./vtxUtil.js');
+const logger = require('./logger.js');
 
 const _event = Symbol('event');
 
@@ -15,6 +17,12 @@ class Console {
 	log(type, msg, char = '') {
 		const _t = this;
 		// do something
+		let info = `${getTime()} ${msg}\r\n`;
+		if(['error', 'warn'].indexOf(type) > -1) {
+			logger.error(info);
+		} else {
+			logger.success(info);
+		}
 		return this[_event]()[type](msg, char);
 	}
 
