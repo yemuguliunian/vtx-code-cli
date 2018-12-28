@@ -60,17 +60,15 @@ function writeCModal(folder, body) {
 		let { namespace } = body;
 		// modal文件名
 		let modalFoler = `${namespace}M`;
-		let modalFolerPath = `${folder}/${modalFoler}`;
-		fs.exists( modalFolerPath, function(exists) {
-			// 不存在
-			if(!exists) {
-				fs.mkdir(modalFolerPath, function(err) {
-					if(err) {
-						_console.log('error', err);
-					}
-				})
-			}
-		})
+		let modalFolerPath = `${folder}/${modalFoler}.js`;
+		fs.writeFile(modalFolerPath, initCModal(body), function(err){
+		    if(err) {
+		    	_console.log('error', err);
+		    } else {
+		    	_console.log('success', `new [File] ${modalFolerPath}`);
+		    	resolve(`new [File] ${modalFolerPath}`);
+		    }
+		});
 	})
 }
 
@@ -93,7 +91,10 @@ function mkdirTemplate(folder, body, resolveCli) {
 					} else {
 						_console.log('divid', 'start init template');
 						_console.log('success', `new [Folder] ${folder}`);
-						writeAddFile(folder, body).then((result) => {
+						Promise.all([
+							writeAddFile(folder, body),
+							writeCModal(folder, body)
+						]).then((result) => {
 							const id = folder.split('/')[2];
 							resolveCli({id : id, status : '1000'});
 							_console.log('divid', 'end init template', '\n');
