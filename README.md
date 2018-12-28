@@ -42,6 +42,10 @@ react，dva，（可视化配置页面是vtx-cli生成的项目）
 
 node（fs，path 涉及文件的读写），es6，express（请求处理），yamljs（配置文件读取），moment（时间管理工具），zip-local（文件压缩）
 
+http://momentjs.cn/
+
+https://www.npmjs.com/package/express
+
 https://www.npmjs.com/package/ipware
 
 https://www.npmjs.com/package/yamljs
