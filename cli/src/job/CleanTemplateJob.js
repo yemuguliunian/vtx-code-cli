@@ -31,7 +31,6 @@ class CleanTemplateJob {
 		next.setSeconds(0);
 		
 		setTimeout(_t[_clean], next - current);
-		_t[_clean]();
 	}
 	
 	[_clean]() {
