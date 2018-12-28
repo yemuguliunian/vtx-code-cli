@@ -8,7 +8,7 @@ const path = require('path');
 const moment = require('moment');  
 const rimraf = require('rimraf');
 
-const { messge } = require('../util/vtxUtil.js');
+const _console = require('../util/console.js');
 
 const _clean = Symbol('clean');
 
@@ -60,7 +60,7 @@ class CleanTemplateJob {
 											if(err) {
 												console.log(err);
 											} else {
-												messge.delete(cleanFolderPath + '文件已超过7天');
+												_console.log('delete', `cleanFolderPath文件已超过7天`);
 											}
 										})
 									}

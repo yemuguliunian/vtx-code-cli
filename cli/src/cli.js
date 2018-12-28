@@ -3,9 +3,9 @@ const moment = require('moment');
 
 const initView = require('./init/initView.js');
 const initADD = require('./init/initADD.js');
+const initCModal = require('./init/initCModal.js');
 
-const vtxUtil = require('./util/vtxUtil.js');
-const messge = vtxUtil.messge;
+const _console = require('./util/console.js');
 
 // new新增/查看文件
 function writeAddFile (folder, body) {
@@ -18,17 +18,17 @@ function writeAddFile (folder, body) {
 				// 创建目录
 				fs.mkdir(folderName, function(err) {
 					if(err) {
-						console.log(err);
+						_console.log('error', err);
 					} else {
-						messge.success('new [Folder] '+folderName);
+						_console.log('success', `new [Folder] ${folderName}`);
 						Promise.all([
 							new Promise((resolve, reject) => {
 								// ADD.js
 								fs.writeFile(folderName + '/ADD.js', initADD(parameters, namespace), function(err){
 								    if(err) {
-								    	console.log('new [File]ADD.js error')
+								    	_console.log('error', err);
 								    } else {
-								    	messge.success(`new [File] ${folderName}/ADD.js`);
+								    	_console.log('success', `new [File] ${folderName}/ADD.js`);
 								    	resolve(`new [File] ${folderName}/ADD.js`);
 								    }
 								});
@@ -37,9 +37,9 @@ function writeAddFile (folder, body) {
 								// View.js
 								fs.writeFile(folderName + '/View.js', initView(parameters, namespace), function(err){
 								    if(err) {
-								    	console.log('new [File]View.js error')
+								    	_console.log('error', err);
 								    } else {
-								    	messge.success(`new [File] ${folderName}/View.js`);
+								    	_console.log('success', `new [File] ${folderName}/View.js`);
 								    	resolve(`new [File] ${folderName}/View.js`);
 								    }
 								});
@@ -49,6 +49,26 @@ function writeAddFile (folder, body) {
 						})
 					}
 	            })
+			}
+		})
+	})
+}
+
+// new CURD modal
+function writeCModal(folder, body) {
+	return new Promise(function( resolve, reject ) {
+		let { namespace } = body;
+		// modal文件名
+		let modalFoler = `${namespace}M`;
+		let modalFolerPath = `${folder}/${modalFoler}`;
+		fs.exists( modalFolerPath, function(exists) {
+			// 不存在
+			if(!exists) {
+				fs.mkdir(modalFolerPath, function(err) {
+					if(err) {
+						_console.log('error', err);
+					}
+				})
 			}
 		})
 	})
@@ -69,14 +89,14 @@ function mkdirTemplate(folder, body, resolveCli) {
 			} else {
 				fs.mkdir(folder, function(err) {
 					if(err) {
-						console.log(err);
+						_console.log('error', err);
 					} else {
-						messge.log('start init template');
-						messge.success('new [Folder] '+folder);
+						_console.log('divid', 'start init template');
+						_console.log('success', `new [Folder] ${folder}`);
 						writeAddFile(folder, body).then((result) => {
 							const id = folder.split('/')[2];
 							resolveCli({id : id, status : '1000'});
-							messge.log('end init template', '\n');
+							_console.log('divid', 'end init template', '\n');
 						});
 					}
 				})
@@ -102,7 +122,7 @@ function generateDayFolder(distFolderName, body, resolve) {
 			// 不存在
 			fs.mkdir(dayFolder, function(err) {
 				if(err) {
-					console.log(err);
+					_console.log('error', err);
 				}
 				// 初始化模板
 				mkdirTemplate(tFolder, body, resolve);
@@ -131,7 +151,7 @@ function cli(body) {
 				// 不存在
 				fs.mkdir(distFolderName, function(err) {
 					if(err) {
-						console.log(err);
+						_console.log('error', err);
 					}
 					generateDayFolder(distFolderName, body, resolve);
 				})
