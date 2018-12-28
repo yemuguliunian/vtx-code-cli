@@ -17,6 +17,11 @@ function loadYAMLFile (file) {
 }
 global._config = loadYAMLFile(path.resolve(__dirname, './config.yaml'));
 
+// 定时器
+const CleanTemplateJob = require('./src/job/CleanTemplateJob.js');
+const ctj = new CleanTemplateJob();
+ctj.init;
+
 // 设置跨域访问
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -53,24 +58,30 @@ app.get('/curd/downLoadZip', function(req, res) {
     if(!id) {
         return;
     }
-    let fPath = path.resolve(__dirname, `./dist/${id}`);
+    const dayFolder = id.split('_')[1].substring(0, 8);
+    const dayFolderPath = path.resolve(__dirname, `./${_config.distFolderName}/${dayFolder}`);
+    let fPath = path.resolve(__dirname, `./${_config.distFolderName}/${dayFolder}/${id}`);
     // 检测导出的模板路径是否存在
-    fs.exists( fPath, function(exists) {
-        // 存在则导出
+    fs.exists( dayFolderPath, function(exists) {
         if(exists) {
-            zipper.zip(fPath, function(error, zipped) {
-                if(!error) {
-                    zipped.compress(); // compress before exporting
-                    const buff = zipped.memory(); // get the zipped file as a Buffer
-                    const bufferStream = new stream.PassThrough;
-                    bufferStream.end(buff);
-                    res.writeHead(200, {
-                        'Content-Type': 'application/force-download',
-                        'Content-Disposition': 'attachment; filename=dist.zip'
-                    });
-                    bufferStream.pipe(res);
+            fs.exists( fPath, function(exists) {
+                // 存在则导出
+                if(exists) {
+                    zipper.zip(fPath, function(error, zipped) {
+                        if(!error) {
+                            zipped.compress(); // compress before exporting
+                            const buff = zipped.memory(); // get the zipped file as a Buffer
+                            const bufferStream = new stream.PassThrough;
+                            bufferStream.end(buff);
+                            res.writeHead(200, {
+                                'Content-Type': 'application/force-download',
+                                'Content-Disposition': 'attachment; filename=dist.zip'
+                            });
+                            bufferStream.pipe(res);
+                        }
+                    }); 
                 }
-            }); 
+            })
         }
     })
 })

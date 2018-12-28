@@ -4,6 +4,7 @@ input_len : 32 #文本框最大字节
 inputArea_Num : 300 #文本域最大字节
 inputArea_row : 3 #文本域row
 param_split_num : 7
+distFolderName : 'dist' #文件服务目录
 status_code : 
   1000 : '初始化模板成功'
   1001 : 'namespace未定义'

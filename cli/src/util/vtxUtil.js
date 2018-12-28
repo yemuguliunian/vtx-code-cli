@@ -1,3 +1,4 @@
+require('console-color-mr');
 const moment = require('moment');
 
 function getTime() {
@@ -10,7 +11,13 @@ const messge = {
 		console.log(`--------------${msg}--------------${str}`);
 	},
 	success(msg) {
-		console.log(getTime() + ' \033[42;37msuccess\033[0;0m '+ msg +'\033[0m');
+		console.log(getTime(), 'SUCCESS'.green, msg);
+	},
+	warn(msg) {
+		console.log(getTime(), 'WARN'.red, msg);
+	},
+	delete(msg) {
+		console.log(getTime(), 'DELETE'.red, msg);
 	}
 }
 

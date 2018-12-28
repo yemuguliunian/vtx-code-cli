@@ -1,6 +1,4 @@
 const fs = require('fs');  
-const path = require('path');  
-const rimraf = require('rimraf');
 const moment = require('moment');
 
 const initView = require('./init/initView.js');
@@ -8,9 +6,6 @@ const initADD = require('./init/initADD.js');
 
 const vtxUtil = require('./util/vtxUtil.js');
 const messge = vtxUtil.messge;
-
-// initFolder
-const distFolderName = 'dist';
 
 // new新增/查看文件
 function writeAddFile (folder, body) {
@@ -79,7 +74,7 @@ function mkdirTemplate(folder, body, resolveCli) {
 						messge.log('start init template');
 						messge.success('new [Folder] '+folder);
 						writeAddFile(folder, body).then((result) => {
-							const id = folder.split('/')[1];
+							const id = folder.split('/')[2];
 							resolveCli({id : id, status : '1000'});
 							messge.log('end init template', '\n');
 						});
@@ -90,8 +85,36 @@ function mkdirTemplate(folder, body, resolveCli) {
 	});
 }
 
+// 以每天作为一个单元产生一个当天的总包
+function generateDayFolder(distFolderName, body, resolve) {
+	const current = moment().format('YYYYMMDD');
+	const dayFolder = distFolderName + '/' + current;
+	fs.exists( dayFolder, function(exists) {
+		// 唯一标识 vtx__时间
+	    const key = `vtx_${moment().format('YYYYMMDDHHmmss')}`;
+	    // 以id作为每个curd模板的文件名
+		const tFolder = dayFolder + '/' + key;
+		if(exists) {
+			// 存在
+			// 初始化模板
+			mkdirTemplate(tFolder, body, resolve);
+		} else {
+			// 不存在
+			fs.mkdir(dayFolder, function(err) {
+				if(err) {
+					console.log(err);
+				}
+				// 初始化模板
+				mkdirTemplate(tFolder, body, resolve);
+			})
+		}
+	})
+} 
+
 // cli初始
 function cli(body) {
+	// initFolder
+	const distFolderName = _config.distFolderName;
 	return new Promise((resolve, reject) => {
 		const { namespace } = body;
 		// namespace未定义
@@ -99,27 +122,22 @@ function cli(body) {
 			resolve({status : '1001'});
 			return;
 		}
-		// 唯一标识 vtx__时间
-	    const key = `vtx_${moment().format('YYYYMMDDHHmmss')}`;
 		// 是否存在dist文件
 		fs.exists( distFolderName, function(exists) {
-			// 以id作为每个curd模板的文件名
-			const folder = distFolderName + '/' + key;
 			if(exists) {
 				// 存在dist文件
-				mkdirTemplate(folder, body, resolve);
+				generateDayFolder(distFolderName, body, resolve);
 			} else {
 				// 不存在
 				fs.mkdir(distFolderName, function(err) {
 					if(err) {
 						console.log(err);
 					}
-					mkdirTemplate(folder, body, resolve);
+					generateDayFolder(distFolderName, body, resolve);
 				})
 			}
 		})
 	});
-	
 }
 
 module.exports = cli;
