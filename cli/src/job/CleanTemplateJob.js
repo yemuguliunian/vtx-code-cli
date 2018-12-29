@@ -30,7 +30,7 @@ class CleanTemplateJob {
 		next.setMinutes(0);
 		next.setSeconds(0);
 		
-		setTimeout(_t[_clean], next - current);
+		setTimeout(_t[_clean](), next - current);
 	}
 	
 	[_clean]() {
@@ -60,7 +60,7 @@ class CleanTemplateJob {
 											if(err) {
 												console.log(err);
 											} else {
-												_console.log('delete', `cleanFolderPath文件已超过7天`);
+												_console.log('delete', `${cleanFolderPath}文件已超过7天`);
 											}
 										})
 									}
