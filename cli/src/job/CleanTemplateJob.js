@@ -30,12 +30,11 @@ class CleanTemplateJob {
 		next.setMinutes(0);
 		next.setSeconds(0);
 		
-		setTimeout(_t[_clean](), next - current);
+		setTimeout(() => _t[_clean](), next - current);
 	}
 	
 	[_clean]() {
 		const _t = this;
-		setTimeout(_t[_clean], _t.interval * 24 * 60 * 60 * 1000);
 		const distFolderName = _config.distFolderName;
 		// do something
 		fs.exists( distFolderName, function(exists) {
@@ -72,6 +71,7 @@ class CleanTemplateJob {
 				})
 			}
 		})
+		setTimeout(() => _t[_clean](), _t.interval * 24 * 60 * 60 * 1000);
 	}
 
 }
