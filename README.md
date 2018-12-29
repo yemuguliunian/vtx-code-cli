@@ -68,3 +68,5 @@ https://www.npmjs.com/package/rimraf
 
 4，Promise递归
 
+5，在setTimeout之类回调函数中this丢失的问题
+
