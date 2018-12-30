@@ -11,10 +11,11 @@ function initCModal(body) {
 	const { namespace, searchParams, parameters } = body;
 
 	let fragment = [], // 代码片段
-		queryParams = [], // 查询参数
-		newItemParams = [], // 新增参数
-		paramDatas = []; // 数据来源
-
+		queryState = [], // 查询参数
+		newItemState = [], // 新增参数
+		paramDataState = []; // 数据来源
+	
+	// 查询参数
 	for(var i = searchParams.length - 1; i >= 0; i--) {
 		const { title, param, param1, type, paramData } = searchParams[i];
 
@@ -26,14 +27,15 @@ function initCModal(body) {
 		stateC.setIsLast = i === 0;
 
 		if(['range'].indexOf(type) > -1) {
-			queryParams = queryParams.concat(stateC.cellTemplate);
+			queryState = queryState.concat(stateC.cellTemplate);
 		} else {
-			queryParams.push(stateC.cellTemplate);
+			queryState.push(stateC.cellTemplate);
 		}
 
-		paramDatas.push(paramData);
+		paramDataState.push(paramData);
 	}
-
+	
+	// 新增参数
 	for(var i = parameters.length - 1; i >= 0; i--) {
 		const { title, param, param1, type, paramData } = parameters[i];
 
@@ -45,36 +47,45 @@ function initCModal(body) {
 		stateC.setIsLast = i === 0;
 
 		if(['range'].indexOf(type) > -1) {
-			newItemParams = newItemParams.concat(stateC.cellTemplate);
+			newItemState = newItemState.concat(stateC.cellTemplate);
 		} else {
-			newItemParams.push(stateC.cellTemplate);
+			newItemState.push(stateC.cellTemplate);
 		}
 
-		paramDatas.push(paramData);
+		paramDataState.push(paramData);
 	}
 
-	if(queryParams.length > 0) {
-		queryParams = [
+	if(queryState.length > 0) {
+		queryState = [
 			`// 查询条件`,
-			`let initQueryParams = {`,
-				...queryParams,
+			`let initqueryState = {`,
+				...queryState,
 			`};`
 		];
 	}
 
-	if(newItemParams.length > 0) {
-		newItemParams = [
+	if(newItemState.length > 0) {
+		newItemState = [
 			`// 新增参数`,
 			`let defaultNewItem = {`,
-				...newItemParams,
+				...newItemState,
 			`};`
 		];
+
 	}
 
 	fragment = [
-		...queryParams,
+		...queryState,
 		``,
-		...newItemParams
+		...newItemState,
+		``,
+		`const initState = {`,
+		`    currentPage : 1,`,
+		`    pageSize : 10,`,
+		`    loading : false,`,
+		`    dataSource : [],`,
+		`    total : 0,`,
+		`    selectedRowKeys : [],`
 	];
 	
 	return fragment.join('\n');

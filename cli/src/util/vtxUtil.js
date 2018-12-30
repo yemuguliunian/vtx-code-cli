@@ -19,6 +19,16 @@ function indent(num) {
 	return num ? new Array( num + 1 ).join(" ") : "";
 }
 
+// 数组去重
+function dedupe(array) {
+    return Array.from(new Set(array));
+}
+
+// 首字母大写
+function firstUpperCase(str) {
+	return str.replace(/^\S/, function(s){return s.toUpperCase();});
+}
+
 module.exports = {
 	split_array : split_array,
 	indent : indent,

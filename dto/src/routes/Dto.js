@@ -168,7 +168,7 @@ function Dto({dispatch, dto}) {
         		<Button type="primary" ghost onClick={() => dispatch({type : 'dto/cli'})}>生成模板</Button>
                 <Button 
                     disabled={!distId}
-                    onClick={() => window.open(`/curd/downLoadZip?id=${distId}`)}
+                    onClick={() => window.open(`/code/generator/file/downLoadZip?id=${distId}`)}
                 >导出模板</Button>
         	</div>
         </Page>

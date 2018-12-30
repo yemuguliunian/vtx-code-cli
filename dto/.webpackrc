@@ -1,7 +1,7 @@
 {
   "entry": "src/index.js",
   "proxy": {
-    "/curd/*": {
+    "/code/generator/*": {
       "target":"http://localhost:8088"
     }
   },
