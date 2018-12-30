@@ -1,0 +1,10 @@
+[SYSTEM] 2018-12-30 13:33:43 success mkdir dist 
+[SYSTEM] 2018-12-30 13:33:43 success mkdir dist/20181230 
+[SYSTEM] 2018-12-30 13:33:43 success mkdir dist/20181230/vtx_20181230133343 
+[SYSTEM] 2018-12-30 13:33:43 success new [Folder] dist/20181230/vtx_20181230133343/ceshi 
+[SYSTEM] 2018-12-30 13:33:43 success new [File] dist/20181230/vtx_20181230133343/ceshiM.js 
+[SYSTEM] 2018-12-30 13:33:43 success new [File] dist/20181230/vtx_20181230133343/ceshi/ADD.js 
+[SYSTEM] 2018-12-30 13:33:43 success new [File] dist/20181230/vtx_20181230133343/ceshi/View.js 
+[SYSTEM] 2018-12-30 13:33:43 END init curd template 
+[RUNING] 2018-12-30 13:33:43 127.0.0.1 - POST /code/generator/cli/curd?tenantId=111&_t=1546148023070 HTTP/1.1" 200 http://localhost:8000/ 218.634 ms Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 
+
