@@ -156,7 +156,6 @@ function Dto({dispatch, dto}) {
         	<h5>查询条件</h5>
     		<Button type="primary" icon="plus" onClick={() => dispatch({type : 'dto/newSearchParam'})}>新增查询条件</Button>
     		{searchParamRender}
-            <h5>功能按钮</h5>
             <h5>列表显示</h5>
             <Button type="primary" icon="plus" onClick={() => dispatch({type : 'dto/newListParams'})}>新增列表字段</Button>
             {listParamRender}
