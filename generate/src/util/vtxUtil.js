@@ -32,5 +32,7 @@ function firstUpperCase(str) {
 module.exports = {
 	split_array : split_array,
 	indent : indent,
-	getTime : getTime
+	getTime : getTime,
+	dedupe : dedupe,
+	firstUpperCase : firstUpperCase
 };

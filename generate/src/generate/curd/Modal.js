@@ -1,20 +1,24 @@
 /**
  * 初始化CURD modal
  */
-const vtxUtil = require('../../util/vtxUtil.js');
-const split_array = vtxUtil.split_array;
+const { dedupe, firstUpperCase, split_array, indent } = require('../../util/vtxUtil.js');
 
 const stateC  = require('../template/StateCell');
+const effectC  = require('../template/EffectCell');
+const _ = require('lodash');
 
 function initModal(body) {
 
-	const { namespace, searchParams, parameters } = body;
+	const { namespace, annotation, searchParams, parameters } = body;
 
 	let fragment = [], // 代码片段
+		addParams = ['id'], // 新增参数
+		addParamsFragment = [],
+		effectFragment = [],
 		queryState = [], // 查询参数
 		newItemState = [], // 新增参数
 		paramDataState = []; // 数据来源
-	
+
 	// 查询参数
 	for(var i = searchParams.length - 1; i >= 0; i--) {
 		const { title, param, param1, type, paramData } = searchParams[i];
@@ -32,9 +36,13 @@ function initModal(body) {
 			queryState.push(stateC.cellTemplate);
 		}
 
-		paramDataState.push(paramData);
+		paramData && paramDataState.push({
+			key : paramData,
+			param : param,
+			title : title
+		});
 	}
-	
+
 	// 新增参数
 	for(var i = parameters.length - 1; i >= 0; i--) {
 		const { title, param, param1, type, paramData } = parameters[i];
@@ -52,20 +60,90 @@ function initModal(body) {
 			newItemState.push(stateC.cellTemplate);
 		}
 
-		paramDataState.push(paramData);
+		paramData && paramDataState.push({
+			key : paramData,
+			param : param,
+			title : title
+		});
+
+		// 新增参数存储
+		addParams.push(param);
 	}
 
-	if(queryState.length > 0) {
-		queryState = [
-			`// 查询条件`,
-			`let initqueryState = {`,
-				...queryState,
-			`};`
-		];
-	}
+	// 参数数据源去重
+	paramDataState = _.uniqBy(paramDataState, 'key');
+
+	effectC.setNameSpace = namespace;
+	effectC.setIndentNum = 8;
+	// 下拉参数
+	paramDataState.map(item => {
+		effectFragment.push(...effectC.generateSelect(item));
+		effectFragment.push(``);
+	})
+	// 列表
+	effectFragment.push(...effectC.getList());
+	// 新增or编辑
+	let splitArr = split_array(addParams, _config.param_split_num);
+	addParamsFragment = splitArr.map((item, index) => {
+		return `        ${item.join(', ')},`;
+	})
+	effectFragment.push(...[
+		``,
+		`// 新增or编辑`,
+        `*saveOrUpdate({ payload }, { call, put, select }) {`,
+        `    yield put({`,
+        `        type : payload.btnType === 'add' ? 'updateNewItem' : 'updateEditItem',`,
+        `        payload : {loading : true}` ,
+        `    });`,
+        `    const { newItem, editItem } = yield select( ({driver}) => driver );`,
+        `    const {`,
+	       		...addParamsFragment,
+        `    } = payload.btnType === 'add' ? newItem : editItem;`,
+        `    let params = {`,
+        		...addParamsFragment,	
+        `        userId : userId,`,
+        `        tenantId : tenantId,`,
+        `    };`,
+        `    const { data } = yield call( payload.btnType === 'add' ? `,
+        `            demoService.save : demoService.update, handleTrim(params));`,
+        `    if(!!data && data.result == 0) {`,
+        `        yield put({type:'getList'});`,
+        `        payload.onSuccess();`,
+        `    } else {`,
+        `        payload.onError();`,
+        `    }`,
+        `    yield put({ `,
+        `        type : payload.btnType === 'add' ? 'updateNewItem' : 'updateEditItem', `,
+        `        payload : {loading : false} `,
+        `    });`,
+        `},`
+	].map(item => `${indent(8)}${item}`));
+	// 删除
+	effectFragment.push(...[
+		``,
+		`// 删除`,
+        `*deleteItems({ payload }, { call, put, select }) {`,
+        `    let { ids = [] } = payload;`,
+        `    const params = {`,
+        `        ids : ids.join(',')`,
+        `    };`,
+        `    const { data } = yield call(demoService.delete, params);`,
+        `    if(!!data && data.result==0){`,
+        `        payload.onSuccess(ids);`,
+        `    }`,
+        `    else{`,
+        `        payload.onError( data ? data.msg : '删除失败' );`,
+        `    }`,
+        `}`
+	].map(item => `${indent(8)}${item}`));
 
 	fragment = [
-		...queryState,
+		`import { demoService } from '...';`,
+		``,
+		`// 查询条件`,
+		`let initQueryState = {`,
+			...queryState,
+		`};`,
 		``,
 		`// 新增参数`,
 		`let defaultNewItem = {`,
@@ -73,25 +151,28 @@ function initModal(body) {
 		`};`,
 		``,
 		`const initState = {`,
-		`    currentPage : 1,`,
-		`    pageSize : 10,`,
-		`    loading : false,`,
-		`    dataSource : [],`,
-		`    total : 0,`,
+		`    searchParams : {...queryState}, // 搜索参数`,
+		`    queryParams : {...queryState}, // 查询列表参数`,
+			 ...paramDataState.map(item => `${indent(4)}${item.key} : [], // ${item.title}下拉数据`),
+		`    currentPage : 1, // 页码`,
+		`    pageSize : 10, // 每页条数`,
+		`    loading : false, // 列表是否loading`,
+		`    dataSource : [], // 列表数据源`,
+		`    total : 0, // 列表总条数`,
 		`    selectedRowKeys : [],`,
-		`    newItem : {...defaultNewItem}`,
-		`    editItem:{`,
+		`    newItem : {...defaultNewItem}, // 新增参数`,
+		`    editItem:{ // 编辑参数`,
 		`        visible:false,`,
 		`        loading:false`,
 		`    }`,
-		`    viewItem: {`,
+		`    viewItem: { // 查看参数`,
 		`        visible:false`,
 		`    }`,
 		`};`,
 		``,
 		`export default {`,
 		``,
-		`    namespace : '${namespace}',`,	
+		`    namespace : '${namespace}', // ${annotation || ''}`,	
 		``,
 		`    state : {...initState},`,
 		``,
@@ -99,12 +180,25 @@ function initModal(body) {
 		`        setup({ dispatch, history }) {`,
 		`            return history.listen(({ pathname, search }) => {`,
 		`                if(pathname === '/${namespace}') {`,
+		`					// 初始化state`,
+		`                    dispatch({`,
+		`                        type : 'updateState',`,
+		`                        payload : {`,
+		`                            ...initState`,
+		`                        }`,
+		`                    })`,
+							 ...paramDataState.map(item => {
+							 	return `${indent(20)}// 请求${item.title}下拉数据\n` +
+							 			`${indent(20)}dispatch({type : 'load${firstUpperCase(item.key)}'});`
+							 }),
+		`                    dispatch({type : 'getList'});`,
 		`                }`,
 		`            })`,
 		`        }`,
 		`    },`,
 		``,
 		`    effects : {`,
+				...effectFragment,
 		`    },`,
 		``,
 		`    reducers : {`,
@@ -112,6 +206,38 @@ function initModal(body) {
 		`            return {`,
 		`                ...state,`,
 		`                ...action.payload`,
+		`            }`,
+		`        },`,
+		``,
+		`		updateSearchParams(state, action){`,
+		`            return {`,
+		`                ...state,`,
+		`                searchParams : {`,
+		`                    ...state.searchParams,`,
+		`                    ...action.payload`,
+		`                }`,
+		`            }`,
+		`        },`,
+		``,
+		`		updateQueryParams(state,action) {`,
+		`            let queryParams = _.pick(state.searchParams, _.keys(initQueryParams));`,
+		`            return {`,
+		`                ...state,`,
+		`                ...action.payload,`,
+		`                selectedRowKeys : [],`,
+		`                currentPage : 1,`,
+		`                queryParams : queryParams`,
+		`            }`,
+		`        },`,
+		``,
+		`        initQueryParams(state,action) {`,
+		`            return {`,
+		`                ...state,`,
+		`                ...action.payload,`,
+		`                ...initQueryParams,`,
+		`                currentPage : 1,`,
+		`                pageSize : 10,`,
+		`                queryParams : initQueryParams`,
 		`            }`,
 		`        },`,
 		``,

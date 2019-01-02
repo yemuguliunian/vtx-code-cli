@@ -1,9 +1,12 @@
 const fs = require('fs');  
 const logger = require('../../../middleware/logger.js');
 
+const { firstUpperCase } = require('../../util/vtxUtil.js');
+
 const initView = require('./View.js');
 const initADD = require('./ADD.js');
 const initModal = require('./Modal.js');
+const initRouter = require('./Router.js');
 
 // new新增/查看文件
 function writeAddFile (folder, body) {
@@ -70,10 +73,30 @@ function writeCModal(folder, body) {
 	})
 }
 
+// new CURD router
+function writeRouter(folder, body) {
+	return new Promise(function( resolve, reject ) {
+		let { namespace } = body;
+		// modal文件名
+		let modalFoler = `${firstUpperCase(namespace)}`;
+		let modalFolerPath = `${folder}/${modalFoler}.js`;
+		fs.writeFile(modalFolerPath, initRouter(body), function(err){
+		    if(err) {
+		    	logger.error(`error new [File] ${modalFolerPath}` + err);
+		    } else {
+		    	logger.info(`success new [File] ${modalFolerPath}`);
+		    	resolve(`new [File] ${modalFolerPath}`);
+		    }
+		});
+	})
+}
+
+
 module.exports = function initCurd({folder, body, resolve, reject}) {
 	return Promise.all([
 		writeAddFile(folder, body),
-		writeCModal(folder, body)
+		writeCModal(folder, body),
+		writeRouter(folder, body)
 	]).then((result) => {
 		const id = folder.split('/')[2];
 		resolve({id : id, status : '1000'});
