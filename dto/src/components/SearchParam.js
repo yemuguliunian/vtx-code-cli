@@ -8,7 +8,7 @@ function SearchParam(props) {
 
 	const { 
 		typeData,
-		title, id, param, param1, type, gird, dataSourceParam, 
+		title, id, param, param1, type, gird, paramData, 
 		handleChangeSearchParam, deleteSearchParam 
 	} = props;
 	
@@ -60,7 +60,7 @@ function SearchParam(props) {
     					下拉数据源Param：
     				</Cell.Item.Title>
     				<Cell.Item.Body>
-    					<Input value={dataSourceParam} onChange={(e) => handleChangeSearchParam(e.target.value, id, 'dataSourceParam')}/>
+    					<Input value={paramData} onChange={(e) => handleChangeSearchParam(e.target.value, id, 'paramData')}/>
     				</Cell.Item.Body>
     			</Cell.Item>
 			}

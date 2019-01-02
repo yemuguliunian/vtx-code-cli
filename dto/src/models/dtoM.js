@@ -77,10 +77,10 @@ export default {
                 id : _.uniqueId('searchParam_'),
                 title : '',
                 param : '',
+                paramData : '',
                 param1 : '',
                 type : 'text',
-                gird : 1,
-                dataSourceParam : ''
+                gird : 1
             };
             newData.unshift(searchItem);
             return {
