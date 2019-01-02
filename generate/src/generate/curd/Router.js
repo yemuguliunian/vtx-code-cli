@@ -1,14 +1,14 @@
 /**
  * 初始化CURD router
  */
-const { split_array, firstUpperCase, dedupe } = require('../../util/vtxUtil.js');
+const { split_array, firstUpperCase, dedupe, indent } = require('../../util/vtxUtil.js');
 const gc = require('../template/GirdCell');
 
 const moment = require('moment');
 
 function initRouter(body) { 
 
-	const { namespace, annotation, author, searchParams, parameters } = body;
+	const { namespace, annotation, author, searchParams, parameters, listParams } = body;
 
 	let fragment = [], // 代码片段
 		girdParamFragment = [],
@@ -61,8 +61,8 @@ function initRouter(body) {
 			break;
 			case 'day' : // 日刷选
 				!existDay && (existDay = true);
-				props = gc.day.props;
-				render = gc.day.render;
+				props = gc.date.props;
+				render = gc.date.render;
 			break;
 			case 'month' : // 月刷选
 				!existMonth && (existMonth = true);
@@ -86,7 +86,7 @@ function initRouter(body) {
 		girdParams.push(...props);
 		girdList.push(...render);
 	}
-
+	
 	// 新增参数
 	for(var i = parameters.length - 1; i >= 0; i--) {
 		const { paramData } = parameters[i];
@@ -146,6 +146,8 @@ function initRouter(body) {
 		];
 	}
 
+	// 列表参数
+
 	fragment = [
 		`/**`,
 		` * ${annotation}`,
@@ -194,7 +196,7 @@ function initRouter(body) {
 		`		})`,
 		`	}`,
 		``,
-			...girdParamFragment,
+			...girdParamFragment.map(item => `${indent(4)}${item}`),
 		`}`,
 		``,
 		`export default connect(`,

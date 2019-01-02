@@ -59,18 +59,18 @@ class GirdCell {
 			propsFragment = []; // props
 
 		propsFragment = [
-			`${_t.param}Props : {`
-			`	value : ${_t.param},`
-			`	onChange(e) {`
-			`		updateState({`
-			`            ${_t.param} : e.target.value`
-			`        })`
-			`	},`
-			`    onPressEnter() {`
-			`        getList();`
-			`    },`
-			`	placeholder : '请输入${_t.title}',`
-			`	maxLength : 32`
+			`${_t.param}Props : {`,
+			`	value : ${_t.param},`,
+			`	onChange(e) {`,
+			`		updateState({`,
+			`            ${_t.param} : e.target.value`,
+			`        })`,
+			`	},`,
+			`    onPressEnter() {`,
+			`        getList();`,
+			`    },`,
+			`	placeholder : '请输入${_t.title}',`,
+			`	maxLength : 32`,
 			`},`
 		];
 
@@ -116,7 +116,7 @@ class GirdCell {
 			`	})}`,
 			`</Select>`
 		];
-
+		
 		return {
 			props : propsFragment.map(item => `${indent(_t.indentNum)}${item}`),
 			render : fragment.map(item => `${indent(_t.indentNum)}${item}`)
@@ -147,12 +147,12 @@ class GirdCell {
 	        `    }`,
 			`},`
 		];
-
+		
 		// 文本代码片段
 		fragment = [
 			`<VtxDatePicker {...vtxGridParams.${_t.param}Props}/>`
 		];
-
+		
 		return {
 			props : propsFragment.map(item => `${indent(_t.indentNum)}${item}`),
 			render : fragment.map(item => `${indent(_t.indentNum)}${item}`)

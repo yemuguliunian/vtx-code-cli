@@ -1,269 +1,99 @@
 /**
- * 新增
+ * 查看
  */
 const vtxUtil = require('../../util/vtxUtil.js');
 const indent = vtxUtil.indent;
+
+const _columns = Symbol('columns');
 
 class DataGird {
 
 	constructor() { 
 		// 类型
 		this.type = '';
-		// 标题
-		this.title = '';
 		// Param
-		this.param = '';
-		// Param1
-		this.param1 = '';
-		// Param数据源
-		this.paramData = '';
+		this.params = [];
+		// width
+		this.namespace = '';
+		// 缩进位数
+		this.indentNum = 0;
 	}
-
+	
 	get getType() {
 		return this.type;
 	}
 	set setType(type) {
 		this.type = type;
 	}
-	get getTitle() {
-		return this.title;
+	get getParams() {
+		return this.params;
 	}
-	set setTitle(title) {
-		this.title = title;
+	set setParams(param) {
+		this.params = params;
 	}
-	get getParam() {
-		return this.param;
+	get getNamespace() {
+		return this.namespace;
 	}
-	set setParam(param) {
-		this.param = param;
+	set setTitle(namespace) {
+		this.namespace = namespace;
 	}
-	get getParam1() {
-		return this.param1;
+	get getIndentNum() {
+		return this.indentNum;
 	}
-	set setParam1(required) {
-		this.param1 = param1;
-	}
-	get getParamData() {
-		return this.paramData;
-	}
-	set setParamData(paramData) {
-		this.paramData = paramData;
+	set setIndentNum(indentNum) {
+		this.indentNum = indentNum;
 	}
 
-	// 文本
-	input(indentNum1, indentNum2) {
+	[_columns]() {
 		const _t = this;
-		let fragment = [], // 文本代码片段
-			propsFragment = []; // props
-
-		propsFragment = [
-			`${_t.param}Props : {`
-			`	value : ${_t.param},`
-			`	onChange(e) {`
-			`		updateState({`
-			`            ${_t.param} : e.target.value`
-			`        })`
-			`	},`
-			`    onPressEnter() {`
-			`        getList();`
-			`    },`
-			`	placeholder : '请输入${_t.title}',`
-			`	maxLength : 32`
-			`},`
+		let fragment = [
+			`// 列表`,
+			`const columns = [`,
+				...this.params.map(item => {
+					return `    ['${item.title}', '${item.param}']`;
+				}),
+				...(this.type === 'curd' ? [
+					`['操作', 'action', { renderButtons : () => {`,
+					`	let btns = [];`,
+			        `	btns.push({`,
+			        `		name:'查看',`,
+			        `		onClick(rowData) {`,
+			        `            dispatch({`,
+			        `                type : '${_t.namespace}/updateViewItem',`,
+			        `                payload : {`,
+			        `                    ...rowData`,
+			        `                }`,
+			        `            })`,
+			        `            updateViewWindow();`,
+			        `		}`,
+			        `	})`,
+		        	`	btns.push({`,
+			        `		name:'编辑',`,
+			        `		onClick(rowData) {`,
+			        `			dispatch({`,
+			        `				type : '${_t.namespace}/updateEditItem',`,
+			        `				payload : {`,
+		        	`					...rowData`,
+			        `				}`,
+			        `			})`,
+			        `			updateEditWindow();`,
+			        `		}`,
+			        `	})`,
+			        `	return btns;`,
+					`}, width : '120px'}]`
+				].map(item => `${indent(4)}${item}`) : [])
+			`];`
 		];
 
-		// 文本代码片段
-		fragment = [
-			`<Input {...vtxGridParams.${_t.param}Props}/>`
-		];
-
-		return {
-			props : propsFragment.map(item => `${indent(indentNum1)}${item}`),
-			render : fragment.map(item => `${indent(indentNum2)}${item}`)
-		}
+		return fragment;
 	}
 
-	// 下拉选
-	select(indentNum1, indentNum2) {
-		const _t = this;
-		let fragment = [], // 文本代码片段
-			propsFragment = []; // props
-
-		propsFragment = [
-			`${_t.param}Props : {`,
-			`	value : ${_t.param},`,
-		    `    placeholder : "请选择${_t.title}",`,
-		    `    onChange(value) {`,
-		    `        updateSearchParams({`,
-		    `            ${_t.param} : value`,
-		    `        }),`,
-		    `        getList();`,
-		    `    },`,
-		    `    allowClear : true,`,
-		    `    style : {`,
-		    `        width : '100%'`,
-		    `    }`,
-			`},`
-		];
-
-		// 文本代码片段
-		fragment = [
-			`<Select {...vtxGridParams.${_t.param}Props}>`,
-			`	{${_t.paramData}.map(item => {`,
-			`		return <Option key={item.id}>{item.name}</Option>`,
-			`	})}`,
-			`</Select>`
-		];
-
-		return {
-			props : propsFragment.map(item => `${indent(indentNum1)}${item}`),
-			render : fragment.map(item => `${indent(indentNum2)}${item}`)
-		}
-	}
-
-	// 日刷选
-	date(indentNum1, indentNum2) {
-		const _t = this;
-		let fragment = [], // 文本代码片段
-			propsFragment = []; // props
-
-		propsFragment = [
-			`${_t.param}Props : {`,
-			`	value : ${_t.param},`,
-	        `    onChange(date, dateString) {`,
-	        `        updateSearchParams({`,
-	        `            ${_t.param} : dateString`,
-	        `        })`,
-	        `        getList();`,
-	        `    },`,
-	        `    showTime : true,`,
-	        `    style : {`,
-	        `        width : '100%'`,
-	        `    },`,
-	        `    disabledDate(current) {`,
-	        `        return VtxTimeUtil.isAfterDate(current);`,
-	        `    }`,
-			`},`
-		];
-
-		// 文本代码片段
-		fragment = [
-			`<VtxDatePicker {...vtxGridParams.${_t.param}Props}/>`
-		];
-
-		return {
-			props : propsFragment.map(item => `${indent(indentNum1)}${item}`),
-			render : fragment.map(item => `${indent(indentNum2)}${item}`)
-		}
-	}
-
-	// 月刷选
-	month(indentNum1, indentNum2) {
-		const _t = this;
-		let fragment = [], // 文本代码片段
-			propsFragment = []; // props
-
-		propsFragment = [
-			`${_t.param}Props : {`,
-			`	value : ${_t.param},`,
-	        `    onChange(date, dateString) {`,
-	        `        updateSearchParams({`,
-	        `            ${_t.param} : dateString`,
-	        `        })`,
-	        `        getList();`,
-	        `    },`,
-	        `    style : {`,
-	        `        width : '100%'`,
-	        `    },`,
-	        `    disabledDate(current) {`,
-	        `        return VtxTimeUtil.isAfterDate(current);`,
-	        `    }`,
-			`},`
-		];
-
-		// 文本代码片段
-		fragment = [
-			`<VtxMonthPicker {...vtxGridParams.${_t.param}Props}/>`
-		];
-
-		return {
-			props : propsFragment.map(item => `${indent(indentNum1)}${item}`),
-			render : fragment.map(item => `${indent(indentNum2)}${item}`)
-		}
-	}
-
-	// 年刷选
-	year(indentNum1, indentNum2) {
-		const _t = this;
-		let fragment = [], // 文本代码片段
-			propsFragment = []; // props
-
-		propsFragment = [
-			`${_t.param}Props : {`,
-			`	value : ${_t.param},`,
-	        `    onChange(date, dateString) {`,
-	        `        updateSearchParams({`,
-	        `            ${_t.param} : dateString`,
-	        `        })`,
-	        `        getList();`,
-	        `    },`,
-	        `    style : {`,
-	        `        width : '100%'`,
-	        `    },`,
-	        `    disabledDate(current) {`,
-	        `        return VtxTimeUtil.isAfterDate(current);`,
-	        `    }`,
-			`},`
-		];
-
-		// 文本代码片段
-		fragment = [
-			`<VtxYearPicker {...vtxGridParams.${_t.param}Props}/>`
-		];
-
-		return {
-			props : propsFragment.map(item => `${indent(indentNum1)}${item}`),
-			render : fragment.map(item => `${indent(indentNum2)}${item}`)
-		}
-	}
-
-	// 时间段
-	range(indentNum1, indentNum2) {
-		const _t = this;
-		let fragment = [], // 文本代码片段
-			propsFragment = []; // props
-
-		propsFragment = [
-			`${_t.param}Props : {`,
-			`	value : [${_t.param}, ${_t.param1}],`,
-	        `    onChange(date, dateString) {`,
-	        `        updateSearchParams({`,
-	        `            ${_t.param} : dateString[0],`,
-	        `            ${_t.param1} : dateString[1]`,
-	        `        })`,
-	        `        getList();`,
-	        `    },`,
-	        `    showTime : true,`,
-	        `    style : {`,
-	        `        width : '100%'`,
-	        `    },`,
-	        `    disabledDate(current) {`,
-	        `        return current && VtxTimeUtil.isAfterDate(current);`,
-	        `    }`,
-			`},`
-		];
-
-		// 文本代码片段
-		fragment = [
-			`<VtxRangePicker {...vtxGridParams.${_t.param}Props}/>`
-		];
-
-		return {
-			props : propsFragment.map(item => `${indent(indentNum1)}${item}`),
-			render : fragment.map(item => `${indent(indentNum2)}${item}`)
-		}
+	// 标准查看模板
+	get curd() {
+		
 	}
 }
+
 
 const dg = new DataGird();
 module.exports = dg;
