@@ -48,7 +48,7 @@ class ViewCell {
 	[_dataML]() {
 		let fragment = [
 			`data-modallist={{`,
-			`    layout: {type: 'ctext', name: '${this.title}', width: ${this.width}, key: '${this.param}'}`,
+			`    layout: {type: 'text', name: '${this.title}', width: ${this.width}, key: '${this.param}'}`,
 			`}}`
 		];
 		return fragment.map(item => `${indent(4)}${item}`);
