@@ -95,7 +95,7 @@ function initModal(body) {
         `        type : payload.btnType === 'add' ? 'updateNewItem' : 'updateEditItem',`,
         `        payload : {loading : true}` ,
         `    });`,
-        `    const { newItem, editItem } = yield select( ({driver}) => driver );`,
+        `    const { newItem, editItem } = yield select( ({${namespace}}) => ${namespace} );`,
         `    const {`,
 	       		...addParamsFragment,
         `    } = payload.btnType === 'add' ? newItem : editItem;`,
