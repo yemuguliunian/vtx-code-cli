@@ -234,9 +234,9 @@ function initModal(body) {
 		`            return {`,
 		`                ...state,`,
 		`                ...action.payload,`,
-		`                ...initQueryParams,`,
 		`                currentPage : 1,`,
 		`                pageSize : 10,`,
+		`				 searchParams : initQueryParams,`
 		`                queryParams : initQueryParams`,
 		`            }`,
 		`        },`,
