@@ -59,10 +59,11 @@ class GirdCell {
 			propsFragment = []; // props
 
 		propsFragment = [
+			`// ${_t.title}`,
 			`${_t.param}Props : {`,
-			`	value : ${_t.param},`,
+			`	value : searchParams.${_t.param},`,
 			`	onChange(e) {`,
-			`		updateState({`,
+			`		updateSearchParams({`,
 			`            ${_t.param} : e.target.value`,
 			`        })`,
 			`	},`,
@@ -92,8 +93,9 @@ class GirdCell {
 			propsFragment = []; // props
 
 		propsFragment = [
+			`// ${_t.title}`,
 			`${_t.param}Props : {`,
-			`	value : ${_t.param},`,
+			`	value : searchParams.${_t.param},`,
 		    `    placeholder : "请选择${_t.title}",`,
 		    `    onChange(value) {`,
 		    `        updateSearchParams({`,
@@ -130,8 +132,9 @@ class GirdCell {
 			propsFragment = []; // props
 
 		propsFragment = [
+			`// ${_t.title}`,
 			`${_t.param}Props : {`,
-			`	value : ${_t.param},`,
+			`	value : searchParams.${_t.param},`,
 	        `    onChange(date, dateString) {`,
 	        `        updateSearchParams({`,
 	        `            ${_t.param} : dateString`,
@@ -166,8 +169,9 @@ class GirdCell {
 			propsFragment = []; // props
 
 		propsFragment = [
+			`// ${_t.title}`,
 			`${_t.param}Props : {`,
-			`	value : ${_t.param},`,
+			`	value : searchParams.${_t.param},`,
 	        `    onChange(date, dateString) {`,
 	        `        updateSearchParams({`,
 	        `            ${_t.param} : dateString`,
@@ -201,8 +205,9 @@ class GirdCell {
 			propsFragment = []; // props
 
 		propsFragment = [
+			`// ${_t.title}`,
 			`${_t.param}Props : {`,
-			`	value : ${_t.param},`,
+			`	value : searchParams.${_t.param},`,
 	        `    onChange(date, dateString) {`,
 	        `        updateSearchParams({`,
 	        `            ${_t.param} : dateString`,
@@ -236,8 +241,9 @@ class GirdCell {
 			propsFragment = []; // props
 
 		propsFragment = [
+			`// ${_t.title}`,
 			`${_t.param}Props : {`,
-			`	value : [${_t.param}, ${_t.param1}],`,
+			`	value : [searchParams.${_t.param}, searchParams.${_t.param1}],`,
 	        `    onChange(date, dateString) {`,
 	        `        updateSearchParams({`,
 	        `            ${_t.param} : dateString[0],`,

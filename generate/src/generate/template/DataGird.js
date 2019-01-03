@@ -28,13 +28,13 @@ class DataGird {
 	get getParams() {
 		return this.params;
 	}
-	set setParams(param) {
+	set setParams(params) {
 		this.params = params;
 	}
 	get getNamespace() {
 		return this.namespace;
 	}
-	set setTitle(namespace) {
+	set setNamespace(namespace) {
 		this.namespace = namespace;
 	}
 	get getIndentNum() {
@@ -81,16 +81,67 @@ class DataGird {
 			        `	})`,
 			        `	return btns;`,
 					`}, width : '120px'}]`
-				].map(item => `${indent(4)}${item}`) : [])
+				].map(item => `${indent(4)}${item}`) : []),
 			`];`
 		];
-
 		return fragment;
 	}
 
-	// 标准查看模板
-	get curd() {
-		
+	get render() {
+		const _t = this;
+		console.log(111)
+		let fragment = [
+			...this[_columns](),
+			`let vtxDatagridProps = {`,
+			`	columns : handleColumns(columns),`,
+		    `	dataSource,`,
+		    `	indexColumn : true,`,
+		    `    startIndex : ( currentPage - 1 )*pageSize+1,`,
+		    `    autoFit:true,`,
+		    `    // headFootHeight : 150,`,
+		    `    loading,`,
+		    `    onChange(pagination, filters, sorter){`,
+		    `        dispatch({`,
+		    `        	type:'areaPopulation/getList',`,
+		    `        	payload : {`,
+		    `        		currentPage : pagination.current,`,
+		    `            	pageSize: pagination.pageSize`,
+		    `        	}`,
+		    `        }).then((status) => {`,
+		    `        	if(status) {`,
+		    `        		updateState({`,
+			`	        		currentPage : pagination.current,`,
+			`	                pageSize: pagination.pageSize`,
+			`	        	})`,
+		    `        	}`,
+		    `        });`,
+		    `    },`,
+		    `    pagination:{`,
+		    `        showSizeChanger: true,`,
+		    `        pageSizeOptions: ['10', '20', '30', '40','50'],`,
+		    `        showQuickJumper: true,`,
+		    `        current:currentPage,` ,
+		    `        total:total,` ,
+		    `        pageSize,`,
+		    '        showTotal: total => `合计 ${total} 条`',
+		    `    },`,
+			`};`,
+			...(this.type === 'curd' ? [
+				`vtxDatagridProps = _.assign(vtxDatagridProps, {`,
+		        `    rowSelection : {`,
+		        `        type:'checkbox',`,
+		        `        selectedRowKeys,`,
+		        `        onChange(selectedRowKeys, selectedRows){`,
+		        `            updateState({`,
+		        `                selectedRowKeys`,
+		        `            });`,
+		        `        }`,
+		        `    }`,
+		        `})`
+			] : [])
+		];
+
+		return fragment.map(item => `${indent(_t.indentNum)}${item}`);
 	}
 }
 

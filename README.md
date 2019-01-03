@@ -16,48 +16,50 @@
 3，**可能代表更多的工作？**
 
 ## 涉及知识点
-`底层实现主要就是文件的写入，很low的字符串拼接写入文件中`
 
-react，dva，（可视化配置页面是vtx-cli生成的项目）
+### nodejs 
+基于 Chrome V8 引擎的 JavaScript 运行环境
 
-node（fs，path 涉及文件的读写），es6，express（请求处理），yamljs（配置文件读取），moment（时间管理工具），zip-local（文件压缩）
+http://nodejs.cn/
 
-http://momentjs.cn/
+### nodemon 
+nodejs开发辅助工具
 
-https://www.npmjs.com/package/express
+https://www.npmjs.com/package/nodemon
 
-https://www.npmjs.com/package/ipware
+### express 
+基于Node.js 平台,快速、开放、极简的 Web 开发框架
+
+http://www.expressjs.com.cn/
+
+### express-generator 
+express应用生成器
+
+http://expressjs.com/en/starter/generator.html
+
+### morgan
+Express框架 中间件记录日志
+
+https://www.npmjs.com/package/morgan
+
+### yamljs
+配置文件读取
 
 https://www.npmjs.com/package/yamljs
 
+### zip-local
+文件压缩
+
 https://www.npmjs.com/package/zip-local
+
+### console-color-mr
 
 https://www.npmjs.com/package/console-color-mr
 
-https://www.npmjs.com/package/rimraf
+### moment
+时间管理工具
 
-## 目标
-1，可视化界面配置
-
-2，自动生成CURD一套模板
-
-3，可导出生成的模板 
-
-4，生成模板缓存，最多保存7天，定时清理
-
-5，后续可加入报表的模板化生成
-
-## 实际
-1，主要功能：CURD模板生成 
-
-2，配套功能：可视化界面配置
-
-3，配套功能：文件导出功能
-
-4，配套功能：文件的缓存，超过7天文件删除，每天凌晨跑定时器 文件目录cli/dist
-
-5，配套功能：完善了日志记录  日志目录cli/log
-
+http://momentjs.cn/
 
 ## 问题点
 1，底层代码的可读性，可维护性。

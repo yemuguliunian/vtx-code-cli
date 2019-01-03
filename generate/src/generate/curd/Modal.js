@@ -105,7 +105,7 @@ function initModal(body) {
         `        tenantId : tenantId,`,
         `    };`,
         `    const { data } = yield call( payload.btnType === 'add' ? `,
-        `            demoService.save : demoService.update, handleTrim(params));`,
+        `            demoService.save : demoService.update, VtxUtil.handleTrim(params));`,
         `    if(!!data && data.result == 0) {`,
         `        yield put({type:'getList'});`,
         `        payload.onSuccess();`,
