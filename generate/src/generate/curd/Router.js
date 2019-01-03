@@ -165,7 +165,7 @@ function initRouter(body) {
 		`import React from 'react';`,
 		`import { connect } from 'dva';`,
 		``,
-		`import { Page, Content, BtnWrap, Button, TableWrap } from '../../components/layout';`,
+		`import { Page, Content, BtnWrap, Button, TableWrap } from 'rc-layout';`,
 		`import { ${vtxUi.join(', ')} } from 'vtx-ui';`,
 		...(vtxDateUi.length > 0 ? [`const { ${vtxDateUi.join(', ')} } = VtxDate;`] : []),
 		`import { ${antd.join(', ')} } from 'antd';`,
