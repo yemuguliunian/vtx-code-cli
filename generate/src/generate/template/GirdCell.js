@@ -71,7 +71,7 @@ class GirdCell {
 			`        getList();`,
 			`    },`,
 			`	placeholder : '请输入${_t.title}',`,
-			`	maxLength : 32`,
+			`	maxLength : '32'`,
 			`},`
 		];
 

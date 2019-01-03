@@ -109,7 +109,7 @@ class ADDCell {
 		// 验重设置
 		this[_isRepeat]() && (repeatFragment = [
 			`        repete : {`,
-			`            url : '' // 验重地址,`,
+			`            url : '', // 验重地址,`,
 			`            key : {`,
 			`                id : id,`,
 			`                paramCode : '${this.param}',`,
@@ -129,11 +129,11 @@ class ADDCell {
 			         ...requireFragment,
 	        `        name: '${this.title}',`,
 	        `        width: '${this.width}',`,
-	        		 ...(this.type === 'textarea' ? [`        maxNum: ${_config.inputArea_Num}`] : []),
+	        		 ...(this.type === 'textarea' ? [`        maxNum: ${_config.inputArea_Num},`] : []),
 	        `        key: '${this.param}'`,
-			`    }`,
+			`    },`,
 			`    regexp : {`,
-			`         value : ${regexpValue}${this[_isRepeat]() ? ',' : ''}`,
+			`        value : ${regexpValue}${this[_isRepeat]() ? ',' : ''}`,
 			          ...repeatFragment,
 			`    }`,
 			`}}`
@@ -156,7 +156,7 @@ class ADDCell {
 		switch(this.reg) {
 			case 'num' : // 正整数
 				eventFragment = [
-					`        if(!e.target.value || /^\d+$/.test(e.target.value)) {`,
+					`        if(!e.target.value || /^\\d+$/.test(e.target.value)) {`,
 					             ...eventFragment.map(item => `${indent(4)}${item}`),
 	             	`        }`
 				];

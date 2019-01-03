@@ -50,7 +50,7 @@ class DataGird {
 			`// 列表`,
 			`const columns = [`,
 				...this.params.map(item => {
-					return `    ['${item.title}', '${item.param}']`;
+					return `    ['${item.title}', '${item.param}'],`;
 				}),
 				...(this.type === 'curd' ? [
 					`['操作', 'action', { renderButtons : () => {`,
@@ -89,7 +89,6 @@ class DataGird {
 
 	get render() {
 		const _t = this;
-		console.log(111)
 		let fragment = [
 			...this[_columns](),
 			`let vtxDatagridProps = {`,
@@ -102,7 +101,7 @@ class DataGird {
 		    `    loading,`,
 		    `    onChange(pagination, filters, sorter){`,
 		    `        dispatch({`,
-		    `        	type:'areaPopulation/getList',`,
+		    `        	type:'${_t.namespace}/getList',`,
 		    `        	payload : {`,
 		    `        		currentPage : pagination.current,`,
 		    `            	pageSize: pagination.pageSize`,
