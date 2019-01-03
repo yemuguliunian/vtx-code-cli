@@ -61,6 +61,12 @@ https://www.npmjs.com/package/console-color-mr
 
 http://momentjs.cn/
 
+### lodashjs
+
+是一个一致性、模块化、高性能的 JavaScript 实用工具库。
+
+https://www.lodashjs.com/
+
 ## 问题点
 1，底层代码的可读性，可维护性。
 
