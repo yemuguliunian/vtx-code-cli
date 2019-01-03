@@ -9,7 +9,7 @@ const moment = require('moment');
 
 function initRouter(body) { 
 
-	const { namespace, annotation, author, searchParams, parameters, listParams } = body;
+	const { namespace, annotation, author, searchParams, parameters, listParams = [] } = body;
 
 	let fragment = [], // 代码片段
 		girdParamFragment = [],
@@ -151,7 +151,7 @@ function initRouter(body) {
 	// 列表参数
 	dg.setNamespace = namespace;
 	dg.setType = 'curd';
-	dg.setParams = listParams;
+	dg.setParams = listParams.reverse();
 	dg.setIndentNum = 4;
 	dataGirdFragment = dg.render;
 
