@@ -15,6 +15,17 @@
 
 3，**可能代表更多的工作？**
 
+## API
+
+生成空模板
+```js
+/code/generator/cli/empty
+```
+生成CURD模板接口
+```js
+/code/generator/cli/curd    
+```
+
 ## 涉及知识点
 
 ### nodejs 
