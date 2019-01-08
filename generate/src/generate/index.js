@@ -5,6 +5,7 @@ const moment = require('moment');
 const logger = require('../../middleware/logger.js');
 
 const initCurd = require('./curd/index.js');
+const initEmpty = require('./empty/index.js');
 
 const distFolderName = _config.distFolderName;
 
@@ -16,6 +17,9 @@ class Generate {
 		this.task = {
 			curd({folder, body, resolve, reject}) {
 				initCurd({folder, body, resolve, reject});
+			},
+			empty({folder, body, resolve, reject}) {
+				initEmpty({folder, body, resolve, reject});
 			}
 		}
 	}

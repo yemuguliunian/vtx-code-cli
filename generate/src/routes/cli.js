@@ -30,4 +30,21 @@ router.post('/report', function(req, res, next) {
 	
 });
 
+router.post('/empty', function(req, res, next) {
+    generate({
+        type : 'empty',
+        body : req.body
+    }).then(({status, id}) => {
+        let msg = {
+            exception: id ? "" : `【${status}】${_config.status_code[status]}`,
+            msg: id ? _config.status_code[status] : "",
+            result: id ? 0 : 1
+        };
+        if(id) {
+            msg['id'] = id;
+        }
+        res.json(msg)
+    });
+});
+
 module.exports = router;
