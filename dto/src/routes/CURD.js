@@ -10,16 +10,16 @@ import SearchParam from '../components/SearchParam';
 import Parameter from '../components/Parameter';
 import ListParam from '../components/ListParam';
 
-function Dto({dispatch, dto}) {
+function Curd({dispatch, curd}) {
 
 	const {
 		namespace, annotation, author, searchParams, typeData, 
         parameters, parameterTypeData, listParams, distId
-	} = dto;
+	} = curd;
 
 	const updateState = (obj) => {
 		dispatch({
-			type : 'dto/updateState',
+			type : 'curd/updateState',
 			payload : {
 				...obj
 			}
@@ -154,17 +154,17 @@ function Dto({dispatch, dto}) {
                 </Cell.Item>
 			</Cell>
         	<h5>查询条件</h5>
-    		<Button type="primary" icon="plus" onClick={() => dispatch({type : 'dto/newSearchParam'})}>新增查询条件</Button>
+    		<Button type="primary" icon="plus" onClick={() => dispatch({type : 'curd/newSearchParam'})}>新增查询条件</Button>
     		{searchParamRender}
             <h5>列表显示</h5>
-            <Button type="primary" icon="plus" onClick={() => dispatch({type : 'dto/newListParams'})}>新增列表字段</Button>
+            <Button type="primary" icon="plus" onClick={() => dispatch({type : 'curd/newListParams'})}>新增列表字段</Button>
             {listParamRender}
         	<h5>新增参数</h5>
-    		<Button type="primary" icon="plus" onClick={() => dispatch({type : 'dto/newParameter'})}>新增字段</Button>
+    		<Button type="primary" icon="plus" onClick={() => dispatch({type : 'curd/newParameter'})}>新增字段</Button>
     		{parameterRender}
         	<div className={styles.space}></div>
         	<div className={styles.footer}>
-        		<Button type="primary" ghost onClick={() => dispatch({type : 'dto/cli'})}>生成模板</Button>
+        		<Button type="primary" ghost onClick={() => dispatch({type : 'curd/cli'})}>生成模板</Button>
                 <Button 
                     disabled={!distId}
                     onClick={() => window.open(`/code/generator/file/downLoadZip?id=${distId}`)}
@@ -175,5 +175,5 @@ function Dto({dispatch, dto}) {
 }
 
 export default connect(
-	({dto}) => ({dto})
-)(Dto);
+	({curd}) => ({curd})
+)(Curd);

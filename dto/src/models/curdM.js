@@ -1,8 +1,8 @@
-import { cli, downLoadT } from '../services/service';
+import { cliCurd } from '../services/service';
 
 export default {
 
-    namespace: 'dto',
+    namespace: 'curd',
 
     state: {
         namespace : '', // namespace
@@ -42,7 +42,7 @@ export default {
         *cli({ payload }, { call, put, select }) {
             const { 
                 namespace, annotation, author, searchParams, parameters, listParams 
-            } = yield select(({dto}) => dto);
+            } = yield select(({curd}) => curd);
             const params = {
                 namespace : namespace,
                 annotation : annotation,
@@ -51,7 +51,7 @@ export default {
                 parameters : parameters,
                 listParams : listParams
             };
-            const {data} = yield call(cli, params);
+            const {data} = yield call(cliCurd, params);
             if(!!data && !data.result) {
                 yield put({
                     type : 'updateState',
