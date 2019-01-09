@@ -11,3 +11,9 @@ export async function cliEmpty(param) {
         body: JSON.stringify(param)
     })
 }
+
+export async function cliList(param) {
+    return HttpService.post('/code/generator/cli/list', {
+        body: JSON.stringify(param)
+    })
+}

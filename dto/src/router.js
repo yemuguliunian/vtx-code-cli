@@ -10,6 +10,10 @@ const routes = [{
     path: '/empty',
     models: () => [import('./models/emptyM')],
     component: () => import('./routes/Empty'),
+}, {
+    path: '/list',
+    models: () => [import('./models/listM')],
+    component: () => import('./routes/List'),
 }];
 
 function RouterConfig({ history, app }) {

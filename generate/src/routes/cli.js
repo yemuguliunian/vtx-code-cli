@@ -23,7 +23,20 @@ router.post('/curd', function(req, res, next) {
 });
 
 router.post('/list', function(req, res, next) {
-	
+	generate({
+        type : 'list',
+        body : req.body
+    }).then(({status, id}) => {
+        let msg = {
+            exception: id ? "" : `【${status}】${_config.status_code[status]}`,
+            msg: id ? _config.status_code[status] : "",
+            result: id ? 0 : 1
+        };
+        if(id) {
+            msg['id'] = id;
+        }
+        res.json(msg)
+    });
 });
 
 router.post('/report', function(req, res, next) {
