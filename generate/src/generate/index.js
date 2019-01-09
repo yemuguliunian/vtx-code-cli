@@ -7,6 +7,7 @@ const logger = require('../../middleware/logger.js');
 const initCurd = require('./curd/index.js');
 const initEmpty = require('./empty/index.js');
 const initList = require('./list/index.js');
+const initReport = require('./report/index.js');
 
 const distFolderName = _config.distFolderName;
 
@@ -24,6 +25,9 @@ class Generate {
 			},
 			list({folder, body, resolve, reject}) {
 				initList({folder, body, resolve, reject});
+			},
+			report({folder, body, resolve, reject}) {
+				initReport({folder, body, resolve, reject});
 			}
 		}
 	}

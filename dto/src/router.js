@@ -14,6 +14,10 @@ const routes = [{
     path: '/list',
     models: () => [import('./models/listM')],
     component: () => import('./routes/List'),
+}, {
+    path: '/report',
+    models: () => [import('./models/reportM')],
+    component: () => import('./routes/Report'),
 }];
 
 function RouterConfig({ history, app }) {

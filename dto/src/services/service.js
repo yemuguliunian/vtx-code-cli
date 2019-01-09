@@ -17,3 +17,9 @@ export async function cliList(param) {
         body: JSON.stringify(param)
     })
 }
+
+export async function cliReport(param) {
+    return HttpService.post('/code/generator/cli/report', {
+        body: JSON.stringify(param)
+    })
+}
