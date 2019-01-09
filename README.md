@@ -25,6 +25,10 @@
 ```js
 /code/generator/cli/curd    
 ```
+生成list单纯列表模板接口
+```js
+/code/generator/cli/list    
+```
 
 ## 涉及知识点
 
