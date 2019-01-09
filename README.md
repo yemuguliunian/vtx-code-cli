@@ -21,13 +21,17 @@
 ```js
 /code/generator/cli/empty
 ```
-生成CURD模板接口
+生成CURD模板
 ```js
 /code/generator/cli/curd    
 ```
-生成list单纯列表模板接口
+生成list单纯列表模板
 ```js
 /code/generator/cli/list    
+```
+生成report报表模板
+```js
+/code/generator/cli/report    
 ```
 
 ## 涉及知识点
