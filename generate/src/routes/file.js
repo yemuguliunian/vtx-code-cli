@@ -33,7 +33,7 @@ router.get('/downLoadZip', function(req, res, next) {
                             bufferStream.end(buff);
                             res.writeHead(200, {
                                 'Content-Type': 'application/force-download',
-                                'Content-Disposition': 'attachment; filename=dist.zip'
+                                'Content-Disposition': `attachment; filename=${id}.zip`
                             });
                             bufferStream.pipe(res);
                         }

@@ -3,6 +3,9 @@
   "proxy": {
     "/code/generator/*": {
       "target":"http://localhost:8088"
+    },
+    "/stylesheets/*": {
+      "target":"http://localhost:8088"
     }
   },
   "extraBabelPlugins": [

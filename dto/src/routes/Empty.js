@@ -21,7 +21,7 @@ function Empty({dispatch, empty}) {
 	}	
 
     return (
-        <Page title="实例" space={10}>
+        <Page title="空模板" space={10}>
         	<h5>namespace</h5>
     		<Cell>
     			<Cell.Item>
@@ -56,6 +56,10 @@ function Empty({dispatch, empty}) {
                     disabled={!distId}
                     onClick={() => window.open(`/code/generator/file/downLoadZip?id=${distId}`)}
                 >导出模板</Button>
+                <Button 
+                    disabled={!distId}
+                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
+                >预览</Button>
         	</div>
         </Page>
     );

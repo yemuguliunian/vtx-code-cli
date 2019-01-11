@@ -57,7 +57,7 @@ function Report({dispatch, report}) {
 	})
 
     return (
-        <Page title="列表实例" space={10}>
+        <Page title="报表" space={10}>
         	<h5>namespace</h5>
     		<Cell>
     			<Cell.Item>
@@ -95,6 +95,10 @@ function Report({dispatch, report}) {
                     disabled={!distId}
                     onClick={() => window.open(`/code/generator/file/downLoadZip?id=${distId}`)}
                 >导出模板</Button>
+                <Button 
+                    disabled={!distId}
+                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
+                >预览</Button>
         	</div>
         </Page>
     );

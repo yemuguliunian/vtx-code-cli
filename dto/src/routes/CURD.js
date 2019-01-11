@@ -169,6 +169,10 @@ function Curd({dispatch, curd}) {
                     disabled={!distId}
                     onClick={() => window.open(`/code/generator/file/downLoadZip?id=${distId}`)}
                 >导出模板</Button>
+                <Button 
+                    disabled={!distId}
+                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
+                >预览</Button>
         	</div>
         </Page>
     );

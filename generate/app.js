@@ -19,6 +19,7 @@ require('./src/job/CleanTemplateJob.js');
 var indexRouter = require('./src/routes/index');
 var cliRouter = require('./src/routes/cli');
 var fileRouter = require('./src/routes/file');
+var viewRouter = require('./src/routes/view');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(`/`, indexRouter);
 app.use(`${_config.gateway}/cli`, cliRouter);
 app.use(`${_config.gateway}/file`, fileRouter);
+app.use(`${_config.gateway}/view`, viewRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
