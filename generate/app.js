@@ -14,6 +14,7 @@ global._config = loadYAMLFile(path.resolve(__dirname, './config.yaml'));
 
 // 定时器-定时dist目录下缓存超过7天的文件
 require('./src/job/CleanTemplateJob.js');
+require('./src/job/CleanLoggerJob.js');
 
 // 路由
 var indexRouter = require('./src/routes/index');

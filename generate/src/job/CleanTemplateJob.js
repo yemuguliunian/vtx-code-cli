@@ -60,7 +60,7 @@ class CleanTemplateJob {
 											if(err) {
 												logger.error(err);
 											} else {
-												logger.info(`${cleanFolderPath}文件已超过7天，已删除`);
+												logger.info(`${cleanFolderPath}文件超过7天，已删除`);
 											}
 										})
 									}
