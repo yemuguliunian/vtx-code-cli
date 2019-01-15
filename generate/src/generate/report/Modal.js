@@ -82,7 +82,7 @@ function initModal(body) {
 		`*getUrl({ payload }, {call, put, select}) {`,
         `    const {`,
         `        queryParams, cityName, cityUnit, report_code`,
-        `    } = yield select(({processingStatisticsReport}) => processingStatisticsReport);`,
+        `    } = yield select(({${namespace}}) => ${namespace});`,
         `    const { ${queryParams.join(', ')} }  = queryParams;`,
         ``,
         `    let param={`,
