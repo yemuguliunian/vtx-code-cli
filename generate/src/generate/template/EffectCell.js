@@ -29,7 +29,7 @@ class EffectCell {
 	generateSelect({key, title, param}) {
 		const _t = this;
 		let effect;
-		param && (effect = `load${firstUpperCase(param)}Select`);
+		param && (effect = `load${firstUpperCase(key)}`);
 		// 代码片段
 		let fragment = [
 			`// ${title}下拉`,

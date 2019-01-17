@@ -9,6 +9,7 @@
   "dependencies": {
     "console-color-mr": "^2.0.0",
     "cookie-parser": "~1.4.3",
+    "copy-to-clipboard": "^3.0.8",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');  
 var path = require('path');  
+var copy = require('copy-to-clipboard');
 
 const distFolderName = _config.distFolderName;
 
@@ -22,7 +23,12 @@ router.get('/', function(req, res, next) {
                 if(exists) {
                     let list = [];
 					readFile(fPath, list);
-					res.render('preview', { list: list});
+					res.render('preview', { 
+						list: list,
+						copyEvent(content) {
+							copy(item);
+						}
+					});
                 }
             })
         }
