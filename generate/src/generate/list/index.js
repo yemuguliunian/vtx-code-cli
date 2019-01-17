@@ -29,7 +29,7 @@ function writeRouter(folder, body) {
 	return new Promise(function( resolve, reject ) {
 		let { namespace } = body;
 		// modal文件名
-		let modalFoler = `${firstUpperCase(namespace)}`;
+		let modalFoler = `${namespace}`;
 		let modalFolerPath = `${folder}/${modalFoler}.js`;
 		fs.writeFile(modalFolerPath, initRouter(body), function(err){
 		    if(err) {

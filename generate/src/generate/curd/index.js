@@ -24,13 +24,13 @@ function writeAddFile (folder, body) {
 						logger.info(`success new [Folder] ${folderName}`);
 						Promise.all([
 							new Promise((resolve, reject) => {
-								// ADD.js
-								fs.writeFile(folderName + '/ADD.js', initADD(parameters, namespace), function(err){
+								// Add.js
+								fs.writeFile(folderName + '/Add.js', initADD(parameters, namespace), function(err){
 								    if(err) {
-								    	logger.error(`error new [File] ${folderName}/ADD.js` + err);
+								    	logger.error(`error new [File] ${folderName}/Add.js` + err);
 								    } else {
-								    	logger.info(`success new [File] ${folderName}/ADD.js`);
-								    	resolve(`new [File] ${folderName}/ADD.js`);
+								    	logger.info(`success new [File] ${folderName}/Add.js`);
+								    	resolve(`new [File] ${folderName}/Add.js`);
 								    }
 								});
 							}),
@@ -78,7 +78,7 @@ function writeRouter(folder, body) {
 	return new Promise(function( resolve, reject ) {
 		let { namespace } = body;
 		// modal文件名
-		let modalFoler = `${firstUpperCase(namespace)}`;
+		let modalFoler = `${namespace}`;
 		let modalFolerPath = `${folder}/${modalFoler}.js`;
 		fs.writeFile(modalFolerPath, initRouter(body), function(err){
 		    if(err) {
