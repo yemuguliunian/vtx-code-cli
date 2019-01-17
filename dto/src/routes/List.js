@@ -136,6 +136,9 @@ function List({dispatch, list}) {
                     disabled={!distId}
                     onClick={() => window.open(`/code/generator/view?id=${distId}`)}
                 >预览</Button>
+                <Button 
+                    onClick={() => dispatch({type : 'list/clearCache'})}
+                >清除缓存</Button>
         	</div>
         </Page>
     );

@@ -107,6 +107,13 @@ class Generate {
 							logger.error(`创建${folder}失败 ` + err);
 						} else {
 							logger.info(`success mkdir ${folder}`);
+							fs.writeFile(folder + '/config.json', JSON.stringify(_t.body), function(err){
+							    if(err) {
+							    	logger.error(`error new [File] ${folder}/config.json` + err);
+							    } else {
+							    	logger.info(`success new [File] ${folder}/config.json`);
+							    }
+							});
 							_t.dispacth(folder, resolveG, rejectG);
 						}
 					})

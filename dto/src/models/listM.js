@@ -1,5 +1,8 @@
 import { cliList } from '../services/service';
 
+import cache from '../utils/cache.js';
+import moment from 'moment';
+
 export default {
 
     namespace: 'list',
@@ -23,7 +26,21 @@ export default {
 
     subscriptions: {
         setup({ dispatch, history }) {
-
+            return history.listen(({ pathname, search }) => {
+                if(pathname === '/list') {
+                    let cacheValue = cache.getItem('list');
+                    if(cacheValue) {
+                        let state = JSON.parse(cacheValue);
+                        dispatch({
+                            type : 'updateState',
+                            payload : {
+                                ...state,
+                                type : 'init'
+                            }
+                        })
+                    }
+                }
+            })
         },
     },
 
@@ -53,6 +70,16 @@ export default {
 
     reducers: {
         updateState(state,action){
+            const { type } = action.payload;
+            if(type !== 'init'){
+                const cacheObj = _.cloneDeep({
+                    ...state, 
+                    ...action.payload
+                });
+                delete cacheObj.typeData;
+                delete cacheObj.type;
+                cache.setItem('list', JSON.stringify({...cacheObj}));
+            }
             return {
                 ...state,
                 ...action.payload
@@ -62,7 +89,7 @@ export default {
         newSearchParam(state, action) {
             const newData = _.cloneDeep(state.searchParams);
             const searchItem = {
-                id : _.uniqueId('searchParam_'),
+                id : _.uniqueId(`searchParam_${moment().valueOf()}_`),
                 title : '',
                 param : '',
                 paramData : '',
@@ -80,7 +107,7 @@ export default {
         newListParams(state, action) {
             const newData = _.cloneDeep(state.listParams);
             const listParam = {
-                id : _.uniqueId('parameter_'),
+                id : _.uniqueId(`list_${moment().valueOf()}_`),
                 title : '',
                 param : '',
             };
@@ -88,6 +115,14 @@ export default {
             return {
                 ...state,
                 listParams : newData
+            }
+        },
+
+        clearCache(state, action) {
+            cache.removeItem('list');
+            return {
+                ...state,
+                ...action.payload
             }
         }
     }

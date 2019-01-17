@@ -1,5 +1,8 @@
 import { cliReport } from '../services/service';
 
+import cache from '../utils/cache.js';
+import moment from 'moment';
+
 export default {
 
     namespace: 'report',
@@ -22,7 +25,21 @@ export default {
 
     subscriptions: {
         setup({ dispatch, history }) {
-
+            return history.listen(({ pathname, search }) => {
+                if(pathname === '/report') {
+                    let cacheValue = cache.getItem('report');
+                    if(cacheValue) {
+                        let state = JSON.parse(cacheValue);
+                        dispatch({
+                            type : 'updateState',
+                            payload : {
+                                ...state,
+                                type : 'init'
+                            }
+                        })
+                    }
+                }
+            })
         },
     },
 
@@ -51,6 +68,16 @@ export default {
 
     reducers: {
         updateState(state,action){
+            const { type } = action.payload;
+            if(type !== 'init'){
+                const cacheObj = _.cloneDeep({
+                    ...state, 
+                    ...action.payload
+                });
+                delete cacheObj.typeData;
+                delete cacheObj.type;
+                cache.setItem('report', JSON.stringify({...cacheObj}));
+            }
             return {
                 ...state,
                 ...action.payload
@@ -60,7 +87,7 @@ export default {
         newSearchParam(state, action) {
             const newData = _.cloneDeep(state.searchParams);
             const searchItem = {
-                id : _.uniqueId('searchParam_'),
+                id : _.uniqueId(`searchParam_${moment().valueOf()}_`),
                 title : '',
                 param : '',
                 paramData : '',
@@ -72,6 +99,14 @@ export default {
             return {
                 ...state,
                 searchParams : newData
+            }
+        },
+
+        clearCache(state, action) {
+            cache.removeItem('report');
+            return {
+                ...state,
+                ...action.payload
             }
         }
     }

@@ -1,5 +1,8 @@
 import { cliCurd } from '../services/service';
 
+import cache from '../utils/cache.js';
+import moment from 'moment';
+
 export default {
 
     namespace: 'curd',
@@ -34,7 +37,21 @@ export default {
 
     subscriptions: {
         setup({ dispatch, history }) {
-
+            return history.listen(({ pathname, search }) => {
+                if(pathname === '/curd') {
+                    let cacheValue = cache.getItem('curd');
+                    if(cacheValue) {
+                        let state = JSON.parse(cacheValue);
+                        dispatch({
+                            type : 'updateState',
+                            payload : {
+                                ...state,
+                                type : 'init'
+                            }
+                        })
+                    }
+                }
+            })
         },
     },
 
@@ -64,7 +81,18 @@ export default {
     },
 
     reducers: {
-        updateState(state,action){
+        updateState(state, action){
+            const { type } = action.payload;
+            if(type !== 'init'){
+                const cacheObj = _.cloneDeep({
+                    ...state, 
+                    ...action.payload
+                });
+                delete cacheObj.typeData;
+                delete cacheObj.parameterTypeData;
+                delete cacheObj.type;
+                cache.setItem('curd', JSON.stringify({...cacheObj}));
+            }
             return {
                 ...state,
                 ...action.payload
@@ -74,7 +102,7 @@ export default {
         newSearchParam(state, action) {
             const newData = _.cloneDeep(state.searchParams);
             const searchItem = {
-                id : _.uniqueId('searchParam_'),
+                id : _.uniqueId(`searchParam_${moment().valueOf()}_`),
                 title : '',
                 param : '',
                 paramData : '',
@@ -92,7 +120,7 @@ export default {
         newParameter(state, action) {
             const newData = _.cloneDeep(state.parameters);
             const parameter = {
-                id : _.uniqueId('parameter_'),
+                id : _.uniqueId(`parameter_${moment().valueOf()}_`),
                 title : '',
                 param : '',
                 paramStr : '',
@@ -113,7 +141,7 @@ export default {
         newListParams(state, action) {
             const newData = _.cloneDeep(state.listParams);
             const listParam = {
-                id : _.uniqueId('parameter_'),
+                id : _.uniqueId(`list_${moment().valueOf()}_`),
                 title : '',
                 param : '',
             };
@@ -121,6 +149,14 @@ export default {
             return {
                 ...state,
                 listParams : newData
+            }
+        },
+
+        clearCache(state, action) {
+            cache.removeItem('curd');
+            return {
+                ...state,
+                ...action.payload
             }
         }
     }

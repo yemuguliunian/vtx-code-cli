@@ -173,6 +173,9 @@ function Curd({dispatch, curd}) {
                     disabled={!distId}
                     onClick={() => window.open(`/code/generator/view?id=${distId}`)}
                 >预览</Button>
+                <Button 
+                    onClick={() => dispatch({type : 'curd/clearCache'})}
+                >清除缓存</Button>
         	</div>
         </Page>
     );
