@@ -176,6 +176,10 @@ function Curd({dispatch, curd}) {
                 <Button 
                     onClick={() => dispatch({type : 'curd/clearCache'})}
                 >清除缓存</Button>
+                <Button 
+                    disabled={!distId}
+                    onClick={() => window.open(`/code/generator/file/downLoadConfig?id=${distId}`)}
+                >导出配置项</Button>
         	</div>
         </Page>
     );
