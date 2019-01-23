@@ -145,6 +145,7 @@ function initModal(body) {
 		`import { demoService } from '...';`,
 		``,
 		`const u = require('updeep');`,
+		`import { VtxUtil } from '...';`,
 		``,
 		`// 查询条件`,
 		`let initQueryParams = {`,
