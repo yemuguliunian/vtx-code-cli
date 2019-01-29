@@ -1,3 +1,7 @@
+## 0.1.2 [2019-01-29]
+
+* BUG: 优化新增保存模态框关闭瞬间验证提示闪烁的问题
+
 ## 0.1.1 [2019-01-23]
 
 * Bug: 优化CURD，list模板effects内列表查询判断取payload还是state的currentPage，0默认false，逻辑有误
