@@ -9,8 +9,8 @@
 ## 结构
 ```
 ├── /cli/                  # 废弃
-├── /dto/                  # 配置项服务
-├── /generate/             # 代码生成服务 nodejs
+├── /dto/                  # 配置项服务 前端服务
+├── /generate/             # 代码生成服务 等同于后台服务 nodejs 
 ├── .editorconfig          
 ├── README.md                
 ├── changelog.md           
@@ -18,14 +18,14 @@
 
 ## 使用方式
 ``` 
-    1.启动配置项服务
-        dto目录下使用
-        yarn install
-        yarn start
-    2.启用代码生成服务
-        generate目录下
-        yarn install
-        yarn start
+1.启动配置项服务
+	dto目录下使用
+	yarn install
+	yarn start
+2.启用代码生成服务
+	generate目录下
+	yarn install
+	yarn start
 ```
 
 ## API
