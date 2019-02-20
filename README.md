@@ -23,10 +23,10 @@
 	    dto目录下使用
 	    yarn install
 	    yarn start
-	2.启用代码生成服务
-	    generate目录下
-	    yarn install
-	    yarn start
+    2.启用代码生成服务
+        generate目录下
+        yarn install
+        yarn start
 ```
 
 ## API
