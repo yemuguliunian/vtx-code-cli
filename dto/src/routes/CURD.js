@@ -6,6 +6,7 @@ import { Page, Cell} from 'rc-layout';
 import { Input, Icon, Select, Button } from 'antd';
 const Option = Select.Option;
 
+import Namespace from '../components/Namespace';
 import SearchParam from '../components/SearchParam';
 import Parameter from '../components/Parameter';
 import ListParam from '../components/ListParam';
@@ -127,32 +128,12 @@ function Curd({dispatch, curd}) {
     return (
         <Page title="实例" space={10}>
         	<h5>namespace</h5>
-    		<Cell>
-    			<Cell.Item>
-    				<Cell.Item.Title>
-    					namespace：
-    				</Cell.Item.Title>
-    				<Cell.Item.Body>
-    					<Input value={namespace} onChange={(e) => updateState({namespace : e.target.value})}/>
-    				</Cell.Item.Body>
-    			</Cell.Item>
-                <Cell.Item>
-                    <Cell.Item.Title>
-                        注释：
-                    </Cell.Item.Title>
-                    <Cell.Item.Body>
-                        <Input value={annotation} onChange={(e) => updateState({annotation : e.target.value})}/>
-                    </Cell.Item.Body>
-                </Cell.Item>
-                <Cell.Item>
-                    <Cell.Item.Title>
-                        作者：
-                    </Cell.Item.Title>
-                    <Cell.Item.Body>
-                        <Input value={author} onChange={(e) => updateState({author : e.target.value})}/>
-                    </Cell.Item.Body>
-                </Cell.Item>
-			</Cell>
+            <Namespace 
+                namespace={namespace}
+                annotation={annotation}
+                author={author}
+                updateState={updateState}
+            />
         	<h5>查询条件</h5>
     		<Button type="primary" icon="plus" onClick={() => dispatch({type : 'curd/newSearchParam'})}>新增查询条件</Button>
     		{searchParamRender}
