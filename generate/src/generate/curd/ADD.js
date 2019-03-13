@@ -103,6 +103,8 @@ function initADD(parameters) {
 		existYear && vtxDateUi.push('VtxYearPicker');
 	}
 
+	// addParams去重
+	addParams = vtxUtil.dedupe(addParams);
 	// 新增参数props代码片段
 	if(addParams.length < _config.param_split_num) {
 		// 若参数小于_config.param_split_num

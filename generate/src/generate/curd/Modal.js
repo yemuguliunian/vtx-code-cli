@@ -72,6 +72,8 @@ function initModal(body) {
 
 	// 参数数据源去重
 	paramDataState = _.uniqBy(paramDataState, 'key');
+	// 新增参数去重
+	addParams = dedupe(addParams);
 
 	effectC.setNameSpace = namespace;
 	effectC.setIndentNum = 8;
@@ -104,7 +106,7 @@ function initModal(body) {
         `    let params = {`,
         		...addParamsFragment,	
         `        userId : userId,`,
-        `        tenantId : tenantId,`,
+        `        tenantId : tenantId`,
         `    };`,
         `    const { data } = yield call( payload.btnType === 'add' ? `,
         `            demoService.save : demoService.update, VtxUtil.handleTrim(params));`,

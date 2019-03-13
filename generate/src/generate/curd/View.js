@@ -45,6 +45,8 @@ function initView(parameters) {
 	// 若存在附件上传
 	existUpload && vtxUi.push('VtxUpload2');
 
+	// 查看参数去重
+	viewParams = vtxUtil.dedupe(viewParams);
 	// 查看参数props代码片段
 	if(viewParams.length < _config.param_split_num) {
 		// 若参数小于_config.param_split_num

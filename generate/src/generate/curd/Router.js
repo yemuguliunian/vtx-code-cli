@@ -95,6 +95,8 @@ function initRouter(body) {
 		paramData && addParamsDatas.push(paramData);
 	}
 
+	// 去重
+	addParamsDatas = dedupe(addParamsDatas); 
 	paramDatas = dedupe([...searchParamsDatas, ...addParamsDatas]);
 	searchParams.length > 0 && vtxUi.push('VtxGrid');
 	// 存在文本
@@ -220,7 +222,7 @@ function initRouter(body) {
 		`        },`,
 		`        contentProps:{`,
 		`            ...newItem,`,
-					 ...(addParamsDatas.length > 0 ? [`            ${addParamsDatas.join(',')},`] : []),
+					 ...(addParamsDatas.length > 0 ? [`            ${addParamsDatas.join(', ')},`] : []),
 		`            btnType : 'add',`,
 		`            updateItem(obj) {`,
 		`				updateState({`,
