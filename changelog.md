@@ -1,6 +1,6 @@
 ## 0.1.4 [2019-03-13]
 
-*BUG: effects 下拉数据 if else 语句 条件修复 !!data.data && !data.result => !!data && !data.result
+* BUG: effects 下拉数据 if else 语句 条件修复 !!data.data && !data.result => !!data && !data.result
 
 ## 0.1.3 [2019-03-13]
 
