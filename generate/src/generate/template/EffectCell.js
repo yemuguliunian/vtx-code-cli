@@ -35,7 +35,7 @@ class EffectCell {
 			`// ${title}下拉`,
 	        `*${effect}({ payload }, { call, put, select }) {`,
 	        `    const { data } = yield call(${effect});`,
-	        `    if(!!data.data && !data.result) {`,
+	        `    if(!!data && !data.result) {`,
 	        `        if('data' in data && Array.isArray(data.data)) {`,
 	        `            yield put({`,
 	        `                type : 'updateState',`,
