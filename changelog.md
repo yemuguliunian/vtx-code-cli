@@ -1,3 +1,7 @@
+## 0.1.5 [2019-03-19]
+
+* BUG: 去除文本域中的maxLength属性
+
 ## 0.1.4 [2019-03-13]
 
 * BUG: effects 下拉数据 if else 语句 条件修复 !!data.data && !data.result => !!data && !data.result

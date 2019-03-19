@@ -196,7 +196,6 @@ class ADDCell {
 			`        })`,
 	        `    }}`,
 	        `    placeholder="请输入${this.title}${this[_isRequired]() ? '（必填项）' : ''}"`,
-	        `    maxLength="${_config.input_len}"`,
 	             ...this[_dataML](),
         	`/>`
 		];
