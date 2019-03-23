@@ -60,7 +60,7 @@ function initModal(body) {
 		``,
 		`*getReportCommonParm({ payload }, {call, put, select}) {`,
         `    let { data } = yield call(getReportCommonParm);`,
-        `    if('result' in data) {`,
+        `    if(!!data && 'result' in data) {`,
 		`		if(!data.result && 'data' in data) {`,
 		`			let objName=data.data.filter((item)=>{return item.parmCode=='cityName'});`,
 	    `            let objUnit=data.data.filter((item)=>{return item.parmCode=='cityUnit'});`,
