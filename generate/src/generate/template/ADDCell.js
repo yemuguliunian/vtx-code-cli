@@ -125,7 +125,7 @@ class ADDCell {
 		fragment = [
 			`data-modallist={{`,
 			`    layout:{`,
-			`        comType: 'input',`,
+			`        comType: '${['day', 'month', 'year'].indexOf(_t.type) > -1 ? '' : 'input'}',`,
 			         ...requireFragment,
 	        `        name: '${this.title}',`,
 	        `        width: '${this.width}',`,
