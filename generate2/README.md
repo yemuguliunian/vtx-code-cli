@@ -1,9 +1,11 @@
-# generate2
+# v2.0
 
 ## 变更点
-1，使用ejs模板
+1, 使用yeoman-generator
 
-2，去除logger日志中间件，使用debug
+2，使用ejs模板
+
+3，去除logger日志中间件，使用debug
 
 ## 结构
 ```
