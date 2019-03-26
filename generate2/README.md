@@ -1,7 +1,7 @@
 # v2.0
 
 ## 变更点
-1, 使用yeoman-generator
+1，使用yeoman-generator
 
 2，使用ejs模板
 
