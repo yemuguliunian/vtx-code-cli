@@ -1,8 +1,38 @@
 body {
-  padding: 50px;
+  padding: 16px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.markdown h1, .markdown h2 {
+	border-bottom: 1px solid #eaecef;
+    padding-bottom: .3em;
+}
+.markdown underline {
+	border-bottom: 1px solid red;
+	font-weight: bold;
+	color: red;
+}
+.markdown bg {
+	background-color: #ffec3d;
+}
+
+.markdown pre {
+	margin-bottom: 20px;
+    padding: 15px;
+    font-size: 13px;
+    word-wrap: normal;
+    word-break: break-word!important;
+    word-break: break-all;
+    white-space: pre;
+    overflow: auto;
+    border-radius: 4px;
+    display: block;
+    overflow-x: auto;
+    padding: .8em;
+    color: #abb2bf;
+    background: #282c34;
 }
