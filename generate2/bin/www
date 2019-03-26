@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('vtx-code-cli:server');
 var http = require('http');
+var chalk = require('chalk');
 
 /**
  * Get port from environment and store in Express.
@@ -86,5 +87,7 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
+  console.log('The app is runing at:')
+  console.log(chalk.green('    Http://localhost: ' + addr.port));
   debug('Listening on ' + bind);
 }

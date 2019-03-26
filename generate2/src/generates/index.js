@@ -1,4 +1,5 @@
 const fs = require('fs');  
+const path = require('path');
 const moment = require('moment');
 const chalk = require('chalk');
 const mkdirp  = require('mkdirp');
@@ -16,13 +17,6 @@ class Generate {
 	constructor(type, body) { 
 		this.type = type;
 		this.body = body;
-		// 任务（在此处注册新的任务）
-		this.tasks = {
-			curd : generateCurd,
-			list : generateList,
-			report : generateReport,
-			empty : generateEmpty
-		}
 	}
 	
 	init() {
@@ -47,14 +41,15 @@ class Generate {
 			currentTime = moment().format('YYYYMMDDHHmmss');
 		const dayFolder = distFolderName + '/' + currentDay;
 		// 唯一标识 vtx__时间
-		const subFolder = dayFolder + '/' + `vtx_${currentTime}`;
+		const key = `vtx_${currentTime}`;
+		const subFolder = path.join(dayFolder, key);
 		
 		mkdirp.sync(dayFolder);
-		this.mkdirTemplate(subFolder, resolve, reject);
+		this.mkdirTemplate(subFolder, resolve, reject, key);
 	}
 	
 	// 新建模板，每个模板缓存一份，定期清理
-	mkdirTemplate(folder, resolveG, rejectG) {
+	mkdirTemplate(folder, resolveG, rejectG, id) {
 		const _t = this;
 		return new Promise((resolve, reject) => {
 			// 是否存在${folder}文件
@@ -65,14 +60,46 @@ class Generate {
 					strArr[2] = String(parseInt(strArr[2] || '0') + 1);
 					folder = strArr.join('_');
 					// 若存在重新创建
-					_t.mkdirTemplate(folder, resolveG, rejectG);
+					_t.mkdirTemplate(folder, resolveG, rejectG, id);
 				} else {
 					mkdirp.sync(folder);
-					console.log(chalk.green('create ') + folder);
+					console.log(chalk.green('   create ') + folder);
+					// 缓存一份配置项
+					let options = path.join(folder, 'confog.json');
+					fs.writeFileSync(options, JSON.stringify(_t.body));
+					debug(`writeFile ${options}`);
+					console.log(chalk.green('   create ') + options);
+					_t.runGenerator(folder, resolveG, rejectG, id).catch(e => {
+					    console.error(chalk.red(`> Generate failed`), e);
+					    process.exit(1);
+				  	});
 				}
 			})
 		});
 	}
+
+	runGenerator (folder, resolveG, rejectG, id){
+		const _t = this;
+		return new Promise(resolve => {
+			let generatorPath = `./${_t.type}`;
+			const Generator = require(generatorPath);
+			const generator = new Generator({
+				body : _t.body,
+		      	env: {
+		        	cwd : path.join(process.cwd(), folder)
+		      	},
+	      		resolved: require.resolve(generatorPath),
+	    	});
+	    	return generator.run(() => {
+	      		console.log('✨ File Generate Done');
+	      		resolveG({
+	      			id, status : 1000
+	      		});
+	      		resolve(true);
+	    	});
+		})
+	}
+
 	
 }
 
