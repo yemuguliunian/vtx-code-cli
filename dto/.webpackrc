@@ -6,6 +6,9 @@
     },
     "/stylesheets/*": {
       "target":"http://localhost:8088"
+    },
+    "/javascripts/*": {
+      "target":"http://localhost:8088"
     }
   },
   "extraBabelPlugins": [
