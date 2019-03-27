@@ -8,6 +8,9 @@ var Util = require('./src/util/util.js');
 // 加载配置文件并设置全局变量 {appliaction}
 global.appliaction = Util.loadYAMLFile(path.resolve(__dirname, './appliaction.yaml'));
 
+// 定时器-定时dist目录下缓存超过7天的文件
+require('./src/job/CleanTemplateJob.js');
+
 var indexRouter = require('./src/routes/index');
 var generateRouter = require('./src/routes/generate');
 var viewRouter = require('./src/routes/view');
