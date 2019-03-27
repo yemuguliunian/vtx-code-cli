@@ -3,12 +3,16 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script type="text/javascript" src="/stylesheets/clipboard.min.js"></script>
+    <script type="text/javascript" src="/javascripts/clipboard.min.js"></script>
   </head>
   <body class="markdown">
 	<% for(var i in list){ %>
 		<h3><%= list[i].name %></h3>
+    <a class="btn" data-clipboard-target="#code<%= i%>">复制</a>
 		<pre id="code<%= i%>"><%= list[i].content %></pre>
 	<% } %>
   </body>
+  <script type="text/javascript">
+    var clipboard = new ClipboardJS('.btn');
+  </script>
 </html>

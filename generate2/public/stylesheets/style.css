@@ -36,3 +36,7 @@ a {
     color: #abb2bf;
     background: #282c34;
 }
+
+.markdown a {
+    cursor: pointer;
+}
