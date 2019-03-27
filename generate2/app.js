@@ -11,6 +11,7 @@ global.appliaction = Util.loadYAMLFile(path.resolve(__dirname, './appliaction.ya
 var indexRouter = require('./src/routes/index');
 var generateRouter = require('./src/routes/generate');
 var viewRouter = require('./src/routes/view');
+var fileRouter = require('./src/routes/file');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use(`${appliaction.gateway}/cli`, generateRouter);
 app.use(`${appliaction.gateway}/view`, viewRouter);
+app.use(`${appliaction.gateway}/file`, fileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

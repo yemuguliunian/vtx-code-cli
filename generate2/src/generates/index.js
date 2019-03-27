@@ -60,7 +60,7 @@ class Generate {
 					mkdirp.sync(folder);
 					console.log(chalk.green('   create ') + folder);
 					// 缓存一份配置项
-					let options = path.join(folder, 'confog.json');
+					let options = path.join(folder, 'config.json');
 					fs.writeFileSync(options, JSON.stringify(_t.body));
 					debug(`writeFile ${options}`);
 					console.log(chalk.green('   create ') + options);
