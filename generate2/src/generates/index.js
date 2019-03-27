@@ -5,11 +5,6 @@ const chalk = require('chalk');
 const mkdirp  = require('mkdirp');
 const debug = require('debug')('vtx-code-cli:generates');
 
-const generateCurd = require('./curd/index.js');
-const generateList = require('./list/index.js');
-const generateReport = require('./report/index.js');
-const generateEmpty = require('./empty/index.js');
-
 const distFolderName = appliaction.distFolderName;
 
 class Generate {

@@ -21,8 +21,8 @@
 	└── /views/
 ├── .editorconfig          
 ├── .gitignore
-├── app.js   			# 入口文件
-├── appliaction.yaml     # 配置文件
+├── app.js # 入口文件
+├── appliaction.yaml # 配置文件
 ├── CHANGELOG.md   
 ├── package.json
 └── README.md
@@ -39,3 +39,8 @@ https://clipboardjs.com/
 代码高亮
 
 https://highlightjs.org/
+
+## 知识点
+1，DOMContentLoaded和load的区别
+
+2，CSS tab-size 属性
