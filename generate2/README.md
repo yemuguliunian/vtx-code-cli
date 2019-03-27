@@ -7,6 +7,8 @@
 
 3，去除logger日志中间件，使用debug
 
+4，预览页面新增 复制 和 代码高亮 功能
+
 ## 结构
 ```
 ├── /bin/                 
@@ -25,3 +27,15 @@
 ├── package.json
 └── README.md
 ```
+
+## 插件
+
+### clipboard
+复制到剪切板
+
+https://clipboardjs.com/
+
+### highlightjs
+代码高亮
+
+https://highlightjs.org/

@@ -22,7 +22,6 @@ a {
 
 .markdown pre {
 	margin-bottom: 20px;
-    padding: 15px;
     font-size: 13px;
     word-wrap: normal;
     word-break: break-word!important;
@@ -32,9 +31,10 @@ a {
     border-radius: 4px;
     display: block;
     overflow-x: auto;
-    padding: .8em;
+    padding: .5em;
     color: #abb2bf;
     background: #282c34;
+    tab-size: 4;
 }
 
 .markdown a {

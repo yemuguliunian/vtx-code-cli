@@ -2,17 +2,25 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' type="text/css" href='/stylesheets/style.css' />
+    <link rel="stylesheet" type="text/css" href="/javascripts/highlight/styles/atom-one-dark.css"/>    
     <script type="text/javascript" src="/javascripts/clipboard.min.js"></script>
+    <script type="text/javascript" src="/javascripts/highlight/highlight.pack.js"></script>
   </head>
   <body class="markdown">
 	<% for(var i in list){ %>
 		<h3><%= list[i].name %></h3>
     <a class="btn" data-clipboard-target="#code<%= i%>">复制</a>
-		<pre id="code<%= i%>"><%= list[i].content %></pre>
+		<pre id="code<%= i%>" ><code class="lang-javascript"><%= list[i].content %></code></pre>
 	<% } %>
   </body>
   <script type="text/javascript">
     var clipboard = new ClipboardJS('.btn');
+    // 代码高亮
+    document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightBlock(block);
+      });
+    });
   </script>
 </html>
