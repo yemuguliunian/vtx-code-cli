@@ -4,6 +4,8 @@ const { statSync } = require('fs');
 const { basename } = require('path');
 const debug = require('debug')('vtx-code-cli:BasicGenerator');
 
+const Util = require('../util/util.js');
+
 function noop() {
   	return true;
 }
@@ -13,7 +15,7 @@ class BasicGenerator extends Generator {
 	constructor(opts) {
     	super(opts);
     	this.opts = opts;
-    	this.body = opts.body;
+    	this.body = Util.handleTrim(opts.body);
   	}
 	
   	writeFiles({ context, filterFiles = noop }) {
