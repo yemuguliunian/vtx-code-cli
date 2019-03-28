@@ -5,7 +5,9 @@ const u = require('updeep');
 
 // 查询条件
 let initQueryParams = {
-	
+	<% searchParams.map(item=> { %>
+    <%= item.param%> : <%= `${defaultValue[item.type]}` %>, // <%= item.title -%>
+    <% }) %>
 };
 
 const initState = {
@@ -66,8 +68,16 @@ export default {
             const {
                 queryParams, cityName, cityUnit, report_code
             } = yield select(({<%= namespace %>}) => <%= namespace %>);
-            const {  }  = queryParams;
-        
+            <% if (queryParams.length < 6) { %>
+            const { <%= queryParams.join(', ') %> }  = queryParams;
+            <% } -%>
+            <% if (queryParams.length >= 6) { %>
+            const {
+                <%chunk(queryParams, 5).map((item, index) => { %>
+                <%= item.join(', ') %><%= index+1!=chunk(queryParams, 5).length ? ',' : ''-%> 
+                <%})%>
+            } = queryParams;
+            <% } -%>   
             let param={
                 report_code: report_code,
                 data_param: {

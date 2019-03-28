@@ -90,7 +90,10 @@ function Report({dispatch, report}) {
     		{searchParamRender}
         	<div className={styles.space}></div>
         	<div className={styles.footer}>
-        		<Button type="primary" ghost onClick={() => dispatch({type : 'report/cli'})}>生成模板</Button>
+        		<Button type="primary" ghost onClick={() => {
+                    updateState({distId : ''});
+                    dispatch({type : 'report/cli'})
+                }}>生成模板</Button>
                 <Button 
                     disabled={!distId}
                     onClick={() => window.open(`/code/generator/file/downLoadZip?id=${distId}`)}

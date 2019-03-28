@@ -1,14 +1,14 @@
 /**
  * <%=annotation%>
  * author : vtx <%=author%>
- * createTime : <%=moment().format('YYYY-MM-DD HH:mm:ss')%>
+ * createTime : <%=getTime()%>
  */
 import React from 'react';
 import { connect } from 'dva';
 
 import { Page } from 'rc-layout';
 
-function <%=firstUpperCase(namespace)%>({ dispatch, <%=namespace%> }) {
+function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 
 	const {
 		
@@ -30,4 +30,4 @@ function <%=firstUpperCase(namespace)%>({ dispatch, <%=namespace%> }) {
 
 export default connect(
     ({<%=namespace%>}) => ({<%=namespace%>})
-)(<%=firstUpperCase(namespace)%>);
+)(<%=upperFirst(namespace)%>);

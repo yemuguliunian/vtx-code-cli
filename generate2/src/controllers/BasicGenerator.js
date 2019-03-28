@@ -5,6 +5,7 @@ const { basename } = require('path');
 const debug = require('debug')('vtx-code-cli:BasicGenerator');
 
 const moment = require('moment');
+const _ = require('lodash');
 const Util = require('../util/util.js');
 
 function noop() {
@@ -17,10 +18,24 @@ class BasicGenerator extends Generator {
     	super(opts);
     	this.opts = opts;
     	this.body = Util.handleTrim(opts.body);
+        this.defaultValue = {
+            text : '',
+            textarea : '',
+            select : undefined,
+            treeSelect : [],
+            day : '',
+            month : '',
+            year : '',
+            range : '',
+            upload : []
+        },
         this.context = {
             ...this.body,
-            firstUpperCase : Util.firstUpperCase,
-            moment
+            upperFirst : _.upperFirst,
+            chunk : _.chunk,
+            getTime : function() {
+                return moment().format('YYYY-MM-DD HH:mm:ss');
+            }
         }
   	}
 	
