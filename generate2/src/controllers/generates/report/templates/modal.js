@@ -44,6 +44,7 @@ export default {
 
     effects : {
 		
+        // 获取报表参数
 		*getReportCommonParm({ payload }, {call, put, select}) {
             let { data } = yield call(getReportCommonParm);
             if(!!data && 'result' in data) {

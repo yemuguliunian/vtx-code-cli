@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const generate = require('../generates/index.js');
+const generate = require('../controllers/index.js');
 
 const response = (status, id) => {
 	let json = {

@@ -16,20 +16,19 @@ class BasicGenerator extends Generator {
 	constructor(opts) {
     	super(opts);
     	this.opts = opts;
-    	this.body = {
-            ...Util.handleTrim(opts.body),
+    	this.body = Util.handleTrim(opts.body);
+        this.context = {
+            ...this.body,
             firstUpperCase : Util.firstUpperCase,
             moment
-        };
+        }
   	}
 	
   	writeFiles({ context, filterFiles = noop }) {
   		glob.sync('**/*', {
 	        cwd: this.templatePath(),
 	        dot: true
-      	})
-      	.filter(filterFiles)
-      	.forEach(file => {
+      	}).filter(filterFiles).forEach(file => {
       		debug(`create ${file}`);
 			const filePath = this.templatePath(file);
 			if (statSync(filePath).isFile()) {

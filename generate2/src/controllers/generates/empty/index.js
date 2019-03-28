@@ -1,11 +1,11 @@
-const BasicGenerator = require('../BasicGenerator.js');
+const BasicGenerator = require('../../BasicGenerator.js');
 
 class Generator extends BasicGenerator {
 
     writing() {
         this.writeFiles({
             context: {
-                ...this.body
+                ...this.context
             },
             filterFiles: f => {
                 return true;
