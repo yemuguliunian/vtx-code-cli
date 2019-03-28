@@ -11,6 +11,7 @@
 ├── /cli/                  # 废弃
 ├── /dto/                  # 配置项服务 前端服务
 ├── /generate/             # 代码生成服务 等同于后台服务 nodejs 
+├── /generate2/            # v2.0 （后续只维护这套）
 ├── .editorconfig          
 ├── README.md                
 ├── changelog.md           
