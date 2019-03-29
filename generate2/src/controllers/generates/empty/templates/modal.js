@@ -16,7 +16,7 @@ export default {
                 if(pathname === '/<%=namespace%>') {
                     // 初始化state
                     dispatch({
-                        type : 'updateState'
+                        type : 'updateState',
                         payload : {
                             ...initState
                         }

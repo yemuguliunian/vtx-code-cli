@@ -16,7 +16,7 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 
 	const updateState = (obj) => {
 		dispatch({
-			type : '<%=namespace%>/updateState'
+			type : '<%=namespace%>/updateState',
 			payload : {...obj}
 		})
 	}
