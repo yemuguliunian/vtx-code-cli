@@ -35,7 +35,7 @@ class CleanTemplateJob {
 	
 	[_clean]() {
 		const _t = this;
-		const distFolderName = _config.distFolderName;
+		const distFolderName = appliaction.distFolderName;
 		// do something
 		fs.exists( distFolderName, function(exists) {
 			if(exists) {
