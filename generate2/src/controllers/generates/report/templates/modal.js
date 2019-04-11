@@ -6,14 +6,16 @@ const u = require('updeep');
 // 查询条件
 let initQueryParams = {
 	<% searchParams.map(item=> { %>
-    <%= item.param%> : <%= `${defaultValue[item.type]}` %>, // <%= item.title -%>
+    <%= item.param%> : <%- `${defaultValue[item.type]}` %>, // <%= item.title -%>
     <% }) %>
 };
 
 const initState = {
     searchParams : {...initQueryParams}, // 搜索参数
     queryParams : {...initQueryParams}, // 查询参数
-	
+	<% queryParamData.map(item=> { %>
+    <%= item.key%> : [], // <%= item.title -%>下拉数据
+    <% }) %>
 	report_code : '',
 	iframeSrc : ''
 };
@@ -73,9 +75,9 @@ export default {
             <% } -%>
             <% if (queryParams.length >= 6) { %>
             const {
-                <%chunk(queryParams, 5).map((item, index) => { %>
-                <%= item.join(', ') %><%= index+1!=chunk(queryParams, 5).length ? ',' : ''-%> 
-                <%})%>
+                <% chunk(queryParams, 5).map((item, index) => { %>
+                <%= item.join(', ') %><%= index+1!=chunk(queryParams, 5).length ? ',' : '' -%> 
+                <% }) %>
             } = queryParams;
             <% } -%>   
             let param={

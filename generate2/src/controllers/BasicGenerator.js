@@ -19,15 +19,15 @@ class BasicGenerator extends Generator {
     	this.opts = opts;
     	this.body = Util.handleTrim(opts.body);
         this.defaultValue = {
-            text : '',
-            textarea : '',
-            select : undefined,
-            treeSelect : [],
-            day : '',
-            month : '',
-            year : '',
-            range : '',
-            upload : []
+            text : `''`,
+            textarea : `''`,
+            select : `undefined`,
+            treeSelect : `[]`,
+            day : `''`,
+            month : `''`,
+            year : `''`,
+            range : `''`,
+            upload : `[]`
         },
         this.context = {
             ...this.body,
