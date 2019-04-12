@@ -6,7 +6,7 @@ class Generator extends BasicGenerator {
 
     writing() {
         const { searchParams, parameters } = this.body;
-        const add = getAddParams(parameters);
+        const add = getAddAndViewParams(parameters);
 
         this.writeFiles({
             context: {
@@ -20,8 +20,8 @@ class Generator extends BasicGenerator {
     }
 }
 
-// 获取新增参数
-function getAddParams(parameters) {
+// 获取新增和查看参数
+function getAddAndViewParams(parameters) {
 
     let newParameters = _.cloneDeep(parameters);
 
@@ -29,6 +29,8 @@ function getAddParams(parameters) {
         vtxUi = ['VtxModal', 'VtxModalList'], // vtx-ui组件
         vtxDateUi = [], // 日期组件
         antd = ['Button'];
+        viewParams = [], // 查看参数
+        viewVtxUi = []; // 查看vtx-ui组件 
 
     let existInput = false, // 是否存在文本
         existSelect = false, // 是否存在下拉
@@ -50,6 +52,9 @@ function getAddParams(parameters) {
         // 新增参数存储
         addParams.push(param);
         ['select', 'treeSelect'].indexOf(type) > -1 && addParams.push(paramData);
+
+        // 查看参数存储
+        viewParams.push(['select', 'treeSelect'].indexOf(type) > -1 ? paramStr : param);
 
         // 类型检测
         switch(type) {
@@ -93,6 +98,7 @@ function getAddParams(parameters) {
     if(existUpload) {
         vtxUi.push('VtxUpload2');
         antd.push('message');
+        viewVtxUi.push('VtxUpload2');
     }
     if(existDay || existMonth || existYear) {
         vtxUi.push('VtxDate');
@@ -108,7 +114,12 @@ function getAddParams(parameters) {
     addParams = _.uniq(addParams);
     
     return {
-        addParams, vtxUi, vtxDateUi, antd, existSelect, parameters : newParameters.reverse()
+        add : {
+            addParams, vtxUi, vtxDateUi, antd, existSelect, parameters : newParameters.reverse()
+        },
+        view : {
+            viewParams, vtxUi : viewVtxUi, parameters : newParameters.reverse()
+        }
     }
 }
 
