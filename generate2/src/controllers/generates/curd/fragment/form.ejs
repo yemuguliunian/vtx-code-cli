@@ -1,0 +1,138 @@
+					<%_ if (type === 'text') { _%>
+					<Input
+						value={<%= param %>}
+						onChange={(e) => {
+							<%_ if(!reg) { _%>
+							updateItem({
+								<%= param %> : e.target.value
+							})
+							<%_ } _%>
+							<%_ if(reg === 'num') { _%>
+							if(!e.target.value || /^\\d+$/.test(e.target.value)) {
+								updateItem({
+									<%= param %> : e.target.value
+								})
+							}
+							<%_ } _%>
+						}}
+						placeholder="请输入<%= title %><%= required ? '（必填项）' : '' %>"
+						maxLength="<%= appliaction.input_len %>"
+<%- include('dataML', {item, appliaction}); %>
+					/>
+					<%_ } _%>
+					<%_ if (type === 'textarea') { _%>
+					<Input
+						value={<%= param %>}
+						rows={<%= appliaction.inputArea_row%>}
+						type='textarea'
+						onChange={(e) => {
+							updateItem({
+								<%= param %> : e.target.value
+							})
+						}}
+						placeholder="请输入<%= title %><%= required ? '（必填项）' : '' %>"
+<%- include('dataML', {item, appliaction}); %>
+					/>
+					<%_ } _%>
+					<%_ if (type === 'select') { _%>
+					<Select
+						value={<%= param %>}
+						onChange={(e) => {
+							updateItem({
+								<%= param %> : value
+							})
+						}}
+						placeholder="请选择<%= title %><%= required ? '（必选项）' : '' %>"
+						allowClear
+<%- include('dataML', {item, appliaction}); %>
+					>
+						{<%= paramData %>.map(item => {
+							return <Option key={item.id}>{item.name}</Option>;
+						}) }
+					</Select>
+					<%_ } _%>
+					<%_ if (type === 'treeSelect') { _%>
+					<VtxTreeSelect
+						value={<%= param %>}
+						data={<%= paramData %>}
+						multiple
+						treeCheckable
+						treeDefaultExpandAll
+						onChange={({allValue, allLabel, value, label}) => {
+							updateItem({
+								<%= param %> : value
+							})
+						}}
+						placeholder="请选择<%= title %><%= required ? '（必选项）' : '' %>"
+						allowClear
+<%- include('dataML', {item, appliaction}); %>
+					/>
+					<%_ } _%>
+					<%_ if (type === 'day') { _%>
+					<VtxDatePicker
+						value={<%= param %>}
+						onChange={(date, dateString) => {
+							updateItem({
+								<%= param %> : dateString
+							});
+						}}
+						showTime
+						format='YYYY-MM-DD HH:mm:ss'
+<%- include('dataML', {item, appliaction}); %>
+					/>
+					<%_ } _%>
+					<%_ if (type === 'month') { _%>
+					<VtxMonthPicker
+						value={<%= param %>}
+						onChange={(date, dateString) => {
+							updateItem({
+								<%= param %> : dateString
+							});
+						}}
+						showTime
+						format='YYYY-MM'
+<%- include('dataML', {item, appliaction}); %>
+					/>
+					<%_ } _%>
+					<%_ if (type === 'year') { _%>
+					<VtxYearPicker
+						value={<%= param %>}
+						onChange={(date, dateString) => {
+							updateItem({
+								<%= param %> : dateString
+							});
+						}}
+						showTime
+						format='YYYY'
+<%- include('dataML', {item, appliaction}); %>
+					/>
+					<%_ } _%>
+					<%_ if (type === 'upload') { _%>
+					<VtxUpload2
+						fileList={<%= param %>}
+						mode='multiple'
+						action='/cloudFile/common/uploadFile'
+						downLoadURL='/cloudFile/common/downloadFile?id='
+						disabled={false}
+						multiple={true}
+						showUploadList
+						onSuccess={(file) => {
+							message.info(`${file.name} 上传成功.`);
+							<%= param %>.push({
+								id : file.id,
+							 	name : file.name
+						 	});
+						 	updateItem({
+						 		<%= param %> : <%= param %>
+						 	})
+					 	}}
+					 	onError={(file) => {
+					 		message.info(`${file.name} 上传失败.`);
+					 	}}
+					 	onRemove={(file) => {
+					 		let files = <%= param %>.filter(item => item.id != file.id);
+					 		updateItem({<%= param %> : files});
+					 	}}
+<%- include('dataML', {item, appliaction}); %>
+					/>
+					<%_ } _%>

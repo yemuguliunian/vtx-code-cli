@@ -31,6 +31,7 @@ class BasicGenerator extends Generator {
         },
         this.context = {
             ...this.body,
+            appliaction : appliaction,
             upperFirst : _.upperFirst,
             chunk : _.chunk,
             getTime : function() {

@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { <%= add.vtxUi.join(', ') %> } from 'vtx-ui';
-<% if(add.vtxDateUi.length > 0) { %>
+<%_ if(add.vtxDateUi.length > 0) { _%>
 const { <%= add.vtxDateUi.join(', ') %> } = VtxDate;
 <% } %>
 import { <%= add.antd.join(', ') %> } from 'antd';
-<% if(add.existSelect) { %>
+<%_ if(add.existSelect) { _%>
 const Option = Select.Option;
-<% } %>
+<%_ } _%>
 
 class ADD extends React.Component {
 
@@ -40,8 +40,17 @@ class ADD extends React.Component {
 
     render() {
         const { dispatch, modalProps, contentProps } = this.props;
-        const { updateItem } = contentProps;
-
+        <% if (add.addParams.length < 7) { %>
+        const { <%= add.addParams.join(', ') %>, updateItem }  = contentProps;
+        <% } -%>
+        <% if (add.addParams.length >= 7) { %>
+        const {
+        	<%_ chunk(add.addParams, 6).map((item, index) => { _%>
+            <%= item.join(', ') %>,
+        	<%_ }) _%>
+            updateItem 
+        } = contentProps;
+        <% } -%>   
         return (
             <VtxModal
                 {...modalProps}
@@ -52,7 +61,9 @@ class ADD extends React.Component {
                     visible={modalProps.visible}
                     ref={this.modalListRef}
                 >
-                	
+					<%_ add.parameters.forEach(function(item){ _%>
+<%- include('../fragment/form', {...item, item, appliaction}); _%>
+					<%_ }); _%>
                 </VtxModalList>
             </VtxModal>
         )
