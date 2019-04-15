@@ -6,12 +6,13 @@ class Generator extends BasicGenerator {
 
     writing() {
         const { searchParams, parameters } = this.body;
-        const add = getAddAndViewParams(parameters);
+        const { add, view } = getAddAndViewParams(parameters);
 
         this.writeFiles({
             context: {
                 ...this.context,
-                add
+                add,
+                view
             },
             filterFiles: f => {
                 return true;

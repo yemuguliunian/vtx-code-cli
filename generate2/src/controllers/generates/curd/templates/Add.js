@@ -12,7 +12,7 @@ const Option = Select.Option;
 class ADD extends React.Component {
 
 	constructor(props) {
-		super(props); ,
+		super(props);
 
 		this.state = {};
 	}
