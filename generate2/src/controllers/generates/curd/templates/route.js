@@ -1,0 +1,212 @@
+/**
+ * <%=annotation%>
+ * author : vtx <%=author%>
+ * createTime : <%=getTime()%>
+ */
+import React from 'react';
+import { connect } from 'dva';
+
+import { Page, Content, BtnWrap, TableWrap } from 'rc-layout';
+import { <%= route.vtxUi.join(', ') %> } from 'vtx-ui';
+<%_ if(route.vtxDateUi.length > 0) { _%>
+const { <%= route.vtxDateUi.join(', ') %> } = VtxDate;
+<% } %>
+import { <%= route.antd.join(', ') %> } from 'antd';
+<%_ if(route.existSelect) { _%>
+const Option = Select.Option;
+<% } %>
+
+import NewItem from '../components/<%=namespace%>/Add';
+import EditItem from '../components/<%=namespace%>/Add';
+import ViewItem from '../components/<%=namespace%>/View';
+
+import { handleColumns } from '../../utils/tools';
+<%_ if(route.vtxDateUi.length > 0) { _%>
+import { VtxTimeUtil } from '../../utils/util';
+<%_ } _%>
+
+function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
+	const {
+		searchParams,
+		...(paramDatas.length > 0 ? [        ${paramDatas.join(', ')},] : []),
+		currentPage, pageSize, loading, dataSource, total, selectedRowKeys,
+		newItem, editItem, viewItem
+	} = ${namespace};
+
+	const updateState = (obj) => {
+		dispatch({
+			type : '${namespace}/updateState',
+			payload : {
+				...obj
+			}
+		})
+	}
+
+	...girdParamFragment.map(item => ${indent(4)}${item}),
+
+	...dataGirdFragment,
+
+	//----------------新增------------------
+    const updateNewWindow = (status = true) => {
+		updateState({
+            newItem : {
+                visible : status
+            }
+        })
+    	if(!status) {
+    		dispatch({ type : '${namespace}/initNewItem' });
+    	}
+    }
+    const newItemProps = {
+    	updateWindow : updateNewWindow,
+        modalProps:{
+            title:'${annotation} > 新增',
+            visible: newItem.visible,
+            onCancel:() => updateNewWindow(false), 
+            width:900
+        },
+        contentProps:{
+            ...newItem,
+			 ...(addParamsDatas.length > 0 ? [            ${addParamsDatas.join(', ')},] : []),
+            btnType : 'add',
+            updateItem(obj) {
+				updateState({
+                    newItem : {
+                        ...obj
+                    }
+                })
+            },
+            save() {
+            	dispatch({type:'${namespace}/saveOrUpdate',payload:{
+					btnType : 'add',
+                    onSuccess:function(){
+                        message.success('新增成功');
+                        updateNewWindow(false);
+                    },
+                    onError:function(){
+                        message.error('新增失败');
+                    }
+                }})
+            }
+        }
+    };
+    
+	//--------------编辑-----------------
+    const updateEditWindow = (status = true) => {
+		updateState({
+            editItem : {
+                visible : status
+            }
+        })
+    }
+    const editItemProps = {
+    	updateWindow : updateEditWindow,
+        modalProps:{
+            title:'${annotation} > 编辑',
+            visible: editItem.visible,
+            onCancel:() => updateEditWindow(false),
+            width:900
+        },
+        contentProps:{
+            ...editItem,
+			 ...(addParamsDatas.length > 0 ? [            ${addParamsDatas.join(',')},] : []),
+            btnType : 'edit',
+            updateItem(obj) {
+				updateState({
+                    editItem : {
+                        ...obj
+                    }
+                })
+            },
+            save() {
+            	dispatch({type:'${namespace}/saveOrUpdate',payload:{
+					btnType : 'edit',
+                    onSuccess:function(){
+                        message.success('编辑成功');
+                        updateEditWindow(false);
+                    },
+                    onError:function(){
+                        message.error('编辑失败');
+                    }
+                }})
+            }
+        }
+    };
+    
+	//--------------查看-----------------
+    const updateViewWindow = (status = true) => {
+		updateState({
+            viewItem : {
+                visible : status
+            }
+        })
+    }
+    const viewItemProps = {
+        updateWindow : updateViewWindow,
+        modalProps:{
+            title:'${annotation} > 查看',
+            visible: viewItem.visible,
+            onCancel:() => updateViewWindow(false),
+            width:900
+        },
+        contentProps:{
+            ...viewItem,
+            btnType : 'view'
+        }
+    };
+    
+	//--------------删除------------------
+    const deleteItems = () => {
+    	Modal.confirm({
+'         content: 确定删除选中的${selectedRowKeys.length}条数据吗？',
+            okText: '确定',
+            cancelText: '取消',
+            onOk() {
+                dispatch({type:'${namespace}/deleteItems',payload:{
+                    ids : selectedRowKeys,
+                    onSuccess:function(ids){
+                    	let page = currentPage !=1 && ids.length === (total - (currentPage - 1)*pageSize) ?
+                                currentPage - 1 : currentPage;
+                        dispatch({
+                            type:'${namespace}/getList',
+                            payload : {
+                                selectedRowKeys : [],
+                                currentPage : page
+                            }
+                        })
+                        message.success('删除成功');
+                    },
+                    onError:function(msg){
+                        message.error(msg);
+                    }
+                }});
+            }
+        });
+    }
+    
+	return (
+		<Page title="${annotation}">
+			...girdFragment.map(item => ${indent(12)}${item}),
+			<Content top={${searchParams.length > 0 ? 48 : 0}}>
+				{/*按钮*/}
+				<BtnWrap>
+					<Button icon="file-add" onClick={() => updateNewWindow()}>新增</Button>
+					<Button icon="delete" disabled={selectedRowKeys.length == 0} onClick={deleteItems}>删除</Button>
+				</BtnWrap>
+				<TableWrap top={48}>
+					<VtxDatagrid {...vtxDatagridProps}/>
+				</TableWrap>
+			</Content>
+			{/*新增*/}
+			{newItem.visible && <NewItem {...newItemProps}/>}
+			{/*编辑*/}
+			{editItem.visible && <EditItem {...editItemProps}/>}
+            {/*查看*/}
+            {viewItem.visible && <ViewItem {...viewItemProps}/>}
+		</Page>
+	)
+}
+
+export default connect(
+	({${namespace}}) => ({${namespace}})
+)(${firstUpperCase(namespace)});
