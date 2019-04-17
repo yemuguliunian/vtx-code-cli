@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var CSSSplitWebpackPlugin = require('css-split-webpack-plugin/dist/index').default;
+var historyDir = require('path').dirname(require.resolve('history/package.json'));
 
 module.exports = function(webpackConfig, env) {
 // adding plugins to your configuration
@@ -9,5 +10,7 @@ module.exports = function(webpackConfig, env) {
             imports:true
         })
     )
+    // 锁定版本
+    webpackConfig.resolve.alias['history'] = historyDir;
     return webpackConfig
 }
