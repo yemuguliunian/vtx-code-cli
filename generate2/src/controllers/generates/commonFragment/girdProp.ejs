@@ -1,0 +1,100 @@
+		<%_ if (type === 'text') { _%>
+		// <%= title %>
+		<%= param %>Props : {
+			value : searchParams.<%= param %>,
+			onChange(e) {
+				updateState({
+		            searchParams : {
+		                <%= param %> : e.target.value
+		            }
+		        })
+			},
+		    onPressEnter() {
+		        getList();
+		    },
+			placeholder : '请输入<%= title %>',
+			maxLength : '32'
+		},
+		<%_ } _%>
+		<%_ if (type === 'select') { _%>
+		// <%= title %>
+		<%= param %>Props : {
+			value : searchParams.<%= param %>,
+			onChange(value) {
+				updateState({
+		            searchParams : {
+		                <%= param %> : value
+		            }
+		        })
+		        getList();
+			},
+		    allowClear : true,
+			placeholder : '请选择<%= title %>',
+			style : {
+				width : '100%'	
+			}
+		},
+		<%_ } _%>
+		<%_ if (type === 'day') { _%>
+		// <%= title %>
+		<%= param %>Props : {
+			value : searchParams.<%= param %>,
+			onChange(date, dateString)) {
+				updateState({
+		            searchParams : {
+		                <%= param %> : dateString
+		            }
+		        })
+		        getList();
+			},
+		    showTime : true,
+		    disabledDate(current) {
+		    	return VtxTimeUtil.isAfterDate(current);
+			},
+			style : {
+				width : '100%'	
+			}
+		},
+		<%_ } _%>
+		<%_ if (type === 'month' || type === 'year') { _%>
+		// <%= title %>
+		<%= param %>Props : {
+			value : searchParams.<%= param %>,
+			onChange(date, dateString)) {
+				updateState({
+		            searchParams : {
+		                <%= param %> : dateString
+		            }
+		        })
+		        getList();
+			},
+		    disabledDate(current) {
+		    	return VtxTimeUtil.isAfterDate(current);
+			},
+			style : {
+				width : '100%'	
+			}
+		},
+		<%_ } _%>
+		<%_ if (type === 'range') { _%>
+		// <%= title %>
+		<%= param %>Props : {
+			value : [searchParams.<%= param %>, searchParams.<%= param1 %>],
+			onChange(date, dateString)) {
+				updateState({
+		            searchParams : {
+		            	<%= param %> : dateString[0],
+		            	<%= param1 %> : dateString[1]
+		            }
+		        })
+		        getList();
+			},
+			showTime : true,
+		    disabledDate(current) {
+		    	return current && VtxTimeUtil.isAfterDate(current);
+			},
+			style : {
+				width : '100%'	
+			}
+		},
+		<%_ } _%>

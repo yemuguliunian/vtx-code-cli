@@ -1,0 +1,73 @@
+const columns = [
+	<%_ params.forEach(function(item){ _%>
+	['${item.title}', '${item.param}'],
+	<%_ }); _%>
+	<% if(type === 'curd') { %>
+	['操作', 'action', { renderButtons : () => {
+		let btns = [];
+    	btns.push({
+    		name:'查看',
+    		onClick(rowData) {
+				updateState({
+                    viewItem : {
+                        ...rowData
+                    }
+                })
+                updateViewWindow();
+    		}
+    	})
+		btns.push({
+    		name:'编辑',
+    		onClick(rowData) {
+    			updateState({
+                    editItem : {
+                        ...rowData
+                    }
+                })
+    			updateEditWindow();
+    		}
+    	})
+    	return btns;
+	}, width : '120px'}]
+	<% } %>
+];
+let vtxDatagridProps = {
+	columns : handleColumns(columns),
+	dataSource,
+	indexColumn : true,
+    startIndex : ( currentPage - 1 )*pageSize+1,
+    autoFit:true,
+    // headFootHeight : 150,
+    loading,
+    onChange(pagination, filters, sorter){
+        dispatch({
+        	type:'<%=namespace%>/getList',
+        	payload : {
+        		currentPage : pagination.current,
+            	pageSize: pagination.pageSize
+        	}
+        })
+    },
+    pagination:{
+        showSizeChanger: true,
+        pageSizeOptions: ['10', '20', '30', '40','50'],
+        showQuickJumper: true,
+        current:currentPage,` ,
+        total:total,` ,
+        pageSize,
+        showTotal: total => `合计 ${total} 条
+    },
+};
+<% if(type === 'curd') { %>
+vtxDatagridProps = _.assign(vtxDatagridProps, {
+    rowSelection : {
+        type:'checkbox',
+        selectedRowKeys,
+        onChange(selectedRowKeys, selectedRows){
+            updateState({
+                selectedRowKeys
+            });
+        }
+    }
+})
+<% } %>

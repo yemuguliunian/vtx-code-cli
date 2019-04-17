@@ -25,24 +25,46 @@ import { handleColumns } from '../../utils/tools';
 import { VtxTimeUtil } from '../../utils/util';
 <%_ } _%>
 
-function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
+function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 	const {
 		searchParams,
-		...(paramDatas.length > 0 ? [        ${paramDatas.join(', ')},] : []),
+        <%_ if(route.paramDatas.length > 0) { _%>
+        <%= route.paramDatas.join(', ') %>,
+        <%_ } _%>
 		currentPage, pageSize, loading, dataSource, total, selectedRowKeys,
 		newItem, editItem, viewItem
-	} = ${namespace};
+	} = <%=namespace%>;
 
 	const updateState = (obj) => {
 		dispatch({
-			type : '${namespace}/updateState',
+			type : '<%=namespace%>/updateState',
 			payload : {
 				...obj
 			}
 		})
 	}
 
-	...girdParamFragment.map(item => ${indent(4)}${item}),
+    <%_ if(route.searchParams.length > 0) { _%>
+    const getList = () => {
+       dispatch({type : '<%=namespace%>/updateQueryParams'});
+       dispatch({type : '<%=namespace%>/getList'});
+    }
+
+    const vtxGridParams = {
+        <%_ route.searchParams.forEach(function(item){ _%>
+<%- include('../../commonFragment/girdProp.ejs', {...item}); _%>
+
+        <%_ }); _%>
+        query() {
+            getList();
+        },
+
+        clear() {
+            dispatch({type : '${namespace}/initQueryParams'});
+            dispatch({type : '${namespace}/getList'});
+        }
+    };
+    <%_ } _%>
 
 	...dataGirdFragment,
 
@@ -54,13 +76,13 @@ function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
             }
         })
     	if(!status) {
-    		dispatch({ type : '${namespace}/initNewItem' });
+    		dispatch({ type : '<%=namespace%>/initNewItem' });
     	}
     }
     const newItemProps = {
     	updateWindow : updateNewWindow,
         modalProps:{
-            title:'${annotation} > 新增',
+            title:'<%=annotation%> > 新增',
             visible: newItem.visible,
             onCancel:() => updateNewWindow(false), 
             width:900
@@ -77,7 +99,7 @@ function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
                 })
             },
             save() {
-            	dispatch({type:'${namespace}/saveOrUpdate',payload:{
+            	dispatch({type:'<%=namespace%>/saveOrUpdate',payload:{
 					btnType : 'add',
                     onSuccess:function(){
                         message.success('新增成功');
@@ -102,7 +124,7 @@ function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
     const editItemProps = {
     	updateWindow : updateEditWindow,
         modalProps:{
-            title:'${annotation} > 编辑',
+            title:'<%=annotation%> > 编辑',
             visible: editItem.visible,
             onCancel:() => updateEditWindow(false),
             width:900
@@ -119,7 +141,7 @@ function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
                 })
             },
             save() {
-            	dispatch({type:'${namespace}/saveOrUpdate',payload:{
+            	dispatch({type:'<%=namespace%>/saveOrUpdate',payload:{
 					btnType : 'edit',
                     onSuccess:function(){
                         message.success('编辑成功');
@@ -144,7 +166,7 @@ function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
     const viewItemProps = {
         updateWindow : updateViewWindow,
         modalProps:{
-            title:'${annotation} > 查看',
+            title:'<%=annotation%> > 查看',
             visible: viewItem.visible,
             onCancel:() => updateViewWindow(false),
             width:900
@@ -158,17 +180,17 @@ function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
 	//--------------删除------------------
     const deleteItems = () => {
     	Modal.confirm({
-'         content: 确定删除选中的${selectedRowKeys.length}条数据吗？',
+            content: `确定删除选中的${selectedRowKeys.length}条数据吗？`,
             okText: '确定',
             cancelText: '取消',
             onOk() {
-                dispatch({type:'${namespace}/deleteItems',payload:{
+                dispatch({type:'<%=namespace%>/deleteItems',payload:{
                     ids : selectedRowKeys,
                     onSuccess:function(ids){
                     	let page = currentPage !=1 && ids.length === (total - (currentPage - 1)*pageSize) ?
                                 currentPage - 1 : currentPage;
                         dispatch({
-                            type:'${namespace}/getList',
+                            type:'<%=namespace%>/getList',
                             payload : {
                                 selectedRowKeys : [],
                                 currentPage : page
@@ -185,7 +207,7 @@ function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
     }
     
 	return (
-		<Page title="${annotation}">
+		<Page title="<%=annotation%>">
 			...girdFragment.map(item => ${indent(12)}${item}),
 			<Content top={${searchParams.length > 0 ? 48 : 0}}>
 				{/*按钮*/}
@@ -208,5 +230,5 @@ function ${firstUpperCase(namespace)}({ dispatch, ${namespace} }) {
 }
 
 export default connect(
-	({${namespace}}) => ({${namespace}})
-)(${firstUpperCase(namespace)});
+	({<%=namespace%>}) => ({<%=namespace%>})
+)(<%=upperFirst(namespace)%>);
