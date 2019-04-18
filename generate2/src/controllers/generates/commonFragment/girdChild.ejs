@@ -1,0 +1,28 @@
+				<%_ if (type === 'text') { _%>
+				{/*<%= title %>*/}
+				<Input {...vtxGridParams.<%= param %>Props}/>
+				<%_ } _%>
+				<%_ if (type === 'select') { _%>
+				{/*<%= title %>*/}
+				<Select {...vtxGridParams.<%= param %>Props}>
+					{<%= paramData %>.map(item => {
+						return <Option key={item.id}>{item.name}</Option>
+					})}
+				</Select>
+				<%_ } _%>
+				<%_ if (type === 'day') { _%>
+				{/*<%= title %>*/}
+				<VtxDatePicker {...vtxGridParams.<%= param %>Props}/>
+				<%_ } _%>
+				<%_ if (type === 'month') { _%>
+				{/*<%= title %>*/}
+				<VtxMonthPicker {...vtxGridParams.<%= param %>Props}/>
+				<%_ } _%>
+				<%_ if (type === 'year') { _%>
+				{/*<%= title %>*/}
+				<VtxYearPicker {...vtxGridParams.<%= param %>Props}/>
+				<%_ } _%>
+				<%_ if (type === 'range') { _%>
+				{/*<%= title %>*/}
+				<VtxRangePicker {...vtxGridParams.<%= param %>Props}/>
+				<%_ } _%>

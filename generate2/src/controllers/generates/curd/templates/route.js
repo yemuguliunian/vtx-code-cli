@@ -66,7 +66,7 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
     };
     <%_ } _%>
 
-	...dataGirdFragment,
+<%- include('../../commonFragment/dataGird.ejs', {listParams : route.listParams, type : route.type}); _%>
 
 	//----------------新增------------------
     const updateNewWindow = (status = true) => {
@@ -89,7 +89,9 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
         },
         contentProps:{
             ...newItem,
-			 ...(addParamsDatas.length > 0 ? [            ${addParamsDatas.join(', ')},] : []),
+            <%_ if(route.addParamsDatas.length > 0) { _%>
+            <%= route.addParamsDatas.join(', ')%>,
+            <%_ } _%>
             btnType : 'add',
             updateItem(obj) {
 				updateState({
@@ -99,7 +101,7 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
                 })
             },
             save() {
-            	dispatch({type:'<%=namespace%>/saveOrUpdate',payload:{
+            	dispatch({type:'<%=namespace%>/saveOrUpdate', payload:{
 					btnType : 'add',
                     onSuccess:function(){
                         message.success('新增成功');
@@ -131,7 +133,9 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
         },
         contentProps:{
             ...editItem,
-			 ...(addParamsDatas.length > 0 ? [            ${addParamsDatas.join(',')},] : []),
+			<%_ if(route.addParamsDatas.length > 0) { _%>
+            <%= route.addParamsDatas.join(', ')%>,
+            <%_ } _%>
             btnType : 'edit',
             updateItem(obj) {
 				updateState({
@@ -141,7 +145,7 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
                 })
             },
             save() {
-            	dispatch({type:'<%=namespace%>/saveOrUpdate',payload:{
+            	dispatch({type:'<%=namespace%>/saveOrUpdate', payload:{
 					btnType : 'edit',
                     onSuccess:function(){
                         message.success('编辑成功');
@@ -208,7 +212,18 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
     
 	return (
 		<Page title="<%=annotation%>">
-			...girdFragment.map(item => ${indent(12)}${item}),
+            <%_ if(route.searchParams.length > 0) { _%>
+            <VtxGrid
+               titles={[<%- route.girdTitle.join(', ') %>]}
+               gridweight={[<%= route.girdWidth.join(', ') %>]}
+               confirm={vtxGridParams.query}
+               clear={vtxGridParams.clear}
+            >
+                <%_ route.searchParams.forEach(function(item){ _%>
+<%- include('../../commonFragment/girdChild.ejs', {...item}); _%>
+                <%_ }); _%>
+            </VtxGrid>
+            <%_ } _%>
 			<Content top={${searchParams.length > 0 ? 48 : 0}}>
 				{/*按钮*/}
 				<BtnWrap>

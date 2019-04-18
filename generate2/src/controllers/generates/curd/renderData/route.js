@@ -25,7 +25,7 @@ module.exports = function getRouteParams({searchParams, parameters, listParams})
 	for(var i = searchParams.length - 1; i >= 0; i--) {
 		const { title, param, param1, type, paramData, gird } = searchParams[i];
 
-		girdTitle.push(title);
+		girdTitle.push(`'${title}'`);
 		girdWidth.push(gird);
 
 		paramData && searchParamsDatas.push(paramData);
@@ -94,7 +94,9 @@ module.exports = function getRouteParams({searchParams, parameters, listParams})
 		vtxUi, 
 	    vtxDateUi,
 		antd,
-		existSelect
+		existSelect,
+		listParams : listParams.reverse(),
+		type : 'curd'
 	}
 
 }

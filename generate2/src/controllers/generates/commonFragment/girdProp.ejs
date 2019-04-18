@@ -39,7 +39,7 @@
 		// <%= title %>
 		<%= param %>Props : {
 			value : searchParams.<%= param %>,
-			onChange(date, dateString)) {
+			onChange(date, dateString) {
 				updateState({
 		            searchParams : {
 		                <%= param %> : dateString
@@ -60,7 +60,7 @@
 		// <%= title %>
 		<%= param %>Props : {
 			value : searchParams.<%= param %>,
-			onChange(date, dateString)) {
+			onChange(date, dateString) {
 				updateState({
 		            searchParams : {
 		                <%= param %> : dateString
@@ -80,7 +80,7 @@
 		// <%= title %>
 		<%= param %>Props : {
 			value : [searchParams.<%= param %>, searchParams.<%= param1 %>],
-			onChange(date, dateString)) {
+			onChange(date, dateString) {
 				updateState({
 		            searchParams : {
 		            	<%= param %> : dateString[0],
