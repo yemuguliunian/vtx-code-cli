@@ -83,7 +83,7 @@ module.exports = function getRouteParams({searchParams, parameters, listParams})
 	}
 
 	return {
-		searchParams,
+		searchParams : searchParams.reverse(),
 		searchParamsDatas, 
 		addParamsDatas,
 		paramDatas, 
