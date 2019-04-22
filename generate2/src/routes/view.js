@@ -16,9 +16,11 @@ router.get('/', function(req, res, next) {
     dayFolder = path.resolve(__dirname, `../../${distFolderName}/${dayFolder}`);
     let fPath = path.join(dayFolder, id);
     // 检测导出的模板路径是否存在
-    let existDayFolder = fs.existsSync(dayFolder);
+    let isExist = true;
+    let existDayFolder = isExist = fs.existsSync(dayFolder);
     if(existDayFolder) {
     	fs.exists( fPath, function(exists) {
+    		isExist = exists;
             // 存在则导出
             if(exists) {
                 let list = [];
@@ -29,6 +31,12 @@ router.get('/', function(req, res, next) {
 				});
             }
         })
+    }
+    // 文件不存在则提示404
+    if(!isExist) {
+    	res.render('404', { 
+            title : id
+        });
     }
 });
 

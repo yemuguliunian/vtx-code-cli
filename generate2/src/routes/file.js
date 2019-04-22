@@ -22,16 +22,22 @@ const checkExist = (id) => {
 	    let dayFolder = id.split('_')[1].substring(0, 8);
 	    dayFolder = path.resolve(__dirname, `../../${distFolderName}/${dayFolder}`);
 	    let fPath = path.join(dayFolder, id);
+        
 	    // 检测导出的模板路径是否存在
-    	let existDayFolder = fs.existsSync(dayFolder);
+        let isExist = true; 
+    	let existDayFolder = isExist = fs.existsSync(dayFolder);
     	if(existDayFolder) {
 	    	fs.exists( fPath, function(exists) {
+                isExist = exists;
 	            // 存在
 	            if(exists) {
 	                resolve(fPath);
 	            }
 	        })
 	    }
+        if(!isExist) {
+            reject(isExist);
+        }
 	});
 }
 
@@ -55,7 +61,11 @@ router.get('/downLoadZip', function(req, res, next) {
                 }
             }); 
   		}
-  	})
+  	}).catch(() => {
+        res.render('404', { 
+            title : id
+        });
+    }) 
 });
 
 // 下载配置项
@@ -71,7 +81,11 @@ router.get('/downLoadConfig', function(req, res, next) {
 	            }
 	        })
     	}
-    })
+    }).catch(() => {
+        res.render('404', { 
+            title : id
+        });
+    }) 
 });
 
 module.exports = router;
