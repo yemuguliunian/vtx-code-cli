@@ -6,10 +6,20 @@
     <link rel="stylesheet" type="text/css" href="/javascripts/highlight/styles/atom-one-dark.css"/>    
     <script type="text/javascript" src="/javascripts/clipboard.min.js"></script>
     <script type="text/javascript" src="/javascripts/highlight/highlight.pack.js"></script>
+    <script type="text/javascript" src="/javascripts/smooth-scroll.min.js"></script>
   </head>
   <body class="markdown">
+  <div class="toc-affix">
+    <ul class="toc demos-anchor">
+      <% for(var i in list){ %>
+      <li title="<%= list[i].name %>">
+        <a href="#vtx-code-<%= i%>"><%= list[i].name %></a>
+      </li>
+      <% } %>
+    </ul>
+  </div>
 	<% for(var i in list){ %>
-		<h3><%= list[i].name %></h3>
+		<h3 id="vtx-code-<%= i%>"><%= list[i].name %></h3>
     <a class="btn" data-clipboard-target="#code<%= i%>">复制</a>
 		<pre id="code<%= i%>" ><code class="lang-javascript"><%= list[i].content %></code></pre>
 	<% } %>
@@ -21,6 +31,10 @@
       document.querySelectorAll('pre code').forEach((block) => {
         hljs.highlightBlock(block);
       });
+    });
+    var scroll = new SmoothScroll('a[href*="#"]', {
+      speed: 500,
+      speedAsDuration: true
     });
   </script>
 </html>

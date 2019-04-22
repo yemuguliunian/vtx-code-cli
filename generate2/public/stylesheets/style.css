@@ -1,12 +1,27 @@
 body {
-  padding: 16px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 16px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+    background: transparent;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    -webkit-transition: color .3s ease;
+    transition: color .3s ease;
 }
 
+ul, li {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.markdown {
+    padding-right: 160px;
+}
 .markdown h1, .markdown h2 {
 	border-bottom: 1px solid #eaecef;
     padding-bottom: .3em;
@@ -39,4 +54,42 @@ a {
 
 .markdown a {
     cursor: pointer;
+}
+
+.toc-affix {
+    position: fixed;
+    top: 24px;
+    right: 49px;
+}
+
+.toc {
+    font-size: 14px;
+    margin: 24px 0;
+    border-left: 1px solid #e9e9e9;
+    list-style: none;
+}
+.demos-anchor {
+    color: #aaa;
+    font-size: 12px;
+    margin-top: -4px;
+    background-color: #fff;
+}
+
+.toc a {
+    padding-left: 16px;
+    display: block;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    color: rgba(0,0,0,.65);
+}
+
+.demos-anchor a {
+    padding-left: 8px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 110px;
 }
