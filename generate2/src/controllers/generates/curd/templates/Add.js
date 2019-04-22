@@ -9,7 +9,7 @@ import { <%= add.antd.join(', ') %> } from 'antd';
 const Option = Select.Option;
 <%_ } _%>
 
-class ADD extends React.Component {
+class Add extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -70,4 +70,4 @@ class ADD extends React.Component {
     }
 }
 
-export default ADD;
+export default Add;

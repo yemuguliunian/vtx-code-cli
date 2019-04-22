@@ -47,10 +47,19 @@ class BasicGenerator extends Generator {
       	}).filter(filterFiles).forEach(file => {
       		debug(`create ${file}`);
 			const filePath = this.templatePath(file);
+            // 目标路径
+            let namespace = this.opts.body.namespace;
+            let targetPath = file;
+            if(file === 'modal.js') {
+                targetPath = file.replace(/modal/, `${namespace}M`)
+            }
+            if(file === 'route.js') {
+                targetPath = file.replace(/route/, _.upperFirst(namespace));
+            }
 			if (statSync(filePath).isFile()) {
 	          	this.fs.copyTpl(
 		            this.templatePath(filePath),
-		            this.destinationPath(file.replace(/^_/, '.')),
+		            this.destinationPath(targetPath),
 		            context
 	          	);
 	        }
