@@ -7,6 +7,9 @@ const u = require('updeep');
 let initQueryParams = {
 	<% searchParams.map(item=> { %>
     <%= item.param%> : <%- `${defaultValue[item.type]}` %>, // <%= item.title -%>
+    <%_ if(['range'].indexOf(item.type) > -1) { _%>
+    <%= item.param1%> : <%- `${defaultValue[item.type]}` %>, // <%= item.title -%>
+    <%_ } _%>
     <% }) %>
 };
 
