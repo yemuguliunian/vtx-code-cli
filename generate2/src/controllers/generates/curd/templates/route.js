@@ -52,7 +52,7 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 
     const vtxGridParams = {
         <%_ route.searchParams.forEach(function(item){ _%>
-<%- include('../../commonFragment/girdProp.ejs', {...item}); _%>
+<%- include('../../commonFragment/girdPropA.ejs', {...item}); _%>
 
         <%_ }); _%>
         query() {
@@ -60,8 +60,8 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
         },
 
         clear() {
-            dispatch({type : '${namespace}/initQueryParams'});
-            dispatch({type : '${namespace}/getList'});
+            dispatch({type : '<%=namespace%>/initQueryParams'});
+            dispatch({type : '<%=namespace%>/getList'});
         }
     };
     <%_ } _%>
@@ -224,7 +224,7 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
                 <%_ }); _%>
             </VtxGrid>
             <%_ } _%>
-			<Content top={${searchParams.length > 0 ? 48 : 0}}>
+			<Content top={<%= searchParams.length > 0 ? 48 : 0 %>}>
 				{/*按钮*/}
 				<BtnWrap>
 					<Button icon="file-add" onClick={() => updateNewWindow()}>新增</Button>

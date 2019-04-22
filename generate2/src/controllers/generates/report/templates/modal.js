@@ -5,7 +5,7 @@ const u = require('updeep');
 
 // 查询条件
 let initQueryParams = {
-	<% searchParams.map(item=> { %>
+	<% modal.searchParams.map(item=> { %>
     <%= item.param%> : <%- `${defaultValue[item.type]}` %>, // <%= item.title -%>
     <%_ if(['range'].indexOf(item.type) > -1) { _%>
     <%= item.param1%> : <%- `${defaultValue[item.type]}` %>, // <%= item.title -%>
@@ -16,7 +16,7 @@ let initQueryParams = {
 const initState = {
     searchParams : {...initQueryParams}, // 搜索参数
     queryParams : {...initQueryParams}, // 查询参数
-	<% queryParamData.map(item=> { %>
+	<% modal.queryParamData.map(item=> { %>
     <%= item.key%> : [], // <%= item.title -%>下拉数据
     <% }) %>
 	report_code : '',
@@ -73,13 +73,13 @@ export default {
             const {
                 queryParams, cityName, cityUnit, report_code
             } = yield select(({<%= namespace %>}) => <%= namespace %>);
-            <% if (queryParams.length < 6) { %>
-            const { <%= queryParams.join(', ') %> }  = queryParams;
+            <% if (modal.queryParams.length < 6) { %>
+            const { <%= modal.queryParams.join(', ') %> }  = queryParams;
             <% } -%>
-            <% if (queryParams.length >= 6) { %>
+            <% if (modal.queryParams.length >= 6) { %>
             const {
-                <% chunk(queryParams, 5).map((item, index) => { %>
-                <%= item.join(', ') %><%= index+1!=chunk(queryParams, 5).length ? ',' : '' -%> 
+                <% chunk(modal.queryParams, 5).map((item, index) => { %>
+                <%= item.join(', ') %><%= index+1!=chunk(modal.queryParams, 5).length ? ',' : '' -%> 
                 <% }) %>
             } = queryParams;
             <% } -%>   

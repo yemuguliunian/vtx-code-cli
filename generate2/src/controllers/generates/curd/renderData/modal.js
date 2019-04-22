@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-// route
+// modal
 module.exports = function getModalParams({searchParams, parameters}) {
 
 	let addParams = ['id'], // 新增参数

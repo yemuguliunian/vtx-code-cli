@@ -14,7 +14,7 @@ const { <%= route.vtxDateUi.join(', ') %> } = VtxDate;
 import { <%= route.antd.join(', ') %> } from 'antd';
 <%_ if(route.existSelect) { _%>
 const Option = Select.Option;
-<% } %>
+<% } -%>
 
 import { handleColumns } from '../../utils/tools';
 <%_ if(route.vtxDateUi.length > 0) { _%>
@@ -47,7 +47,7 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 
     const vtxGridParams = {
         <%_ route.searchParams.forEach(function(item){ _%>
-<%- include('../../commonFragment/girdProp.ejs', {...item}); _%>
+<%- include('../../commonFragment/girdPropA.ejs', {...item}); _%>
 
         <%_ }); _%>
         query() {
