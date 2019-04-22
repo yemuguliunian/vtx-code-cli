@@ -1,6 +1,6 @@
 {
-  "name": "generate2.0",
-  "version": "0.0.0",
+  "name": "vtx-code-generate",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
