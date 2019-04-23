@@ -151,19 +151,19 @@ function Curd({dispatch, curd}) {
                 }}>生成模板</Button>
                 <Button 
                     disabled={!distId}
+                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
+                >预览</Button>
+                <Button 
+                    disabled={!distId}
                     onClick={() => window.open(`/code/generator/file/downLoadZip?id=${distId}`)}
                 >导出模板</Button>
                 <Button 
                     disabled={!distId}
-                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
-                >预览</Button>
+                    onClick={() => window.open(`/code/generator/file/downLoadConfig?id=${distId}`)}
+                >导出配置项</Button>
                 <Button 
                     onClick={() => dispatch({type : 'curd/clearCache'})}
                 >清除缓存</Button>
-                <Button 
-                    disabled={!distId}
-                    onClick={() => window.open(`/code/generator/file/downLoadConfig?id=${distId}`)}
-                >导出配置项</Button>
         	</div>
         </Page>
     );

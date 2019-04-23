@@ -6,6 +6,7 @@ import { Page, Cell} from 'rc-layout';
 import { Input, Icon, Select, Button } from 'antd';
 const Option = Select.Option;
 
+import Namespace from '../components/Namespace';
 import SearchParam from '../components/SearchParam';
 
 function Report({dispatch, report}) {
@@ -55,36 +56,16 @@ function Report({dispatch, report}) {
             />
         )
 	})
-
+    
     return (
         <Page title="报表" space={10}>
         	<h5>namespace</h5>
-    		<Cell>
-    			<Cell.Item>
-    				<Cell.Item.Title>
-    					namespace：
-    				</Cell.Item.Title>
-    				<Cell.Item.Body>
-    					<Input value={namespace} onChange={(e) => updateState({namespace : e.target.value})}/>
-    				</Cell.Item.Body>
-    			</Cell.Item>
-                <Cell.Item>
-                    <Cell.Item.Title>
-                        注释：
-                    </Cell.Item.Title>
-                    <Cell.Item.Body>
-                        <Input value={annotation} onChange={(e) => updateState({annotation : e.target.value})}/>
-                    </Cell.Item.Body>
-                </Cell.Item>
-                <Cell.Item>
-                    <Cell.Item.Title>
-                        作者：
-                    </Cell.Item.Title>
-                    <Cell.Item.Body>
-                        <Input value={author} onChange={(e) => updateState({author : e.target.value})}/>
-                    </Cell.Item.Body>
-                </Cell.Item>
-			</Cell>
+    		<Namespace 
+                namespace={namespace}
+                annotation={annotation}
+                author={author}
+                updateState={updateState}
+            />
         	<h5>查询条件</h5>
     		<Button type="primary" icon="plus" onClick={() => dispatch({type : 'report/newSearchParam'})}>新增查询条件</Button>
     		{searchParamRender}
@@ -96,19 +77,19 @@ function Report({dispatch, report}) {
                 }}>生成模板</Button>
                 <Button 
                     disabled={!distId}
+                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
+                >预览</Button>
+                <Button 
+                    disabled={!distId}
                     onClick={() => window.open(`/code/generator/file/downLoadZip?id=${distId}`)}
                 >导出模板</Button>
                 <Button 
                     disabled={!distId}
-                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
-                >预览</Button>
+                    onClick={() => window.open(`/code/generator/file/downLoadConfig?id=${distId}`)}
+                >导出配置项</Button>
                 <Button 
                     onClick={() => dispatch({type : 'report/clearCache'})}
                 >清除缓存</Button>
-                <Button 
-                    disabled={!distId}
-                    onClick={() => window.open(`/code/generator/file/downLoadConfig?id=${distId}`)}
-                >导出配置项</Button>
         	</div>
         </Page>
     );
