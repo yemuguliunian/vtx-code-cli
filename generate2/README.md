@@ -7,18 +7,20 @@
 
 3，去除logger日志中间件，使用debug
 
-4，预览页面新增 复制 和 代码高亮 功能
+4，预览页面新增 复制 代码高亮 锚点 功能
+
+5，文件不存在时提示404
 
 ## 结构
 ```
 ├── /bin/                 
 ├── /public/               
 ├── /src/             
-	├── /generates/
-	├── /job/
-	├── /routes/
-	├── /util/
-	└── /views/
+	├── /generates/ # 生成代码逻辑
+	├── /job/       # 定时器
+	├── /routes/    # 路由(接口)
+	├── /util/      # 工具类
+	└── /views/     # 视图
 ├── .editorconfig          
 ├── .gitignore
 ├── app.js # 入口文件
