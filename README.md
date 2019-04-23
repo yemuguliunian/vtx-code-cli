@@ -25,9 +25,15 @@
   yarn install
   yarn start
 ```
-### dto 路由
-> * /curd   # curd配置
-> * /list   # 列表
-> * /report # 报表
-> * /empty  # 空模板
+### 1.dto 路由
+* /curd   			# curd配置
+* /list   			# 列表
+* /report 			# 报表
+* /empty  			# 空模板
+
+### 2.dto 功能清单
+- [x] 生成模板
+- [x] 预览 - 点击生成模板成功后可预览生成的代码内容
+- [x] 导出模板和配置项
+- [x] 自动缓存配置数据（防止误操作导致数据丢失），亦可以手动清除缓存
 
