@@ -34,7 +34,10 @@
     });
     var scroll = new SmoothScroll('a[href*="#"]', {
       speed: 500,
-      speedAsDuration: true
+      speedAsDuration: true,
+      offset: function (anchor, toggle) {
+        return 25;
+      }
     });
   </script>
 </html>
