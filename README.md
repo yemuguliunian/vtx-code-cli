@@ -1,7 +1,4 @@
 # Vortex前端代码模板化生成
- 
-## 立意
-减少重复繁琐的工作
 
 ## 面向群体
 公司内部前端研发
@@ -24,19 +21,13 @@
   yarn install
   yarn start
 2.启用代码生成服务
-  generate目录下
+  generate2目录下
   yarn install
   yarn start
 ```
 ### dto 路由
-```
-curd配置
-/curd
-列表配置
-/list
-报表配置
-/report
-空模板
-/empty
-```
+> * /curd   # curd配置
+> * /list   # 列表
+> * /report # 报表
+> * /empty  # 空模板
 
