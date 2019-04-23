@@ -93,12 +93,20 @@ module.exports = function getAddAndViewParams(parameters) {
     // 去重, 对象属性若存在重复在IE严格模式下报错
     addParams = _.uniq(addParams);
     
+    let reverseParameters = newParameters.reverse();
+
     return {
         add : {
-            addParams, vtxUi, vtxDateUi, antd, existSelect, parameters : newParameters.reverse()
+            addParams, vtxUi, vtxDateUi, antd, existSelect, parameters : reverseParameters
         },
         view : {
-            viewParams, vtxUi : viewVtxUi, parameters : newParameters.reverse()
+            viewParams, vtxUi : viewVtxUi, 
+            parameters : reverseParameters.map(item => {
+                return {
+                    ...item,
+                    param : ['select', 'treeSelect'].indexOf(item.type) > -1 ? item.paramStr : item.param
+                }
+            })
         }
     }
 }

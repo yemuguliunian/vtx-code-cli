@@ -11,7 +11,7 @@ module.exports = function getRouteParams({searchParams, parameters, listParams})
 		girdChildList = [], // gird children
 		vtxUi = ['VtxDatagrid'], // vtx-ui组件
 	    vtxDateUi = [], // 日期组件
-		antd = ['Modal', 'Button', 'message']; // antd组件
+		antd = []; // antd组件
 
 	let existInput = false, // 是否存在文本
     	existSelect = false, // 是否存在下拉

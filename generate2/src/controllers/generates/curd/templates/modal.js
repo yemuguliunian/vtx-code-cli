@@ -143,7 +143,7 @@ export default {
             } = payload.btnType === 'add' ? newItem : editItem;
             let params = {
                 <%_ if (modal.addParams.length < 7) { _%>
-                <%= modal.addParams.join(', ') %>
+                <%= modal.addParams.join(', ') %>,
                 <%_ } _%>
                 <%_ if (modal.addParams.length >= 7) { _%>
                 <%_ chunk(modal.addParams, 6).map((item, index) => { _%>
