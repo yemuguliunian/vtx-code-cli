@@ -28,10 +28,15 @@
   yarn install
   yarn start
 ```
-
-## dto
-### 路由
-#### curd
+### dto 路由
+```
+curd配置
+/curd
+列表配置
+/list
+报表配置
+/report
+空模板
+/empty
 ```
 
-```
