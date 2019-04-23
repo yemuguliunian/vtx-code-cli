@@ -9,6 +9,8 @@ const Option = Select.Option;
 import Namespace from '../components/Namespace';
 import SearchParam from '../components/SearchParam';
 
+import { openWindow } from '../utils/tools.js';
+
 function Report({dispatch, report}) {
 
 	const {
@@ -77,7 +79,7 @@ function Report({dispatch, report}) {
                 }}>生成模板</Button>
                 <Button 
                     disabled={!distId}
-                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
+                    onClick={() => openWindow(`/code/generator/view?id=${distId}`, distId)}
                 >预览</Button>
                 <Button 
                     disabled={!distId}

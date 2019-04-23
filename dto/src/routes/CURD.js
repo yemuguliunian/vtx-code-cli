@@ -11,6 +11,8 @@ import SearchParam from '../components/SearchParam';
 import Parameter from '../components/Parameter';
 import ListParam from '../components/ListParam';
 
+import { openWindow } from '../utils/tools.js';
+
 function Curd({dispatch, curd}) {
 
 	const {
@@ -151,7 +153,7 @@ function Curd({dispatch, curd}) {
                 }}>生成模板</Button>
                 <Button 
                     disabled={!distId}
-                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
+                    onClick={() => openWindow(`/code/generator/view?id=${distId}`, distId)}
                 >预览</Button>
                 <Button 
                     disabled={!distId}

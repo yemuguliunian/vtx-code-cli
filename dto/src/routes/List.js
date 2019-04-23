@@ -10,6 +10,8 @@ import Namespace from '../components/Namespace';
 import SearchParam from '../components/SearchParam';
 import ListParam from '../components/ListParam';
 
+import { openWindow } from '../utils/tools.js';
+
 function List({dispatch, list}) {
 
 	const {
@@ -114,7 +116,7 @@ function List({dispatch, list}) {
                 }}>生成模板</Button>
                 <Button 
                     disabled={!distId}
-                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
+                    onClick={() => openWindow(`/code/generator/view?id=${distId}`, distId)}
                 >预览</Button>
                 <Button 
                     disabled={!distId}

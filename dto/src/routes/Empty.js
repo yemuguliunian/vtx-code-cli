@@ -7,6 +7,8 @@ import { Input, Button } from 'antd';
 
 import Namespace from '../components/Namespace';
 
+import { openWindow } from '../utils/tools.js';
+
 function Empty({dispatch, empty}) {
 
 	const {
@@ -39,7 +41,7 @@ function Empty({dispatch, empty}) {
                 }}>生成模板</Button>
                 <Button 
                     disabled={!distId}
-                    onClick={() => window.open(`/code/generator/view?id=${distId}`)}
+                    onClick={() => openWindow(`/code/generator/view?id=${distId}`, distId)}
                 >预览</Button>
                 <Button 
                     disabled={!distId}
