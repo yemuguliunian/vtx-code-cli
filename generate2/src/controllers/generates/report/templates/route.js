@@ -78,5 +78,5 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 }
 
 export default connect(
-	({${namespace}}) => ({${namespace}})
-)(${firstUpperCase(namespace)});
+    ({<%=namespace%>}) => ({<%=namespace%>})
+)(<%=upperFirst(namespace)%>);

@@ -48,7 +48,7 @@ class BasicGenerator extends Generator {
       		debug(`create ${file}`);
 			const filePath = this.templatePath(file);
             // 目标路径
-            let namespace = this.opts.body.namespace;
+            let namespace = this.body.namespace;
             let targetPath = file;
             if(file === 'modal.js') {
                 targetPath = file.replace(/modal/, `${namespace}M`)

@@ -37,7 +37,7 @@
 					<%_ if (type === 'select') { _%>
 					<Select
 						value={<%= param %>}
-						onChange={(e) => {
+						onChange={(value) => {
 							updateItem({
 								<%= param %> : value
 							})

@@ -43,7 +43,7 @@ export default {
                     })
                     <% modal.paramDatas.map(item=> { %>
                     // 请求<%= item.title -%>下拉数据
-                    dispatch({type : 'load<%=upperFirst(namespace)%>'});
+                    dispatch({type : 'load<%=upperFirst(item.key)%>'});
                     <% }) %>
                     dispatch({type : 'getList'});
                 }
@@ -54,8 +54,8 @@ export default {
     effects : {
 		<% modal.paramDatas.map(item=> { %>
         // <%= item.title -%>下拉
-        *load<%=upperFirst(namespace)%>({ payload }, { call, put, select }) {
-            const { data } = yield call(load<%=upperFirst(namespace)%>);
+        *load<%=upperFirst(item.key)%>({ payload }, { call, put, select }) {
+            const { data } = yield call(load<%=upperFirst(item.key)%>);
             if(!!data && !data.result) {
                 if('data' in data && Array.isArray(data.data)) {
                     yield put({
@@ -130,15 +130,6 @@ export default {
                 pageSize : 10,
 				searchParams : initQueryParams,
                 queryParams : initQueryParams
-            }
-        },
-
-        initNewItem(state, action){
-            return {
-                ...state,
-                newItem:{
-                    ...defaultNewItem         
-                }
             }
         }
     }
