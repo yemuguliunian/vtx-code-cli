@@ -12,7 +12,7 @@ function View(props) {
     <% if (view.viewParams.length >= 7) { %>
     const {
     	<%_ chunk(view.viewParams, 6).map((item, index) => { _%>
-        <%= item.join(', ') %>
+        <%= item.join(', ') %>,
     	<%_ }) _%>
     } = contentProps;
     <% } -%>  
