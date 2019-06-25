@@ -32,8 +32,8 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 
 	const updateState = (obj) => {
 		dispatch({
-			type : '<%=namespace%>/updateState',
-			payload : {
+			type: '<%=namespace%>/updateState',
+			payload: {
 				...obj
 			}
 		})
@@ -41,8 +41,8 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 
     <%_ if(route.searchParams.length > 0) { _%>
     const getList = () => {
-       dispatch({type : '<%=namespace%>/updateQueryParams'});
-       dispatch({type : '<%=namespace%>/getList'});
+       dispatch({type: '<%=namespace%>/updateQueryParams'});
+       dispatch({type: '<%=namespace%>/getList'});
     }
 
     const vtxGridParams = {
@@ -55,13 +55,13 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
         },
 
         clear() {
-            dispatch({type : '<%=namespace%>/initQueryParams'});
-            dispatch({type : '<%=namespace%>/getList'});
+            dispatch({type: '<%=namespace%>/initQueryParams'});
+            dispatch({type: '<%=namespace%>/getList'});
         }
     };
     <%_ } _%>
 
-<%- include('../../commonFragment/dataGird.ejs', {listParams : route.listParams, type : route.type}); _%>
+<%- include('../../commonFragment/dataGird.ejs', {listParams: route.listParams, type: route.type}); _%>
     
 	return (
 		<Page title="<%=annotation%>">

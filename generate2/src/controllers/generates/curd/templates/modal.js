@@ -7,36 +7,36 @@ import { VtxUtil } from '...';
 // 查询条件
 let initQueryParams = {
 	<% modal.searchParamStates.map(item=> { %>
-    <%= item.param%> : <%- `${defaultValue[item.type]}` %>, // <%= item.title -%>
+    <%= item.param%>: <%- `${defaultValue[item.type]}` %>, // <%= item.title -%>
     <% }) %>
 };
 
 // 新增参数
 let defaultNewItem = {
 	<% modal.parameters.map(item=> { %>
-    <%= item.param%> : <%- `${defaultValue[item.type]}` %>, // <%= item.title -%>
+    <%= item.param%>: <%- `${defaultValue[item.type]}` %>, // <%= item.title -%>
     <% }) %>
 };
 
 const initState = {
-    searchParams : {...initQueryParams}, // 搜索参数
-    queryParams : {...initQueryParams}, // 查询列表参数
+    searchParams: {...initQueryParams}, // 搜索参数
+    queryParams: {...initQueryParams}, // 查询列表参数
     <% modal.paramDatas.map(item=> { %>
-    <%= item.key%> : [], // <%= item.title -%>下拉数据
+    <%= item.key%>: [], // <%= item.title -%>下拉数据
     <% }) %>
-    currentPage : 1, // 页码
-    pageSize : 10, // 每页条数
-    loading : false, // 列表是否loading
-    dataSource : [], // 列表数据源
-    total : 0, // 列表总条数
-    selectedRowKeys : [],
-    newItem : {...defaultNewItem}, // 新增参数
-    editItem:{ // 编辑参数
-        visible:false,
-        loading:false
+    currentPage: 1, // 页码
+    pageSize: 10, // 每页条数
+    loading: false, // 列表是否loading
+    dataSource: [], // 列表数据源
+    total: 0, // 列表总条数
+    selectedRowKeys: [],
+    newItem: {...defaultNewItem}, // 新增参数
+    editItem: { // 编辑参数
+        visible: false,
+        loading: false
     },
     viewItem: { // 查看参数
-        visible:false
+        visible: false
     }
 };
 
@@ -52,16 +52,16 @@ export default {
                 if(pathname === '/<%= namespace %>') {
 					// 初始化state
                     dispatch({
-                        type : 'updateState',
-                        payload : {
+                        type: 'updateState',
+                        payload: {
                             ...initState
                         }
                     })
                     <% modal.paramDatas.map(item=> { %>
                     // 请求<%= item.title -%>下拉数据
-                    dispatch({type : 'load<%=upperFirst(item.key)%>'});
+                    dispatch({type: 'load<%=upperFirst(item.key)%>'});
                     <% }) %>
-                    dispatch({type : 'getList'});
+                    dispatch({type: 'getList'});
                 }
             })
         }
@@ -75,9 +75,9 @@ export default {
             if(!!data && !data.result) {
                 if('data' in data && Array.isArray(data.data)) {
                     yield put({
-                        type : 'updateState',
-                        payload : {
-                            <%= item.key%> : data.data
+                        type: 'updateState',
+                        payload: {
+                            <%= item.key%>: data.data
                         }
                     })
                 }
@@ -86,7 +86,7 @@ export default {
         <% }) %>
         // 获取列表
         *getList({ payload = {} }, { call, put, select }) {
-            yield put({ type : 'updateState', payload : {loading : true} });
+            yield put({ type: 'updateState', payload : {loading : true} });
             let {
                 pageSize, currentPage, queryParams
             } = yield select(({<%= namespace %>}) => <%= namespace %>);
@@ -94,8 +94,8 @@ export default {
            pageSize = 'pageSize' in payload ? payload.pageSize : pageSize;
             let params = {
                 ...queryParams,
-                page : currentPage,
-                rows : pageSize
+                page: currentPage - 1,
+                size: pageSize
             };
             const { data } = yield call(demoService.getList, VtxUtil.handleTrim(params));
             let dataSource = [], total = 0, status = false;
@@ -104,7 +104,7 @@ export default {
                     status = true;
                     dataSource = data.data.rows.map(item => ({
                         ...item, 
-                        key : item.id
+                        key: item.id
                     }));
                     total = data.data.total;
                 }
@@ -112,21 +112,21 @@ export default {
             let uState = {
                 dataSource,
                 total,
-                loading : false
+                loading: false
             };
             // 请求成功 更新传入值
             status && (uState = {...uState, ...payload});
             yield put({
-                type : 'updateState',
-                payload : {...uState}
+                type: 'updateState',
+                payload: {...uState}
             })
         },
 
         // 新增or编辑
         *saveOrUpdate({ payload }, { call, put, select }) {
            yield put({
-                type : 'updateState',
-                payload : {
+                type: 'updateState',
+                payload: {
                     [payload.btnType === 'add' ? 'newItem' : 'editItem'] : { loading : true }
                 }
             });
@@ -150,8 +150,8 @@ export default {
                 <%= item.join(', ') %>,
                 <%_ }) _%>
                 <%_ } _%>   
-                userId : userId,
-                tenantId : tenantId
+                userId: userId,
+                tenantId: tenantId
             };
             const { data } = yield call( payload.btnType === 'add' ? 
                     demoService.save : demoService.update, VtxUtil.handleTrim(params));
@@ -173,7 +173,7 @@ export default {
         *deleteItems({ payload }, { call, put, select }) {
             let { ids = [] } = payload;
             const params = {
-                ids : ids.join(',')
+                ids: ids.join(',')
             };
             const { data } = yield call(demoService.delete, params);
             if( !!data && data.result == 0 ){
@@ -194,9 +194,9 @@ export default {
             return {
                 ...state,
                 ...action.payload,
-                selectedRowKeys : [],
-                currentPage : 1,
-                queryParams : queryParams
+                selectedRowKeys: [],
+                currentPage: 1,
+                queryParams: queryParams
             }
         },
 
@@ -204,17 +204,17 @@ export default {
             return {
                 ...state,
                 ...action.payload,
-                currentPage : 1,
-                pageSize : 10,
-				searchParams : initQueryParams,
-                queryParams : initQueryParams
+                currentPage: 1,
+                pageSize: 10,
+				searchParams: initQueryParams,
+                queryParams: initQueryParams
             }
         },
 
         initNewItem(state, action){
             return {
                 ...state,
-                newItem:{
+                newItem: {
                     ...defaultNewItem         
                 }
             }

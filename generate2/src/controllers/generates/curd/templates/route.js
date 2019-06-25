@@ -37,8 +37,8 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 
 	const updateState = (obj) => {
 		dispatch({
-			type : '<%=namespace%>/updateState',
-			payload : {
+			type: '<%=namespace%>/updateState',
+			payload: {
 				...obj
 			}
 		})
@@ -46,8 +46,8 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 
     <%_ if(route.searchParams.length > 0) { _%>
     const getList = () => {
-       dispatch({type : '<%=namespace%>/updateQueryParams'});
-       dispatch({type : '<%=namespace%>/getList'});
+       dispatch({type: '<%=namespace%>/updateQueryParams'});
+       dispatch({type: '<%=namespace%>/getList'});
     }
 
     const vtxGridParams = {
@@ -60,8 +60,8 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
         },
 
         clear() {
-            dispatch({type : '<%=namespace%>/initQueryParams'});
-            dispatch({type : '<%=namespace%>/getList'});
+            dispatch({type: '<%=namespace%>/initQueryParams'});
+            dispatch({type: '<%=namespace%>/getList'});
         }
     };
     <%_ } _%>
@@ -71,28 +71,28 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 	//----------------新增------------------
     const updateNewWindow = (status = true) => {
 		updateState({
-            newItem : {
-                visible : status
+            newItem: {
+                visible: status
             }
         })
     	if(!status) {
-    		dispatch({ type : '<%=namespace%>/initNewItem' });
+    		dispatch({ type: '<%=namespace%>/initNewItem' });
     	}
     }
     const newItemProps = {
-    	updateWindow : updateNewWindow,
+    	updateWindow: updateNewWindow,
         modalProps:{
-            title:'<%=annotation%> > 新增',
+            title: '<%=annotation%> > 新增',
             visible: newItem.visible,
-            onCancel:() => updateNewWindow(false), 
-            width:900
+            onCancel: () => updateNewWindow(false), 
+            width: 900
         },
         contentProps:{
             ...newItem,
             <%_ if(route.addParamsDatas.length > 0) { _%>
             <%= route.addParamsDatas.join(', ')%>,
             <%_ } _%>
-            btnType : 'add',
+            btnType: 'add',
             updateItem(obj) {
 				updateState({
                     newItem : {
@@ -102,12 +102,12 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
             },
             save() {
             	dispatch({type:'<%=namespace%>/saveOrUpdate', payload:{
-					btnType : 'add',
-                    onSuccess:function(){
+					btnType: 'add',
+                    onSuccess: function(){
                         message.success('新增成功');
                         updateNewWindow(false);
                     },
-                    onError:function(){
+                    onError: function(){
                         message.error('新增失败');
                     }
                 }})
@@ -124,34 +124,34 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
         })
     }
     const editItemProps = {
-    	updateWindow : updateEditWindow,
-        modalProps:{
-            title:'<%=annotation%> > 编辑',
+    	updateWindow: updateEditWindow,
+        modalProps: {
+            title: '<%=annotation%> > 编辑',
             visible: editItem.visible,
-            onCancel:() => updateEditWindow(false),
-            width:900
+            onCancel: () => updateEditWindow(false),
+            width: 900
         },
         contentProps:{
             ...editItem,
 			<%_ if(route.addParamsDatas.length > 0) { _%>
             <%= route.addParamsDatas.join(', ')%>,
             <%_ } _%>
-            btnType : 'edit',
+            btnType: 'edit',
             updateItem(obj) {
 				updateState({
-                    editItem : {
+                    editItem: {
                         ...obj
                     }
                 })
             },
             save() {
-            	dispatch({type:'<%=namespace%>/saveOrUpdate', payload:{
-					btnType : 'edit',
-                    onSuccess:function(){
+            	dispatch({type: '<%=namespace%>/saveOrUpdate', payload: {
+					btnType: 'edit',
+                    onSuccess: function(){
                         message.success('编辑成功');
                         updateEditWindow(false);
                     },
-                    onError:function(){
+                    onError: function(){
                         message.error('编辑失败');
                     }
                 }})
@@ -162,22 +162,22 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 	//--------------查看-----------------
     const updateViewWindow = (status = true) => {
 		updateState({
-            viewItem : {
-                visible : status
+            viewItem: {
+                visible: status
             }
         })
     }
     const viewItemProps = {
-        updateWindow : updateViewWindow,
-        modalProps:{
-            title:'<%=annotation%> > 查看',
+        updateWindow: updateViewWindow,
+        modalProps: {
+            title: '<%=annotation%> > 查看',
             visible: viewItem.visible,
-            onCancel:() => updateViewWindow(false),
-            width:900
+            onCancel: () => updateViewWindow(false),
+            width: 900
         },
-        contentProps:{
+        contentProps: {
             ...viewItem,
-            btnType : 'view'
+            btnType: 'view'
         }
     };
     
@@ -189,15 +189,15 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
             cancelText: '取消',
             onOk() {
                 dispatch({type:'<%=namespace%>/deleteItems',payload:{
-                    ids : selectedRowKeys,
-                    onSuccess:function(ids){
+                    ids: selectedRowKeys,
+                    onSuccess: function(ids){
                     	let page = currentPage !=1 && ids.length === (total - (currentPage - 1)*pageSize) ?
                                 currentPage - 1 : currentPage;
                         dispatch({
-                            type:'<%=namespace%>/getList',
-                            payload : {
-                                selectedRowKeys : [],
-                                currentPage : page
+                            type: '<%=namespace%>/getList',
+                            payload: {
+                                selectedRowKeys: [],
+                                currentPage: page
                             }
                         })
                         message.success('删除成功');

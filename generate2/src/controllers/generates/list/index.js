@@ -17,7 +17,7 @@ class Generator extends BasicGenerator {
         this.writeFiles({
             context: {
                 ...this.context,
-                defaultValue : this.defaultValue,
+                defaultValue: this.defaultValue,
                 route,
                 modal
             },

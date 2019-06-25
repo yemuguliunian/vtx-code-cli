@@ -4,13 +4,13 @@
 						onChange={(e) => {
 							<%_ if(!reg) { _%>
 							updateItem({
-								<%= param %> : e.target.value
+								<%= param %>: e.target.value
 							})
 							<%_ } _%>
 							<%_ if(reg === 'num') { _%>
 							if(!e.target.value || /^\\d+$/.test(e.target.value)) {
 								updateItem({
-									<%= param %> : e.target.value
+									<%= param %>: e.target.value
 								})
 							}
 							<%_ } _%>
@@ -27,7 +27,7 @@
 						type='textarea'
 						onChange={(e) => {
 							updateItem({
-								<%= param %> : e.target.value
+								<%= param %>: e.target.value
 							})
 						}}
 						placeholder="请输入<%= title %><%= required ? '（必填项）' : '' %>"
@@ -39,11 +39,13 @@
 						value={<%= param %>}
 						onChange={(value) => {
 							updateItem({
-								<%= param %> : value
+								<%= param %>: value
 							})
 						}}
 						placeholder="请选择<%= title %><%= required ? '（必选项）' : '' %>"
 						allowClear
+						showSearch
+						optionFilterProp="children"
 <%- include('dataML', {item, appliaction}); %>
 					>
 						{<%= paramData %>.map(item => {
@@ -60,7 +62,7 @@
 						treeDefaultExpandAll
 						onChange={({allValue, allLabel, value, label}) => {
 							updateItem({
-								<%= param %> : value
+								<%= param %>: value
 							})
 						}}
 						placeholder="请选择<%= title %><%= required ? '（必选项）' : '' %>"
@@ -73,7 +75,7 @@
 						value={<%= param %>}
 						onChange={(date, dateString) => {
 							updateItem({
-								<%= param %> : dateString
+								<%= param %>: dateString
 							});
 						}}
 						showTime
@@ -86,7 +88,7 @@
 						value={<%= param %>}
 						onChange={(date, dateString) => {
 							updateItem({
-								<%= param %> : dateString
+								<%= param %>: dateString
 							});
 						}}
 						showTime
@@ -99,7 +101,7 @@
 						value={<%= param %>}
 						onChange={(date, dateString) => {
 							updateItem({
-								<%= param %> : dateString
+								<%= param %>: dateString
 							});
 						}}
 						showTime
@@ -119,11 +121,11 @@
 						onSuccess={(file) => {
 							message.info(`${file.name} 上传成功.`);
 							<%= param %>.push({
-								id : file.id,
-							 	name : file.name
+								id: file.id,
+							 	name: file.name
 						 	});
 						 	updateItem({
-						 		<%= param %> : <%= param %>
+						 		<%= param %>: <%= param %>
 						 	})
 					 	}}
 					 	onError={(file) => {
@@ -131,7 +133,7 @@
 					 	}}
 					 	onRemove={(file) => {
 					 		let files = <%= param %>.filter(item => item.id != file.id);
-					 		updateItem({<%= param %> : files});
+					 		updateItem({<%= param %>: files});
 					 	}}
 <%- include('dataML', {item, appliaction}); %>
 					/>

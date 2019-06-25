@@ -1,30 +1,30 @@
 						data-modallist={{
-							layout:{
-								comType : <%- ['day', 'month', 'year'].indexOf(type) > -1 ? `''` : `'input'` %>,
+							layout: {
+								comType: <%- ['day', 'month', 'year'].indexOf(type) > -1 ? `''` : `'input'` %>,
 								<%_ if(required) { _%>
 								require: true,
 								<%_ } _%>
-								name : '<%= title %>',
-								width : <%= width %>,
+								name: '<%= title %>',
+								width: <%= width %>,
 								<%_ if(type === 'textarea') { _%>
 								maxNum: <%= appliaction.inputArea_Num %>,
 								<%_ } _%>
-								key : '<%= param %>'
+								key: '<%= param %>'
 							},
-							regexp : {
+							regexp: {
 								<%_ if(['treeSelect', 'upload'].indexOf(type) > -1) { _%>
-								value : <%= param %>.length > 0 ? '1' : ''<%= repeat ? ',' : '' %>
+								value: <%= param %>.length > 0 ? '1' : ''<%= repeat ? ',' : '' %>
 								<%_ } else { _%>
-								value : <%= param %><%= repeat ? ',' : '' %>
+								value: <%= param %><%= repeat ? ',' : '' %>
 								<%_ } _%>
 								<%_ if(repeat) { _%>
-								repete : {
-									url : '', // 验重地址,
-									key : {
-										id : id,
-										paramCode : '<%= param %>',
-										paramValue : <%= param %>,
-										tenantId : vtxInfo.tenantId // 租户信息`
+								repete: {
+									url: '', // 验重地址,
+									key: {
+										id: id,
+										paramCode: '<%= param %>',
+										paramValue: <%= param %>,
+										tenantId: vtxInfo.tenantId // 租户信息`
 									}
 								}
 								<%_ } _%>
