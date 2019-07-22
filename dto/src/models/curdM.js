@@ -33,7 +33,8 @@ export default {
             {code : 'upload', text : '附件'}
         ],
         listParams : [],
-        distId : ''
+        distId : '',
+        loading: false
     },
 
     subscriptions: {
@@ -58,6 +59,7 @@ export default {
 
     effects: {
         *cli({ payload }, { call, put, select }) {
+            yield put({type: 'updateState', payload: {loading: true}});
             const { 
                 namespace, annotation, author, searchParams, parameters, listParams 
             } = yield select(({curd}) => curd);
@@ -78,6 +80,7 @@ export default {
                     }
                 })
             }
+            yield put({type: 'updateState', payload: {loading: false}});
         }
     },
 

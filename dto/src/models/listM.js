@@ -15,13 +15,15 @@ export default {
         typeData : [
             {code : 'text', text : '文本'},
             {code : 'select', text : '下拉'},
+            {code : 'ztreeSelect', text : '下拉树'},
             {code : 'day', text : '日'},
             {code : 'month', text : '月'},
             {code : 'year', text : '年'},
             {code : 'range', text : '时间段'}
         ],
         listParams : [],
-        distId : ''
+        distId : '',
+        loading: false
     },
 
     subscriptions: {
@@ -46,6 +48,7 @@ export default {
 
     effects: {
         *cli({ payload }, { call, put, select }) {
+            yield put({type: 'updateState', payload: {loading: true}});
             const { 
                 namespace, annotation, author, searchParams, listParams 
             } = yield select(({list}) => list);
@@ -65,6 +68,7 @@ export default {
                     }
                 })
             }
+            yield put({type: 'updateState', payload: {loading: false}});
         }
     },
 

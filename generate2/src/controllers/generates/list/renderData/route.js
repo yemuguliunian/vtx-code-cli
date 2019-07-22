@@ -15,6 +15,7 @@ module.exports = function getRouteParams({searchParams, parameters, listParams})
 
 	let existInput = false, // 是否存在文本
     	existSelect = false, // 是否存在下拉
+    	existZtreeSelect = false, // 是否存在下拉
     	existDay = false, // 是否存在日刷选
     	existMonth = false, // 是否存在月刷选
     	existYear = false, // 是否存在年刷选
@@ -35,6 +36,9 @@ module.exports = function getRouteParams({searchParams, parameters, listParams})
 			break;
 			case 'select' : // 下拉选
 				!existSelect && (existSelect = true);
+			break;
+			case 'ztreeSelect' : // 下拉选
+				!existZtreeSelect && (existZtreeSelect = true);
 			break;
 			case 'day' : // 日刷选
 				!existDay && (existDay = true);
@@ -62,6 +66,7 @@ module.exports = function getRouteParams({searchParams, parameters, listParams})
 	existInput && antd.push('Input');
 	// 存在下拉
 	existSelect && antd.push('Select');
+	existZtreeSelect && vtxUi.push('VtxZtreeSelect');
 	if(existDay || existMonth || existYear || existRange) {
 		vtxUi.push('VtxDate');
 		// 存在日刷选

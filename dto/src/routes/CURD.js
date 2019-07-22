@@ -10,6 +10,7 @@ import Namespace from '../components/Namespace';
 import SearchParam from '../components/SearchParam';
 import Parameter from '../components/Parameter';
 import ListParam from '../components/ListParam';
+import Loading from '../components/loading';
 
 import { openWindow } from '../utils/tools.js';
 
@@ -17,7 +18,7 @@ function Curd({dispatch, curd}) {
 
 	const {
 		namespace, annotation, author, searchParams, typeData, 
-        parameters, parameterTypeData, listParams, distId
+        parameters, parameterTypeData, listParams, distId, loading
 	} = curd;
 
 	const updateState = (obj) => {
@@ -167,6 +168,7 @@ function Curd({dispatch, curd}) {
                     onClick={() => dispatch({type : 'curd/clearCache'})}
                 >清除缓存</Button>
         	</div>
+            <Loading loading={loading}/>
         </Page>
     );
 }

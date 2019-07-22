@@ -9,6 +9,7 @@ const Option = Select.Option;
 import Namespace from '../components/Namespace';
 import SearchParam from '../components/SearchParam';
 import ListParam from '../components/ListParam';
+import Loading from '../components/loading';
 
 import { openWindow } from '../utils/tools.js';
 
@@ -16,7 +17,7 @@ function List({dispatch, list}) {
 
 	const {
 		namespace, annotation, author, searchParams, typeData, 
-        listParams, distId
+        listParams, distId, loading
 	} = list;
 
 	const updateState = (obj) => {
@@ -130,6 +131,7 @@ function List({dispatch, list}) {
                     onClick={() => dispatch({type : 'list/clearCache'})}
                 >清除缓存</Button>
         	</div>
+            <Loading loading={loading}/>
         </Page>
     );
 }

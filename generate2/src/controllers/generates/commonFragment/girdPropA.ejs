@@ -41,7 +41,7 @@
 		// <%= title %>
 		<%= param %>Props: {
 			value: [searchParams.<%= param %>],
-			data: paramData,
+			data: <%= paramData %>,
 			onChange({ nodes, keys, leafKeys, names }) {
 				updateState({
 		            <%= param %> : keys
