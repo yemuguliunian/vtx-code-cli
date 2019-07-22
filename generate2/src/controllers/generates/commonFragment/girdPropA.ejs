@@ -37,6 +37,25 @@
 			}
 		},
 		<%_ } _%>
+		<%_ if (type === 'ztreeSelect') { _%>
+		// <%= title %>
+		<%= param %>Props: {
+			value: [searchParams.<%= param %>],
+			data: paramData,
+			onChange({ nodes, keys, leafKeys, names }) {
+				updateState({
+		            <%= param %> : keys
+		        })
+		        getList();
+			},
+		    allowClear: true,
+		    showSearch: true,
+			placeholder: '请选择<%= title %>',
+			style: {
+				width: '100%'	
+			}
+		},
+		<%_ } _%>
 		<%_ if (type === 'day') { _%>
 		// <%= title %>
 		<%= param %>Props: {

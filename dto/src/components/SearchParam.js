@@ -54,7 +54,7 @@ function SearchParam(props) {
                 </Cell.Item>
             }
 			{
-				type === 'select' &&
+				(type === 'select' || type === 'ztreeSelect') &&
 				<Cell.Item>
     				<Cell.Item.Title>
     					下拉数据源Param：

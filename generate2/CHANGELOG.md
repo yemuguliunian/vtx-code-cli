@@ -1,0 +1,5 @@
+## 2.1.0 [2019-07-22]
+
+*Feature: CURD 查询条件新增“下拉树”选择项
+*Feature: VtxDatagrid 配置项统一加上配置项 hideColumn，默认为true
+*Update: CURD 列表查询page，size字段修改，默认起始页修改为0

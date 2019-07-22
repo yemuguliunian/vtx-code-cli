@@ -15,6 +15,7 @@ export default {
         typeData : [
             {code : 'text', text : '文本'},
             {code : 'select', text : '下拉'},
+            {code : 'ztreeSelect', text : '下拉树'},
             {code : 'day', text : '日'},
             {code : 'month', text : '月'},
             {code : 'year', text : '年'},

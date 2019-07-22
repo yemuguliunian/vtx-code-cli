@@ -10,6 +10,10 @@
 					})}
 				</Select>
 				<%_ } _%>
+				<%_ if (type === 'ztreeSelect') { _%>
+				{/*<%= title %>*/}
+				<VtxZtreeSelect {...vtxGridParams.<%= param %>Props}/>
+				<%_ } _%>
 				<%_ if (type === 'day') { _%>
 				{/*<%= title %>*/}
 				<VtxDatePicker {...vtxGridParams.<%= param %>Props}/>

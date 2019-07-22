@@ -7,10 +7,10 @@
 		['操作', 'action', { renderButtons : () => {
 			let btns = [];
 	    	btns.push({
-	    		name:'查看',
+	    		name: '查看',
 	    		onClick(rowData) {
 					updateState({
-	                    viewItem : {
+	                    viewItem: {
 	                        ...rowData
 	                    }
 	                })
@@ -18,10 +18,10 @@
 	    		}
 	    	})
 			btns.push({
-	    		name:'编辑',
+	    		name: '编辑',
 	    		onClick(rowData) {
 	    			updateState({
-	                    editItem : {
+	                    editItem: {
 	                        ...rowData
 	                    }
 	                })
@@ -29,40 +29,41 @@
 	    		}
 	    	})
 	    	return btns;
-		}, width : '120px'}]
+		}, width: '120px'}]
 		<%_ } _%>
 	];
 	let vtxDatagridProps = {
-		columns : handleColumns(columns),
+		columns: handleColumns(columns),
 		dataSource,
-		indexColumn : true,
-	    startIndex : ( currentPage - 1 )*pageSize+1,
-	    autoFit:true,
-	    // headFootHeight : 150,
+		hideColumn: true,
+		indexColumn: true,
+	    startIndex: ( currentPage - 1 )*pageSize+1,
+	    autoFit: true,
+	    // headFootHeight: 150,
 	    loading,
 	    onChange(pagination, filters, sorter){
 	        dispatch({
-	        	type:'<%=namespace%>/getList',
-	        	payload : {
-	        		currentPage : pagination.current,
+	        	type: '<%=namespace%>/getList',
+	        	payload: {
+	        		currentPage: pagination.current,
 	            	pageSize: pagination.pageSize
 	        	}
 	        })
 	    },
 	    pagination:{
+	   		total,
+	    	pageSize,
+	    	current: currentPage,
 	        showSizeChanger: true,
 	        pageSizeOptions: ['10', '20', '30', '40','50'],
 	        showQuickJumper: true,
-	        current:currentPage,
-	        total:total,
-	        pageSize,
 	        showTotal: total => `合计 ${total} 条`
 	    },
 	};
 	<%_ if(type === 'curd') { _%>
 	vtxDatagridProps = _.assign(vtxDatagridProps, {
-	    rowSelection : {
-	        type:'checkbox',
+	    rowSelection: {
+	        type: 'checkbox',
 	        selectedRowKeys,
 	        onChange(selectedRowKeys, selectedRows){
 	            updateState({
