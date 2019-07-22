@@ -6,7 +6,7 @@
 import React from 'react';
 import { connect } from 'dva';
 
-import { Page, Report } from 'rc-layout';
+import { Page, Content } from 'rc-layout';
 import { <%= route.vtxUi.join(', ') %> } from 'vtx-ui';
 <%_ if(route.vtxDateUi.length > 0) { _%>
 const { <%= route.vtxDateUi.join(', ') %> } = VtxDate;
@@ -25,10 +25,7 @@ import { VtxTimeUtil } from '../../utils/util';
 function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 	const {
 		searchParams,
-		<%_ if(route.paramDatas.length > 0) { _%>
-        <%= route.paramDatas.join(', ') %>,
-        <%_ } _%>
-		iframeSrc
+		reportFlag
 	} = <%=namespace%>;
 
 	const updateState = (obj) => {
@@ -47,16 +44,34 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 
         <%_ }); _%>
         query() {
-            dispatch({type : '<%=namespace%>/updateQueryParams'});
-            dispatch({type : '<%=namespace%>/getUrl'});
+            updateState({
+                reportFlag: new Date().getTime()
+            })
         },
 
         clear() {
             dispatch({type : '<%=namespace%>/initQueryParams'});
-            dispatch({type : '<%=namespace%>/getUrl'});;
+            updateState({
+                reportFlag: new Date().getTime()
+            })
         }
     };
     <%_ } _%>
+
+    const rpsProps = {
+        report_code: '',
+        report_param : {
+            date: '',
+            title: <%=annotation%>
+        },
+        data_param: {
+            ...searchParams,
+            tenantId: '',
+            userId: '',
+        },
+        tenantId: '',
+        flag: reportFlag,
+    }
     
 	return (
 		<Page title="<%=annotation%>">
@@ -72,7 +87,9 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
                 <%_ }); _%>
             </VtxGrid>
             <%_ } _%>
-			<Report src={iframeSrc} top={<%= searchParams.length > 0 ? 48 : 0 %>}/>
+			<Content top={48}>
+                <VtxRpsFrame {...rpsProps}/>
+            </Content>
 		</Page>
 	)
 }

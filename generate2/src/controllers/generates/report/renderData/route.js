@@ -8,7 +8,7 @@ module.exports = function getRouteParams({searchParams}) {
 		girdWidth = [], // vtxGird width
 		girdParams = [], // vtxGird props
 		girdChildList = [], // gird children
-		vtxUi = ['VtxDatagrid'], // vtx-ui组件
+		vtxUi = ['VtxRpsFrame'], // vtx-ui组件
 	    vtxDateUi = [], // 日期组件
 		antd = []; // antd组件
 

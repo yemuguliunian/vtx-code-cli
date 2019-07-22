@@ -8,13 +8,14 @@ const Option = Select.Option;
 
 import Namespace from '../components/Namespace';
 import SearchParam from '../components/SearchParam';
+import Loading from '../components/loading';
 
 import { openWindow } from '../utils/tools.js';
 
 function Report({dispatch, report}) {
 
 	const {
-		namespace, annotation, author, searchParams, typeData, distId
+		namespace, annotation, author, searchParams, typeData, distId, loading
 	} = report;
 
 	const updateState = (obj) => {
@@ -93,6 +94,7 @@ function Report({dispatch, report}) {
                     onClick={() => dispatch({type : 'report/clearCache'})}
                 >清除缓存</Button>
         	</div>
+            <Loading loading={loading}/>
         </Page>
     );
 }

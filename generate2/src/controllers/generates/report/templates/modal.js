@@ -1,5 +1,4 @@
 import { demoService } from '...';
-import { getReportCommonParm } from '...';
 
 const u = require('updeep');
 
@@ -15,12 +14,10 @@ let initQueryParams = {
 
 const initState = {
     searchParams : {...initQueryParams}, // 搜索参数
-    queryParams : {...initQueryParams}, // 查询参数
 	<% modal.queryParamData.map(item=> { %>
     <%= item.key%> : [], // <%= item.title -%>下拉数据
     <% }) %>
-	report_code : '',
-	iframeSrc : ''
+    reportFlag: ''
 };
 
 export default {
@@ -40,10 +37,10 @@ export default {
                             ...initState
                         }
                     })
-					
-					dispatch({type : 'getReportCommonParm'}).then(() => {
-                        dispatch({type : 'getUrl'});
-                    });
+                    <% modal.queryParamData.map(item=> { %>
+                    // 请求<%= item.title -%>下拉数据
+                    dispatch({type: 'load<%=upperFirst(item.key)%>'});
+                    <% }) %>
                 }
             })
         }
@@ -51,59 +48,6 @@ export default {
 
     effects : {
 		
-        // 获取报表参数
-		*getReportCommonParm({ payload }, {call, put, select}) {
-            let { data } = yield call(getReportCommonParm);
-            if(!!data && 'result' in data) {
-				if(!data.result && 'data' in data) {
-					let objName=data.data.filter((item)=>{return item.parmCode=='cityName'});
-	                let objUnit=data.data.filter((item)=>{return item.parmCode=='cityUnit'});
-	                yield put({
-	                    type: 'updateState',
-	                    payload: {
-	                        cityName:objName&&objName.length>0?objName[0].parmName:'',
-	                        cityUnit:objUnit&&objUnit.length>0?objUnit[0].parmName:''
-	                    }
-	                });
-				}
-			}
-        },
-
-		*getUrl({ payload }, {call, put, select}) {
-            const {
-                queryParams, cityName, cityUnit, report_code
-            } = yield select(({<%= namespace %>}) => <%= namespace %>);
-            <% if (modal.queryParams.length < 6) { %>
-            const { <%= modal.queryParams.join(', ') %> }  = queryParams;
-            <% } -%>
-            <% if (modal.queryParams.length >= 6) { %>
-            const {
-                <% chunk(modal.queryParams, 5).map((item, index) => { %>
-                <%= item.join(', ') %><%= index+1!=chunk(modal.queryParams, 5).length ? ',' : '' -%> 
-                <% }) %>
-            } = queryParams;
-            <% } -%>   
-            let param={
-                report_code: report_code,
-                data_param: {
-                    
-                },
-                report_param: {
-                    cityName,
-                    cityUnit,
-                    title : '',
-                    date : ''
-                }
-            }
-            param=JSON.stringify(param);
-           	let iframeSrc = `rps/#/rps?param=${param}`;
-            yield put({
-                type: 'updateState',
-                payload: {
-                    iframeSrc: iframeSrc
-                }
-            });
-        }
     },
 
     reducers : {
@@ -111,21 +55,11 @@ export default {
             return u(action.payload, state);
         },
 
-		updateQueryParams(state,action) {
-            let queryParams = _.pick(state.searchParams, _.keys(initQueryParams));
-            return {
-                ...state,
-                ...action.payload,
-                queryParams : queryParams
-            }
-        },
-
         initQueryParams(state,action) {
             return {
                 ...state,
                 ...action.payload,
-				searchParams : initQueryParams,
-                queryParams : initQueryParams
+				searchParams : initQueryParams
             }
         }
     }
