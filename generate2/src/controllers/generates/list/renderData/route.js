@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 // route
-module.exports = function getRouteParams({searchParams, parameters, listParams}) {
+module.exports = function getRouteParams({searchParams, parameters, listParams, isExport}) {
 
 	let searchParamsDatas = [], // 查询参数中下拉的数据源
 		paramDatas = [], // 所有下拉的数据源
@@ -78,6 +78,8 @@ module.exports = function getRouteParams({searchParams, parameters, listParams})
 		// 时间段
 		existRange && vtxDateUi.push('VtxRangePicker');
 	}
+	// 导出
+	isExport && vtxUi.push('VtxExport');
 
 	return {
 		searchParams : searchParams.reverse(),
@@ -91,6 +93,7 @@ module.exports = function getRouteParams({searchParams, parameters, listParams})
 	    vtxDateUi,
 		antd,
 		existSelect,
+		isExport,
 		listParams : listParams.reverse(),
 		type : 'list'
 	}

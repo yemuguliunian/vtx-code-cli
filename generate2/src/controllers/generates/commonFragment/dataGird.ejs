@@ -31,6 +31,23 @@
 	    	return btns;
 		}, width: '120px'}]
 		<%_ } _%>
+		<%_ if(type === 'list' && isView) { _%>
+		['操作', 'action', { renderButtons : () => {
+			let btns = [];
+	    	btns.push({
+	    		name: '查看',
+	    		onClick(rowData) {
+					updateState({
+	                    viewItem: {
+	                        ...rowData
+	                    }
+	                })
+	                updateViewWindow();
+	    		}
+	    	})
+	    	return btns;
+		}, width: '120px'}]
+		<%_ } _%>
 	];
 	let vtxDatagridProps = {
 		columns: handleColumns(columns),
@@ -60,7 +77,7 @@
 	        showTotal: total => `合计 ${total} 条`
 	    },
 	};
-	<%_ if(type === 'curd') { _%>
+	<%_ if(type === 'curd' || (type === 'list' && isExport)) { _%>
 	vtxDatagridProps = _.assign(vtxDatagridProps, {
 	    rowSelection: {
 	        type: 'checkbox',

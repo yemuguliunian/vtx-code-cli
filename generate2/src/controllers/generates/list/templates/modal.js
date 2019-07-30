@@ -1,8 +1,8 @@
-import { demoService } from '...';
+import { demoService } from '@services/..';
 
 import _ from 'lodash';
 const u = require('updeep');
-import { VtxUtil } from '...';
+import { VtxUtil } from '@utils/utils';
 
 // 查询条件
 let initQueryParams = {
@@ -21,7 +21,13 @@ const initState = {
     pageSize: 10, // 每页条数
     loading: false, // 列表是否loading
     dataSource: [], // 列表数据源
-    total: 0 // 列表总条数
+    total: 0, // 列表总条数
+    <% if(isExport) { %>selectedRowKeys: [],<% } %>
+    <%_ if(isView) { _%>
+    viewItem: { // 查看参数
+        visible: false
+    }
+    <%_ } _%>
 };
 
 export default {

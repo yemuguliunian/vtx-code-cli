@@ -1,4 +1,4 @@
-import { demoService } from '...';
+import { demoService } from '@services/..';
 
 const u = require('updeep');
 

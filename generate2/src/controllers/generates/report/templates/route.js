@@ -19,7 +19,7 @@ const Option = Select.Option;
 <% } -%>
 
 <%_ if(route.vtxDateUi.length > 0) { _%>
-import { VtxTimeUtil } from '../../utils/util';
+import { VtxTimeUtil } from '@utils/utils';
 <%_ } _%>
 
 function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {

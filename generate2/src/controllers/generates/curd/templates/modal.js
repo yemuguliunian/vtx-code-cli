@@ -1,8 +1,8 @@
-import { demoService } from '...';
+import { demoService } from '@services/..';
 
 import _ from 'lodash';
 const u = require('updeep');
-import { VtxUtil } from '...';
+import { VtxUtil } from '@utils/utils';
 
 // 查询条件
 let initQueryParams = {

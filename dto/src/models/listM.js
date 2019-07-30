@@ -12,6 +12,8 @@ export default {
         annotation : '', // 注释
         author : '', // 作者
         searchParams : [],
+        isExport: false,
+        isView: false,
         typeData : [
             {code : 'text', text : '文本'},
             {code : 'select', text : '下拉'},
@@ -50,14 +52,16 @@ export default {
         *cli({ payload }, { call, put, select }) {
             yield put({type: 'updateState', payload: {loading: true}});
             const { 
-                namespace, annotation, author, searchParams, listParams 
+                namespace, annotation, author, searchParams, listParams, isExport, isView
             } = yield select(({list}) => list);
             const params = {
-                namespace : namespace,
-                annotation : annotation,
-                author : author,
-                searchParams : searchParams,
-                listParams : listParams
+                namespace,
+                annotation,
+                author,
+                searchParams,
+                listParams,
+                isExport, 
+                isView
             };
             const {data} = yield call(cliList, params);
             if(!!data && !data.result) {

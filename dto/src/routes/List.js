@@ -3,8 +3,9 @@ import { connect } from 'dva';
 import styles from './Dto.less';
 
 import { Page, Cell} from 'rc-layout';
-import { Input, Icon, Select, Button } from 'antd';
+import { Input, Icon, Select, Button, Tag } from 'antd';
 const Option = Select.Option;
+const { CheckableTag } = Tag;
 
 import Namespace from '../components/Namespace';
 import SearchParam from '../components/SearchParam';
@@ -17,6 +18,7 @@ function List({dispatch, list}) {
 
 	const {
 		namespace, annotation, author, searchParams, typeData, 
+        isExport, isView,
         listParams, distId, loading
 	} = list;
 
@@ -103,6 +105,11 @@ function List({dispatch, list}) {
                 author={author}
                 updateState={updateState}
             />
+            <h5>功能按钮（支持配置查看和导出）</h5>
+            <div>
+                <CheckableTag checked={isView} onChange={(checked) => updateState({isView: checked})}>查询</CheckableTag>
+                <CheckableTag checked={isExport} onChange={(checked) => updateState({isExport: checked})}>导出</CheckableTag>
+            </div>
         	<h5>查询条件</h5>
     		<Button type="primary" icon="plus" onClick={() => dispatch({type : 'list/newSearchParam'})}>新增查询条件</Button>
     		{searchParamRender}

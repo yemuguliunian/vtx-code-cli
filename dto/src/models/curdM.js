@@ -22,6 +22,8 @@ export default {
             {code : 'range', text : '时间段'}
         ],
         parameters : [],
+        isExport: false, // 导出
+        isImport: false, // 导入
         parameterTypeData : [
             {code : 'text', text : '文本'},
             {code : 'textarea', text : '文本域'},
@@ -61,15 +63,18 @@ export default {
         *cli({ payload }, { call, put, select }) {
             yield put({type: 'updateState', payload: {loading: true}});
             const { 
-                namespace, annotation, author, searchParams, parameters, listParams 
+                namespace, annotation, author, searchParams, parameters, listParams,
+                isExport, isImport
             } = yield select(({curd}) => curd);
             const params = {
-                namespace : namespace,
-                annotation : annotation,
-                author : author,
-                searchParams : searchParams,
-                parameters : parameters,
-                listParams : listParams
+                namespace,
+                annotation,
+                author,
+                searchParams,
+                parameters,
+                listParams,
+                isExport, 
+                isImport
             };
             const {data} = yield call(cliCurd, params);
             if(!!data && !data.result) {

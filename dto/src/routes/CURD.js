@@ -3,8 +3,9 @@ import { connect } from 'dva';
 import styles from './Dto.less';
 
 import { Page, Cell} from 'rc-layout';
-import { Input, Icon, Select, Button } from 'antd';
+import { Input, Icon, Select, Button, Tag } from 'antd';
 const Option = Select.Option;
+const { CheckableTag } = Tag;
 
 import Namespace from '../components/Namespace';
 import SearchParam from '../components/SearchParam';
@@ -18,6 +19,7 @@ function Curd({dispatch, curd}) {
 
 	const {
 		namespace, annotation, author, searchParams, typeData, 
+        isImport, isExport,
         parameters, parameterTypeData, listParams, distId, loading
 	} = curd;
 
@@ -137,6 +139,15 @@ function Curd({dispatch, curd}) {
                 author={author}
                 updateState={updateState}
             />
+            <h5>功能按钮（增删改查为基础功能不可修改，额外支持配置导出）</h5>
+            <div>
+                <CheckableTag checked>新增</CheckableTag>
+                <CheckableTag checked>删除</CheckableTag>
+                <CheckableTag checked>编辑</CheckableTag>
+                <CheckableTag checked>查询</CheckableTag>
+                {/*<CheckableTag checked={isImport} onChange={(checked) => updateState({isImport: checked})}>导入</CheckableTag>*/}
+                <CheckableTag checked={isExport} onChange={(checked) => updateState({isExport: checked})}>导出</CheckableTag>
+            </div>
         	<h5>查询条件</h5>
     		<Button type="primary" icon="plus" onClick={() => dispatch({type : 'curd/newSearchParam'})}>新增查询条件</Button>
     		{searchParamRender}

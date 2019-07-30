@@ -7,9 +7,9 @@ const getAddAndViewParams = require('./renderData/addAndView.js');
 class Generator extends BasicGenerator {
 
     writing() {
-        const { searchParams, parameters, listParams } = this.body;
+        const { searchParams, parameters, listParams, isExport, isImport } = this.body;
 
-        const route = getRouteParams({searchParams, parameters, listParams});
+        const route = getRouteParams({searchParams, parameters, listParams, isExport, isImport});
         const modal = getModalParams({searchParams, parameters});
         const { add, view } = getAddAndViewParams(parameters);
 

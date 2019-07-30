@@ -10,24 +10,27 @@ import { Page, Content, BtnWrap, TableWrap } from 'rc-layout';
 import { <%= route.vtxUi.join(', ') %> } from 'vtx-ui';
 <%_ if(route.vtxDateUi.length > 0) { _%>
 const { <%= route.vtxDateUi.join(', ') %> } = VtxDate;
+<%_ } _%>
+<%_ if(route.vtxUi.indexOf('VtxExport') > -1) { _%>
+const { VtxExport2 } = VtxExport;
 <% } %>
 import { <%= route.antd.join(', ') %> } from 'antd';
 <%_ if(route.existSelect) { _%>
 const Option = Select.Option;
-<% } %>
+<%_ } _%>
 
-import NewItem from '../components/<%=namespace%>/Add';
-import EditItem from '../components/<%=namespace%>/Add';
-import ViewItem from '../components/<%=namespace%>/View';
+import NewItem from '@components/<%=namespace%>/Add';
+import EditItem from '@components/<%=namespace%>/Add';
+import ViewItem from '@components/<%=namespace%>/View';
 
-import { handleColumns } from '../../utils/tools';
+import { handleColumns<% if(isExport) {%>, renderColumnParam<% } %> } from '@utils/tools';
 <%_ if(route.vtxDateUi.length > 0) { _%>
-import { VtxTimeUtil } from '../../utils/util';
+import { VtxTimeUtil } from '@utils/utils';
 <%_ } _%>
 
 function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 	const {
-		searchParams,
+		searchParams,<% if(isExport) {%> queryParams,<% } %>
         <%_ if(route.paramDatas.length > 0) { _%>
         <%= route.paramDatas.join(', ') %>,
         <%_ } _%>
@@ -209,6 +212,59 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
             }
         });
     }
+
+    <%_ if(isExport) { _%>
+    // ---------------------------------导出-------------------------------
+    const exportProps = {
+        downloadURL: '',
+        getExportParams(exportType){
+            const commonParams = {
+                userId, 
+                tenantId, 
+                ...queryParams,
+                columnJson: renderColumnParam(columns),
+                access_token: token
+            };
+            switch (exportType){
+                case 'rows':
+                    if(selectedRowKeys.length === 0){
+                        message.warn('当前没有选中行');
+                        return null;
+                    }
+                    return {
+                        ...commonParams,
+                        downloadAll: false,
+                        ids: selectedRowKeys.join(','),
+                    };
+                break;
+                case 'page':
+                    if(dataSource.length === 0){
+                        message.warn('当前页无数据');
+                        return null;
+                    }
+                    return {
+                        ...commonParams,
+                        downloadAll: false,
+                        ids: dataSource.map(item => item.id).join(',')
+                    };
+                break;
+                case 'all':
+                    if(total === 0){
+                        message.warn('当前无数据');
+                        return null;
+                    }
+                    return {
+                        ...commonParams,
+                        downloadAll: true
+                    };
+                break;
+                default:
+                    // 无逻辑
+                break;
+            }
+        }
+    };
+    <%_ } _%>
     
 	return (
 		<Page title="<%=annotation%>">
@@ -229,6 +285,7 @@ function <%=upperFirst(namespace)%>({ dispatch, <%=namespace%> }) {
 				<BtnWrap>
 					<Button icon="file-add" onClick={() => updateNewWindow()}>新增</Button>
 					<Button icon="delete" disabled={selectedRowKeys.length == 0} onClick={deleteItems}>删除</Button>
+                    <% if(isExport) { %><VtxExport2 {...exportProps}/><% } %>
 				</BtnWrap>
 				<TableWrap top={48}>
 					<VtxDatagrid {...vtxDatagridProps}/>
