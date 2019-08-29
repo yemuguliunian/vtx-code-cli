@@ -75,7 +75,7 @@ class Generate {
 
 	runGenerator (folder, resolveG, rejectG, id){
 		const _t = this;
-		return new Promise(resolve => {
+		return new Promise((resolve, reject) => {
 			let generatorPath = `./generates/${_t.type}/index.js`;
 			const Generator = require(generatorPath);
 			const generator = new Generator({

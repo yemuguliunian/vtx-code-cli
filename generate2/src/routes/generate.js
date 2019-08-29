@@ -32,6 +32,8 @@ router.post('/curd', function(req, res, next) {
         body : req.body
     }).then(({status, id}) => {
         res.json(response(status, id));
+    }).catch((err) => {
+        console.error(err);
     });
 });
 
@@ -43,6 +45,8 @@ router.post('/list', function(req, res, next) {
         body : req.body
     }).then(({status, id}) => {
         res.json(response(status, id));
+    }).catch((err) => {
+        console.error(err);
     });
 });
 
@@ -54,6 +58,8 @@ router.post('/report', function(req, res, next) {
         body : req.body
     }).then(({status, id}) => {
         res.json(response(status, id));
+    }).catch((err) => {
+        console.error(err);
     });
 });
 
@@ -65,6 +71,8 @@ router.post('/empty', function(req, res, next) {
         body : req.body
     }).then(({status, id}) => {
         res.json(response(status, id));
+    }).catch((err) => {
+        console.error(err);
     });
 });
 
