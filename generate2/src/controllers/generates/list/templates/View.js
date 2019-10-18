@@ -1,23 +1,23 @@
 import React from 'react';
 
-import { VtxrouteList, Vtxroute, } from 'vtx-ui';
+import { VtxModalList, VtxModal, } from 'vtx-ui';
 import { Button } from 'antd';
 
 function View(props) {
 
 	const { updateWindow, routeProps, contentProps } = props;
 	<% if (route.listParams.length < 7) { %>
-    const { <%= route.listParams.join(', ') %>, updateItem }  = contentProps;
+    const { <%= route.listParams.map(item => item.param).join(', ') %>, updateItem }  = contentProps;
     <% } -%>
     <% if (route.listParams.length >= 7) { %>
     const {
-    	<%_ chunk(route.listParams, 6).map((item, index) => { _%>
+    	<%_ chunk(route.listParams.map(item => item.param), 6).map((item, index) => { _%>
         <%= item.join(', ') %>,
     	<%_ }) _%>
     } = contentProps;
     <% } -%>  
 	return (
-		<Vtxroute
+		<VtxModal
 			{...routeProps}
 			footer={[
 				<Button key="cancel" size="large" onClick={()=>{
@@ -25,18 +25,18 @@ function View(props) {
 				}}>取消</Button>
 			]}
 		>
-			<VtxrouteList>
+			<VtxModalList>
 				<%_ route.listParams.forEach(function(item){ _%>
 				<div
-					data-routelist={{
+					data-modallist={{
 					    layout: {type: 'text', name: '<%= item.title%>', width: 50, key: '<%= item.param%>'}
 					}}
 				>
 					{<%= item.param%>}
 				</div>
 				<%_ }); _%>
-			</VtxrouteList>
-		</Vtxroute>
+			</VtxModalList>
+		</VtxModal>
 	)
 }
 

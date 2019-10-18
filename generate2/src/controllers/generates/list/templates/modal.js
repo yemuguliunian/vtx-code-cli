@@ -2,7 +2,7 @@ import { demoService } from '@services/..';
 
 import _ from 'lodash';
 const u = require('updeep');
-import { VtxUtil } from '@utils/utils';
+import { VtxUtil } from '@utils/util';
 
 // 查询条件
 let initQueryParams = {
@@ -84,8 +84,8 @@ export default {
            pageSize = 'pageSize' in payload ? payload.pageSize : pageSize;
             let params = {
                 ...queryParams,
-                page: currentPage,
-                rows: pageSize
+                page: currentPage - 1,
+                size: pageSize
             };
             const { data } = yield call(demoService.getList, VtxUtil.handleTrim(params));
             let dataSource = [], total = 0, status = false;
